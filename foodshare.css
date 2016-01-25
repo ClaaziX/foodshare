@@ -1,0 +1,40 @@
+/* CSS declarations go here */
+body
+{
+font-family: 'Roboto', sans-serif;
+}
+
+h1{
+font-family: 'Crete Round', serif;
+}
+
+header {
+  background: #d2edf4;
+  background-image: linear-gradient(to bottom, #BEF2D4, #C8F2BE 100%);
+  padding: 20px 15px 15px 15px;
+  position: relative;
+}
+
+.new-foodItem input {
+  box-sizing: border-box;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding-right: 80px;
+  font-size: 1em;
+}
+
+.new-foodItem input:focus{
+  outline: 0;
+}
+
+  .new-foodItem input {
+    padding-bottom: 5px;
+  }
+
+@media (max-width: 600px) {
+  li {
+    padding: 12px 15px;
+  }
+}

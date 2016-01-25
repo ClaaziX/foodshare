@@ -1,0 +1,35 @@
+<head>
+  <title>Food Sharers</title>
+    <link href='https://fonts.googleapis.com/css?family=Crete+Round|Roboto' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="container">
+      <header>
+        <h1>Share Food!</h1>
+      
+
+        <form id="new-foodItem">
+            <input type="text" name="foodName" placeholder="Please enter the name of the food" />
+            <input type="text" name="foodDesc" placeholder="Please enter a description of the food" />
+            <input type="submit" id="submit" />
+        </form>
+      </header>
+      
+    <table>
+      {{#each foodItems}}
+        {{> foodItem}}
+      {{/each}}
+    </table>
+      
+   </div>
+</body>
+
+<template name="foodItem">
+    <tr>
+        <td>{{foodName}}</td>
+        <td>{{foodDesc}}</td>
+        <td>{{createdAt}}</td>
+    </tr>
+</template>
+ 
