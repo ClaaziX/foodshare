@@ -1,8 +1,10 @@
 FoodItems = new Mongo.Collection("foodItem");
 
 function foodItemSubmit() {
-
+    
     form = {};
+    createdAt = {};
+    createdAt[createdAt] = new Date(); //can't use timers on server and client at same time!
 
     $.each($('#new-foodItem').serializeArray(), function() {
         form[this.name] = this.value;
@@ -10,7 +12,7 @@ function foodItemSubmit() {
 
     //do validation on form!!!
 
-    FoodItems.insert(form, function(err) {
+    FoodItems.insert(form, createdAt, function(err) {
         if(!err) {
             alert("Submitted!");
             $('#new-foodItem')[0].reset();
