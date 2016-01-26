@@ -8,10 +8,35 @@ h1{
 font-family: 'Crete Round', serif;
 }
 
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100%;
+  background: white;
+}
+
 header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #BEF2D4, #C8F2BE 100%);
   padding: 20px 15px 15px 15px;
+  position: relative;
+}
+
+#login-buttons {
+  display: block;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-right: 1em;
+}
+
+form {
+  margin-top: 10px;
+  margin-bottom: -10px;
   position: relative;
 }
 
@@ -29,12 +54,34 @@ header {
   outline: 0;
 }
 
-  .new-foodItem input {
-    padding-bottom: 5px;
-  }
+.delete {
+  float: right;
+  font-weight: bold;
+  background: none;
+  font-size: 1em;
+  border: none;
+  position: relative;
+}
+
+header .hide-completed {
+  float: right;
+}
+
+.toggle-private {
+  margin-left: 5px;
+}
 
 @media (max-width: 600px) {
   li {
     padding: 12px 15px;
+  }
+
+  .search {
+    width: 150px;
+    clear: both;
+  }
+
+  .new-foodItem input {
+    padding-bottom: 5px;
   }
 }
