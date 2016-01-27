@@ -14,7 +14,7 @@ App = React.createClass({
   renderFoodItems() {
     // Get foodItems from this.data.foodItems
     return this.data.foodItems.map((foodItem) => {
-      return <FoodItems key={foodItem._id} foodItem={foodItem} />;       // this is wrong? call foodName/foodDesc??
+      return <FoodItems key={foodItem._id} foodItem={foodItem} />;   
     });
   },
 
@@ -32,7 +32,8 @@ App = React.createClass({
     });
  
     // Clear form
-    React.findDOMNode(this.refs.textInput).value = "";
+    React.findDOMNode(this.refs.FNR).value = "";
+    React.findDOMNode(this.refs.FDR).value = "";
   },
  
   render() {
