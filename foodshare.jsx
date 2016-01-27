@@ -1,4 +1,4 @@
-FoodItems = new Mongo.Collection("foodItems");
+FoodItemsC = new Mongo.Collection("foodItems");
 
 if (Meteor.isClient) {
   // This code is executed on the client only

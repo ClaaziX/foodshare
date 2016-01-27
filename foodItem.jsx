@@ -7,5 +7,8 @@ FoodItems = React.createClass({
   deleteThisItem() {
     FoodItems.remove(this.props.foodItem._id);
   },
- 
+  
+  render() {
+    return ('a');
+  }
 });

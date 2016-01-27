@@ -7,7 +7,7 @@ App = React.createClass({
   // Loads items from the FoodItems collection and puts them on this.data.foodItems
   getMeteorData() {
     return {
-      foodItems: FoodItems.find({}, {sort: {createdAt: -1}}).fetch()
+      foodItems: FoodItemsC.find({}, {sort: {createdAt: -1}}).fetch()
     }
   },
  
@@ -22,10 +22,10 @@ App = React.createClass({
     event.preventDefault(); //does not seem to work
  
     // Find the text field via the React ref
-    var foodName = React.findDOMNode(this.refs.textInput).value.trim();
-    	foodDesc = React.findDOMNode(this.refs.textInput).value.trim();
+    var foodName = React.findDOMNode(this.refs.FNR).value.trim();
+    var	foodDesc = React.findDOMNode(this.refs.FDR).value.trim();
  
-    FoodItems.insert({
+    FoodItemsC.insert({
       foodName: foodName,
       foodDesc: foodDesc,
       createdAt: new Date() // current time
@@ -40,9 +40,9 @@ App = React.createClass({
       <div className="container">
         <header>
           <h1>Food Sharing</h1>
-          	<form className="new-foodItem">
-	            <input type="text" name="foodName" placeholder="Please enter the name of the food" /><br />
-	            <input type="text" name="foodDesc" placeholder="Please enter a description of the food" /><br />
+          	<form className="new-foodItem" onSubmit={this.handleSubmit}>
+	            <input type="text" name="foodName" ref="FNR" placeholder="Please enter the name of the food" /><br />
+	            <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
 	            <input type="submit" id="submit" />
         	</form>
         </header>
