@@ -10,10 +10,12 @@ FoodItems = React.createClass({
   
   render() {
     return (
-      <div>	
-        <h1>{this.props.foodItem.foodName}</h1>
-        <br/>
-      </div>	 
+      <tr>	
+        <td>{this.props.foodItem.foodName}</td>
+	<td>{this.props.foodItem.foodDesc}</td>
+	
+	<td>{this.props.foodItem._id}</td>
+      </tr>	 
     );
   }
 });

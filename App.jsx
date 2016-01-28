@@ -47,10 +47,16 @@ App = React.createClass({
 	            <input type="submit" id="submit" />
         	</form>
         </header>
- 
+	<table > 
+		<tr>
+			<td>Food Name</td>
+			<td>Food Description</td>
+			
+			<td>ID</td>
+		</tr>
 
 		        	{this.renderFoodItems()} 
-
+	</table>
       </div>
     );
   }
