@@ -10,7 +10,10 @@ FoodItems = React.createClass({
   
   render() {
     return (
-      this.props.foodItem.foodName
+      <div>	
+        <h1>{this.props.foodItem.foodName}</h1>
+        <br/>
+      </div>	 
     );
   }
 });

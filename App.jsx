@@ -49,7 +49,7 @@ App = React.createClass({
         </header>
  
 
-		        	{this.renderFoodItems()} //need to render a table
+		        	{this.renderFoodItems()} 
 
       </div>
     );
