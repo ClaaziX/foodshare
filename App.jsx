@@ -4,11 +4,31 @@ App = React.createClass({
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
  
+  getInitialState() {
+    return {
+      filter : ''
+    }
+  },
+
   // Loads items from the FoodItems collection and puts them on this.data.foodItems
   getMeteorData() {
+    console.log('.*'+this.state.filter+'.*')    
+    queryS = '.*'+this.state.filter+'.*';
+
+    
+    let query = {foodName : {'$regex' : queryS}};
     return {
-      foodItems: FoodItemsC.find({}, {sort: {createdAt: -1}}).fetch()
-    }
+
+      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch()
+    };
+  },
+  
+  filterList(event) {
+    console.log(this.state.filter)
+    //Change the state of the filtering in play
+    this.setState({
+      filter: event.target.value
+    });
   },
  
   renderFoodItems() {
