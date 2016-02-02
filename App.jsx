@@ -47,8 +47,9 @@ App = React.createClass({
 	            <input type="submit" id="submit" />
         	</form>
         </header>
-	<table > 
-		<tr>
+	<input type="text" placeholder="Search" onChange={this.filterList}/>
+	<table style={{width:'100%'}}>
+	        <tr>
 			<td>Food Name</td>
 			<td>Food Description</td>
 			
