@@ -61,6 +61,7 @@ App = React.createClass({
       <div className="container">
         <header>
           <h1>Food Sharing</h1>
+	  <AccountsUIWrapper />
           	<form className="new-foodItem" onSubmit={this.handleSubmit}>
 	            <input type="text" name="foodName" ref="FNR" placeholder="Please enter the name of the food" /><br />
 	            <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
