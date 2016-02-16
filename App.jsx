@@ -19,8 +19,8 @@ App = React.createClass({
 
     let query = {foodName : {'$regex' : queryS}};
     return {
-
-      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch()
+      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch(),
+      currentUser: Meteor.user()
     };
   },
   
@@ -80,6 +80,8 @@ App = React.createClass({
       portionNo: portionSelect,
       portionsClaimed: 0,
       // imgURL: imgURL,
+      owner: Meteor.userId(),           // _id of logged in user
+      username: Meteor.user().username,  // username of logged in user
       createdAt: new Date() // current time
     });
  
@@ -96,6 +98,9 @@ App = React.createClass({
       <div className="container">
         <header>
           <h1>Food Sharing</h1>
+
+          <AccountsUIWrapper />
+          { this.data.currentUser ?
             <form className="new-foodItem" onSubmit={this.handleSubmit}>
 	            
               <input type="text" name="foodName" ref="FNR" placeholder="Please enter the name of the food" /><br />
@@ -127,7 +132,8 @@ App = React.createClass({
                 <option value="10">10</option>
               </select>
               <input type="submit" id="submit" />
-            </form>
+            </form> : ''
+          }
         </header>
 	<input type="text" placeholder="Search" onChange={this.filterList}/>
 	<table className="itemListView">

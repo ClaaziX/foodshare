@@ -22,7 +22,7 @@ FoodItems = React.createClass({
         <tr>
           <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
           <td><h1>{this.props.foodItem.foodName}</h1></td>
-          <td rowSpan="3"><img className="itemSmlPic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"></img></td>
+          <td rowSpan="2"><img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"></img></td>
         </tr>
         <tr>
           <td>{this.props.foodItem.foodDesc}</td>
@@ -30,6 +30,7 @@ FoodItems = React.createClass({
         <tr>
           <td>Number Of Portions: {this.props.foodItem.portionNo}
           </td>
+          <td>{this.props.foodItem.username}</td>
         </tr>
       </tbody>
     );

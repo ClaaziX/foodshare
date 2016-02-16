@@ -138,6 +138,11 @@ header .hide-completed {
   width: 100px;
 }
 
+.profilePic{
+  width: 75px;
+  vertical-align: bottom;
+}
+
 .itemListView {
   margin:0px;padding:0px;
   width:100%;
