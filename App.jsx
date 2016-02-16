@@ -12,7 +12,18 @@ App = React.createClass({
     }
   },
 
+  // Loads items from the FoodItems collection and puts them on this.data.foodItems
+  getMeteorData() {
+    console.log('.*'+this.state.filter+'.*')    
+    queryS = '.*'+this.state.filter+'.*';
 
+    let query = {foodName : {'$regex' : queryS}};
+    return {
+
+      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch()
+    };
+  },
+  
 
   onDrop: function (files) {
     if (Meteor.isServer) {
@@ -38,18 +49,7 @@ App = React.createClass({
     this.refs.dropzone.open();
   },
 
-  // Loads items from the FoodItems collection and puts them on this.data.foodItems
-  getMeteorData() {
-    console.log('.*'+this.state.filter+'.*')    
-    queryS = '.*'+this.state.filter+'.*';
 
-    let query = {foodName : {'$regex' : queryS}};
-    return {
-
-      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch()
-    };
-  },
-  
   filterList(event) {
     console.log(this.state.filter)
     //Change the state of the filtering in play
@@ -126,11 +126,8 @@ App = React.createClass({
                 <option value="9">9</option>
                 <option value="10">10</option>
               </select>
-              
-
               <input type="submit" id="submit" />
-        	</form>
-
+            </form>
         </header>
 	<input type="text" placeholder="Search" onChange={this.filterList}/>
 	<table className="itemListView">

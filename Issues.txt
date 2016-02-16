@@ -8,3 +8,7 @@ when  search is deleted, items do not go back into timeCreatedAt order
 
 Rendering:
 will not show any results if attempting to render createdAt // think wehave to tell it what format to display
+
+Images:
+need to link into items DB
+need to refreash when form is submitted
