@@ -25,3 +25,8 @@ accounts-base
 cfs:standard-packages
 cfs:gridfs
 react
+raix:ui-dropped-event
+praneybehl:react-dropzone
+universe:react-bootstrap
+twbs:bootstrap
+lookback:dropdowns

@@ -85,3 +85,143 @@ header .hide-completed {
     padding-bottom: 5px;
   }
 }
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.imgPreview {
+  max-width: 300px;
+}
+
+.itemSmlPic {
+  width: 100px;
+}
+
+.itemListView {
+  margin:0px;padding:0px;
+  width:100%;
+  border:1px solid #ffffff;
+  
+  -moz-border-radius-bottomleft:20px;
+  -webkit-border-bottom-left-radius:20px;
+  border-bottom-left-radius:20px;
+  
+  -moz-border-radius-bottomright:20px;
+  -webkit-border-bottom-right-radius:20px;
+  border-bottom-right-radius:20px;
+  
+  -moz-border-radius-topright:20px;
+  -webkit-border-top-right-radius:20px;
+  border-top-right-radius:20px;
+  
+  -moz-border-radius-topleft:20px;
+  -webkit-border-top-left-radius:20px;
+  border-top-left-radius:20px;
+}.itemListView table{
+    border-collapse: collapse;
+        border-spacing: 0;
+  width:100%;
+  height:100%;
+  margin:0px;padding:0px;
+}.itemListView tr:last-child td:last-child {
+  -moz-border-radius-bottomright:20px;
+  -webkit-border-bottom-right-radius:20px;
+  border-bottom-right-radius:20px;
+}
+.itemListView table tr:first-child td:first-child {
+  -moz-border-radius-topleft:20px;
+  -webkit-border-top-left-radius:20px;
+  border-top-left-radius:20px;
+}
+.itemListView table tr:first-child td:last-child {
+  -moz-border-radius-topright:20px;
+  -webkit-border-top-right-radius:20px;
+  border-top-right-radius:20px;
+}.itemListView tr:last-child td:first-child{
+  -moz-border-radius-bottomleft:20px;
+  -webkit-border-bottom-left-radius:20px;
+  border-bottom-left-radius:20px;
+}.itemListView tr:hover td{
+  
+}
+.itemListView tr:nth-child(odd){ background-color:#aad4ff; }
+.itemListView tr:nth-child(even)    { background-color:#aaffaa; }.itemListView td{
+  vertical-align:middle;
+  
+  
+  border:1px solid #ffffff;
+  border-width:0px 1px 1px 0px;
+  text-align:left;
+  padding:6px;
+
+}.itemListView tr:last-child td{
+  border-width:0px 1px 0px 0px;
+}.itemListView tr td:last-child{
+  border-width:0px 0px 1px 0px;
+}.itemListView tr:last-child td:last-child{
+  border-width:0px 0px 0px 0px;
+}
+.itemListView tr:first-child td{
+    background:-o-linear-gradient(bottom, #f7f9fc 5%, #f7f9fc 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f7f9fc), color-stop(1, #f7f9fc) );
+  background:-moz-linear-gradient( center top, #f7f9fc 5%, #f7f9fc 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f9fc", endColorstr="#f7f9fc");  background: -o-linear-gradient(top,#f7f9fc,f7f9fc);
+
+  background-color:#f7f9fc;
+  border:0px solid #ffffff;
+  text-align:center;
+  border-width:0px 0px 1px 1px;
+}
+.itemListView tr:first-child:hover td{
+  background:-o-linear-gradient(bottom, #f7f9fc 5%, #f7f9fc 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f7f9fc), color-stop(1, #f7f9fc) );
+  background:-moz-linear-gradient( center top, #f7f9fc 5%, #f7f9fc 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f9fc", endColorstr="#f7f9fc");  background: -o-linear-gradient(top,#f7f9fc,f7f9fc);
+
+  background-color:#f7f9fc;
+}
+.itemListView tr:first-child td:first-child{
+  border-width:0px 0px 1px 0px;
+}
+.itemListView tr:first-child td:last-child{
+  border-width:0px 0px 1px 1px;
+}
