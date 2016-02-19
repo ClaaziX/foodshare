@@ -1,5 +1,5 @@
 
-App = React.createClass({
+foodView = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
