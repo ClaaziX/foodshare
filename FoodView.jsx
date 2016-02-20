@@ -1,5 +1,4 @@
-
-App = React.createClass({
+FoodView = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -95,11 +94,7 @@ App = React.createClass({
 
   render: function() {
     return (
-      <div className="container">
-        <header>
-          <h1>Food Sharing</h1>
-
-          <AccountsUIWrapper />
+	<div>
           { this.data.currentUser ?
             <form className="new-foodItem" onSubmit={this.handleSubmit}>
 	            
@@ -134,12 +129,12 @@ App = React.createClass({
               <input type="submit" id="submit" />
             </form> : ''
           }
-        </header>
+
 	<input type="text" placeholder="Search" onChange={this.filterList}/>
 	<table className="itemListView">
 		{this.renderFoodItems()} 
   </table>
-      </div>
+	</div>
 
 
     );
