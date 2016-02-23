@@ -91,6 +91,13 @@ FoodView = React.createClass({
 
   },
 
+genPtNo: function (pNo) {
+  var x = [];
+  for (i = 1; i < pNo; i++){
+    x.push(<option value={i}>{i}</option>);
+  }
+  return <select name="portionSelect" ref="PSR">{x}</select>;
+},
 
   render: function() {
     return (
@@ -113,19 +120,7 @@ FoodView = React.createClass({
               <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
               
               <div>Please Select The Number of Portions:</div>
-              <select name="portionSelect" ref="PSR">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+              {this.genPtNo(20)}
               <input type="submit" id="submit" />
             </form> : ''
           }
