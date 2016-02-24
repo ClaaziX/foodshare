@@ -9,8 +9,8 @@ FoodItems = React.createClass({
   },
 
 genPrtnImg: function () {
-  var pCla = FoodItemsC.find(this.props.foodItem.portionsClaimed);
-  var pNum = FoodItemsC.find(this.props.foodItem.portionNo) - pCla;
+  var pCla = this.props.foodItem.portionsClaimed;
+  var pNum = this.props.foodItem.portionNo - pCla;
   var x = [];
   for (i = 0; i < pNum; i++){
     x.push(<img src='http://enviroauditcouk.fatcow.com/foodshare/carrot-icon.png' />);
