@@ -1,4 +1,4 @@
-MultiViewApp = React.createClass({
+AppHeader = React.createClass({
 
     getCurrentView : function(){
 	switch(this.state.view){
@@ -21,8 +21,8 @@ MultiViewApp = React.createClass({
 			<h1>Food Sharing</h1>
 			<AccountsUIWrapper />
 		    </header>
-		    
-		    {this.getCurrentView()}
+
+		    {this.props.children}    
 
 		</div>    
 	    );

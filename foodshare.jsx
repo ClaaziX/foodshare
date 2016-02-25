@@ -12,9 +12,20 @@ if (Meteor.isClient) {
 
       });
 
+  const {Router, Route, IndexRoute} = ReactRouter;
+
+  const history = ReactRouter.history.useQueries(ReactRouter.history.createHistory)()
+
   Meteor.startup(function () {
     // Use Meteor.startup to render the component after the page is ready
-    ReactDOM.render(<MultiViewApp />, document.getElementById("render-target"));
+    ReactDOM.render(
+
+	<Router history={history}>
+		<Route path='/' component={AppHeader}>
+		       <IndexRoute component={FoodView} />
+		</Route>
+	</Router>
+	,document.getElementById("render-target"));
   });
 }
 
