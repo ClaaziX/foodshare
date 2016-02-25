@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 
       });
 
-  const {Router, Route, IndexRoute} = ReactRouter;
+  const {Router, Route, IndexRoute, Link} = ReactRouter;
 
   const history = ReactRouter.history.useQueries(ReactRouter.history.createHistory)()
 
@@ -23,7 +23,13 @@ if (Meteor.isClient) {
 	<Router history={history}>
 		<Route path='/' component={AppHeader}>
 		       <IndexRoute component={FoodView} />
+		       <Route path='/UserSettings' component={UserSettings} />
+		       <Route path='/ItemCreation' component={ItemCreation} />
+		       <Route path='/MapView' component={MapView} />
+		       <Route path='/PrivateChat' component={PrivateChat} />
+		       <Route path='/ItemView' component={ItemView} />
 		</Route>
+		
 	</Router>
 	,document.getElementById("render-target"));
   });
