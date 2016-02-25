@@ -1,9 +1,16 @@
 // Task component - represents a single todo item
 FoodItems = React.createClass({
+  mixins: [ReactMeteorData],
   propTypes: {
     foodItem: React.PropTypes.object.isRequired
   },
  
+  getMeteorData(){
+	return{
+		currentUser: Meteor.user() ? Meteor.user().username : ''
+		};
+  },
+
   deleteThisItem() {
     FoodItemsC.remove(this.props.foodItem._id);
   },
@@ -38,7 +45,7 @@ genPrtnImg: function () {
         <tr>
           <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
           <td><h1>{this.props.foodItem.foodName}</h1>
-          { Meteor.user().username == this.props.foodItem.username ?
+          { this.data.currentUser  == this.props.foodItem.username ?
             <button className="delete" onClick={this.deleteThisItem}>x</button> : <button className="claim" onClick={this.claimThisItem}>Claim</button>
           }
           </td>
