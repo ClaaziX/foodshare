@@ -1,17 +1,5 @@
 AppHeader = React.createClass({
 
-    getCurrentView : function(){
-	switch(this.state.view){
-	    case 'foodView':
-		return(<FoodView />);
-	}
-    },
-
-    getInitialState : function() {
-	return {
-	    view : 'foodView'
-	}
-    },
 
     render : function(){
 	    return(
