@@ -27,7 +27,7 @@ if (Meteor.isClient) {
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />
 		       <Route path='/PrivateChat' component={PrivateChat} />
-		       <Route path='/ItemView' component={ItemView} />
+		       <Route path='/ItemView/:itemID' component={ItemView} />
 		</Route>
 		
 	</Router>
