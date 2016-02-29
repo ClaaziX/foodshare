@@ -47,11 +47,6 @@ genPtNo: function (pNo) {
     var	foodDesc = ReactDOM.findDOMNode(this.refs.FDR).value.trim();
     var portionSelect = ReactDOM.findDOMNode(this.refs.PSR).value.trim();
     // var imgURL = arrayOfImageIds[0];
-    
-    console.log('BEGIN')
-    console.log(portionSelect)
-    console.log('END')
-
 
     FoodItemsC.insert({
       foodName: foodName,

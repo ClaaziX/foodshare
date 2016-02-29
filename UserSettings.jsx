@@ -1,5 +1,5 @@
 UserSettings = React.createClass({
 	render() {
-		 return ('');
+		 return (<div>sdfsdfsdfssfsd</div>);
 	}
 });

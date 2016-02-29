@@ -30,3 +30,5 @@ universe:react-bootstrap
 twbs:bootstrap
 lookback:dropdowns
 reactrouter:react-router
+cosmos:browserify
+reactrouter:react-router-ssr
