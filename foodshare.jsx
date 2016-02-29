@@ -12,22 +12,24 @@ if (Meteor.isClient) {
 
       });
 
-  const {Router, Route, IndexRoute, Link} = ReactRouter;
+  const {Router, Route, IndexRoute, Link, history} = ReactRouter;
 
-  const history = ReactRouter.history.useQueries(ReactRouter.history.createHistory)()
+  const browserHistory = history.createHistory();  
 
   Meteor.startup(function () {
     // Use Meteor.startup to render the component after the page is ready
     ReactDOM.render(
 
-	<Router history={history}>
+	<Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
+		       <Route path='/ItemView/:itemID' component={ItemView} />
 		       <IndexRoute component={FoodView} />
+
 		       <Route path='/UserSettings' component={UserSettings} />
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />
 		       <Route path='/PrivateChat' component={PrivateChat} />
-		       <Route path='/ItemView/:itemID' component={ItemView} />
+
 		</Route>
 		
 	</Router>
@@ -37,6 +39,8 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   // This code is executed on the server only
+     	
+	
 
 	MyImages.allow({
 		insert: function() { return true; },

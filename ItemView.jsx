@@ -4,7 +4,7 @@ ItemView = React.createClass({
 	getMeteorData() {
 
 	return {
-	       foodItem: FoodItemsC.find({_id: this.props.params.itemID}).fetch()
+	       foodItem: (FoodItemsC.find({_id: this.props.params.itemID}).fetch()[0])
 	};
 	
 	},
