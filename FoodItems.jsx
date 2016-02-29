@@ -51,7 +51,7 @@ genPrtnImg: function () {
           { this.data.currentUser  == this.props.foodItem.username ?
             <button className="delete" onClick={this.deleteThisItem}>x</button> : <button className="claim" onClick={this.claimThisItem}>Claim</button>
           }
-	  <Link to="/ItemView/{this.props.key}">Discuss</Link>
+	  <Link to={"/ItemView/"+this.props.foodItem._id}>Discuss</Link>
           </td>
           <td rowSpan="2"><img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"></img></td>
         </tr>

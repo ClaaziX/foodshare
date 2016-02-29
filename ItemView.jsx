@@ -1,5 +1,5 @@
 ItemView = React.createClass({
-        mixin: [ReactMeteorData],
+        mixins: [ReactMeteorData],
 
 	getMeteorData() {
 
@@ -10,6 +10,12 @@ ItemView = React.createClass({
 	},
 	 
 	render() {
-		 return (<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/>);
+		 return (
+		 <div>
+			<table className="itemListView">
+		 	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/>
+			</table>
+		</div>
+			);
 	}
 });
