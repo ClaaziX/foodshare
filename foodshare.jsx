@@ -18,7 +18,7 @@ if (Meteor.isClient) {
 
   Meteor.startup(function () {
     // Use Meteor.startup to render the component after the page is ready
-    ReactDOM.render(
+    AppRoutes = (
 
 	<Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
@@ -33,7 +33,8 @@ if (Meteor.isClient) {
 		</Route>
 		
 	</Router>
-	,document.getElementById("render-target"));
+	);
+      ReactRouterSSR.Run(AppRoutes);
   });
 }
 
