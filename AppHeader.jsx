@@ -15,8 +15,16 @@ var {
     Tab,
     Slider,
     FlatButton,
-    FontIcon
+    FontIcon,
+    AppBar,
+    IconButton,
+    NavigationClose,
+    IconMenu,
+    MoreVertIcon,
+    MenuItem
     } = MUI;
+
+    var {SvgIcons} = MUI.Libs;
    
 var { ThemeManager, LightRawTheme } = Styles;
 
@@ -48,13 +56,27 @@ AppHeader = React.createClass({
     render : function(){
 	    return(
 		<div className="container">
+			<div>
+				<AppBar
+				    title="Food Sharing"
+				    iconElementLeft={<AccountsUIWrapper />}
+				    iconElementRight={
+		      			<IconMenu
+		       				iconButtonElement={
+		          				<IconButton><SvgIcons.ContentAddCircle color='Green'/></IconButton>
+		        			}
+					        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+					        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+		      			>
+					        <MenuItem primaryText="Refresh" />
+					        <MenuItem primaryText="Help" />
+					        <MenuItem primaryText="Sign out" />
+		      			</IconMenu>
+		    		}
+		  		/>
+		  	</div>
 
-		    <header>
-			<h1>Food Sharing</h1>
-			<AccountsUIWrapper />
-		    </header>
-
-		    {this.props.children} 
+				    {this.props.children} 
 
 		    <div className="tabsContain">
 				<FlatButton label="List"

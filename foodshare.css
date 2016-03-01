@@ -28,9 +28,12 @@ header {
 
 .tabsContain {
   position: fixed;
-  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   bottom: 0;
-  align: center;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 
 h1 {
