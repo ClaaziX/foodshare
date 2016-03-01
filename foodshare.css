@@ -9,7 +9,7 @@ font-family: 'Crete Round', serif;
 }
 
 .container {
-  max-width: 600px;
+  min-width: 100%;
   margin: 0 auto;
   min-height: 100%;
   background: white;
@@ -24,6 +24,29 @@ header {
 
 #login-buttons {
   display: block;
+}
+
+
+.map-container {
+  width: 800px;
+  max-width: 100%;
+  height: 800px;
+  max-height: 100%
+}
+
+.contentContain{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.headContain {
+  position: fixed;
+  max-width: 100%;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 
 .tabsContain {

@@ -28,18 +28,7 @@ var {
    
 var { ThemeManager, LightRawTheme } = Styles;
 
-const styles = {
-	exampleImageInput: {
-		cursor: 'pointer',
-		position: 'absolute',
-		top: 0,
-		bottom: 0,
-		right: 0,
-		left: 0,
-		width: '100%',
-		opacity: 0,
-	},
-};
+const {Link} = ReactRouter;
 
 AppHeader = React.createClass({
 
@@ -56,7 +45,12 @@ AppHeader = React.createClass({
     render : function(){
 	    return(
 		<div className="container">
-			<div>
+
+		  	<div className="contentContain">
+				    {this.props.children} 
+			</div>
+
+			<div className="headContain">
 				<AppBar
 				    title="Food Sharing"
 				    iconElementLeft={<AccountsUIWrapper />}
@@ -76,26 +70,21 @@ AppHeader = React.createClass({
 		  		/>
 		  	</div>
 
-				    {this.props.children} 
-
 		    <div className="tabsContain">
-				<FlatButton label="List"
+				<Link to={'/'}><FlatButton label="List"
 					labelPosition="before"
 					primary={true}
-					style={styles.button}
-				/>
+				/></Link>
 
-				<FlatButton label="Map"
+				<Link to={'/MapView'}><FlatButton label="Map"
 					labelPosition="before"
 					primary={true}
-					style={styles.button}
-				/>
+				/></Link>
 
-				<FlatButton label="Messages"
+				<Link to={'/PrivateChat'}><FlatButton label="Messages"
 					labelPosition="before"
 					primary={true}
-					style={styles.button}
-				/>
+				/></Link>
 			</div>
 
 		</div>    
