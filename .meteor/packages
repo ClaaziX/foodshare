@@ -27,9 +27,6 @@ react
 raix:ui-dropped-event
 praneybehl:react-dropzone
 reactrouter:react-router
-<<<<<<< HEAD
 izzilab:material-ui
-=======
 cosmos:browserify
 reactrouter:react-router-ssr
->>>>>>> origin/master
