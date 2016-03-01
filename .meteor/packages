@@ -26,9 +26,7 @@ cfs:gridfs
 react
 raix:ui-dropped-event
 praneybehl:react-dropzone
-universe:react-bootstrap
-twbs:bootstrap
-lookback:dropdowns
 reactrouter:react-router
+izzilab:material-ui
 cosmos:browserify
 reactrouter:react-router-ssr
