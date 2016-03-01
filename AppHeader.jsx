@@ -44,10 +44,13 @@ AppHeader = React.createClass({
 
     render : function(){
 	    return(
+
+
+
 		<div className="container">
 
-		  	<div className="contentContain">
-				    {this.props.children} 
+			<div className="contentContain">
+				{this.props.children} 
 			</div>
 
 			<div className="headContain">
@@ -55,36 +58,39 @@ AppHeader = React.createClass({
 				    title="Food Sharing"
 				    iconElementLeft={<AccountsUIWrapper />}
 				    iconElementRight={
-		      			<IconMenu
-		       				iconButtonElement={
-		          				<IconButton><SvgIcons.ContentAddCircle color='Green'/></IconButton>
+
+							<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
+		          					<SvgIcons.ContentAddCircle color='Green'/>
+		          				</IconButton>
 		        			}
 					        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-					        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-		      			>
-					        <MenuItem primaryText="Refresh" />
-					        <MenuItem primaryText="Help" />
-					        <MenuItem primaryText="Sign out" />
-		      			</IconMenu>
-		    		}
 		  		/>
 		  	</div>
 
+
 		    <div className="tabsContain">
-				<Link to={'/'}><FlatButton label="List"
+				<FlatButton label="List"
+					containerElement={<Link to={'/'} />}
+					linkButton={true}
 					labelPosition="before"
 					primary={true}
-				/></Link>
+				/>
 
-				<Link to={'/MapView'}><FlatButton label="Map"
-					labelPosition="before"
-					primary={true}
-				/></Link>
 
-				<Link to={'/PrivateChat'}><FlatButton label="Messages"
+				<FlatButton label="Map"
+					containerElement={<Link to={'/MapView'} />}
+					linkButton={true}
 					labelPosition="before"
 					primary={true}
-				/></Link>
+				/>
+
+				<FlatButton label="Messages"
+					containerElement={<Link to={'/PrivateChat'} />}
+					linkButton={true}
+					labelPosition="before"
+					primary={true}
+				/>
+
 			</div>
 
 		</div>    

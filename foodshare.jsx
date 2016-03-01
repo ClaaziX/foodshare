@@ -1,6 +1,6 @@
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
-  stores: [new FS.Store.GridFS("myImages", {path: "~/uploads"})]
+  stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
 });
 
 

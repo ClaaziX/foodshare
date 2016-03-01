@@ -37,3 +37,4 @@ ejson
 random
 reload
 logging
+cfs:filesystem

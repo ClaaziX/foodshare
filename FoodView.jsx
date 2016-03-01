@@ -39,9 +39,6 @@ FoodView = React.createClass({
   render: function() {
     return (
 	<div>
-          { this.data.currentUser ?
-         <ItemCreation />: ''
-          }
 
 	<input type="text" placeholder="Search" onChange={this.filterList}/>
 	<table className="itemListView">

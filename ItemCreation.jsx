@@ -7,22 +7,21 @@ ItemCreation = React.createClass({
     }
   },
 
-  onDrop: function (files) {
-    if (Meteor.isServer) {
-    MyImages.insert(files, function(err, fileObj){
-        if(err){
-          alert("Error");
+  onDrop(files) {
+    console.log(files)
+      FS.Utility.eachFile(e, function(file) {
+        var newFile = new FS.File(file);
+        
+        Images.insert(newFile, function (error, fileObj) {
+        if (err) {
+          console.log(err);
         } else {
-          // gets the ID of the image that was uploaded
-          var imageId = fileObj._id;
-          // do something with this image ID, like save it somewhere
-          arrayOfImageIds.push(imageId);
+          console.log(fileObj);
         }
-       }); 
-    }  
-  
+      });
+    });
 
-    this.setState({
+        this.setState({
       files: files
     });
   },
