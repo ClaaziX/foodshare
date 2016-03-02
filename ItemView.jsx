@@ -8,13 +8,22 @@ ItemView = React.createClass({
 	};
 	
 	},
+
+	renderComments(){
+		if (this.data.foodItem.comments){
+		   return this.data.foodItem.comments.map((comment) => {
+		       return <Comment comment={comment.comment} date={comment.createdAt.toString()} username={comment.username}/>;
+		       });
+		}
+		
+	},
 	 
 	addComment(event) {
 		 event.preventDefault()   
             	 var comment = ReactDOM.findDOMNode(this.refs.comment).value.trim();
 
 		 FoodItemsC.update({_id: this.data.foodItem._id},{$push : {
-		 	comment:{
+		 	comments:{
 			username: Meteor.user().username,
 			comment: comment,
 			createdAt: new Date()
@@ -34,6 +43,9 @@ ItemView = React.createClass({
 			<form className="new-comment" onSubmit={this.addComment}>
 			      Comment: <input type="text" name="comment" ref="comment" />
 			</form>
+			<table classname="itemListView">
+			       {this.renderComments()}
+			</table>
 		</div>
 			);
 	}
