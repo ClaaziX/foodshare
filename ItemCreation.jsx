@@ -30,13 +30,6 @@ ItemCreation = React.createClass({
     this.refs.dropzone.open();
   },
 
-genPtNo: function (pNo) {
-  var x = [];
-  for (i = 1; i < pNo; i++){
-    x.push(<option value={i}>{i}</option>);
-  }
-  return <select name="portionSelect" ref="PSR">{x}</select>;
-},
 
     handleSubmit(event) {
     event.preventDefault();
@@ -85,7 +78,7 @@ genPtNo: function (pNo) {
               <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
               
               <div>Please Select The Number of Portions:</div>
-              {this.genPtNo(20)}
+			    <PortionControl portions="20" />
               <input type="submit" id="submit" />
             </form>
 		 );
