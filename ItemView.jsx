@@ -43,9 +43,9 @@ ItemView = React.createClass({
 			<form className="new-comment" onSubmit={this.addComment}>
 			      Comment: <input type="text" name="comment" ref="comment" />
 			</form>
-			<table classname="itemListView">
+
 			       {this.renderComments()}
-			</table>
+
 		</div>
 			);
 	}
