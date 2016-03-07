@@ -54,8 +54,7 @@ ItemCreation = React.createClass({
     // Clear form
     ReactDOM.findDOMNode(this.refs.FNR).value = "";
     ReactDOM.findDOMNode(this.refs.FDR).value = "";
-    ReactDOM.findDOMNode(this.refs.PSR).value = "";
-
+    ReactDOM.findDOMNode(this.refs.PSR).value = "1";
   },
 
 
@@ -78,7 +77,9 @@ ItemCreation = React.createClass({
               <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
               
               <div>Please Select The Number of Portions:</div>
-			    <PortionControl portions="20" />
+	      <select name="portionSelect" ref="PSR">
+	          <PortionControl portions="20" />
+	      </select>
               <input type="submit" id="submit" />
             </form>
 		 );

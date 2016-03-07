@@ -5,12 +5,12 @@ PortionControl = React.createClass({
 	for (i = 1; i <= pNo; i++){
 	    x.push(<option value={i}>{i}</option>);
 	}
-	return <select name="portionSelect" ref="PSR">{x}</select>;
+	return x
     },
     
     render() {
 	return(
-	    this.genPtNo(this.props.portions)
+	    <div>{this.genPtNo(this.props.portions)}</div>
 	);
     }
 
