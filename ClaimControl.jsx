@@ -24,7 +24,7 @@ ClaimControl = React.createClass({
 	<div>
 	
 	{this.props.claims < this.props.protions? 
-	    <select onchange=this.makeClaim>
+	    <select onchange={this.makeClaim}>
 		<NumberOptions portions={this.calculatePortions()}/>
             </select>
 	: ''}
