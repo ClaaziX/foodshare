@@ -48,8 +48,11 @@ genPrtnImg: function () {
         <tr>
           <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
           <td><h1>{this.props.foodItem.foodName}</h1>
-          { this.data.currentUser  == this.props.foodItem.username ?
-            <button className="delete" onClick={this.deleteThisItem}>x</button> : <button className="claim" onClick={this.claimThisItem}>Claim</button>
+          { this.data.currentUser  == this.props.foodItem.username 
+	    ?
+            <button className="delete" onClick={this.deleteThisItem}>x</button> 
+	    : 
+   	    <ClaimControl claims={this.props.foodItem.claims} portions={this.props.foodItem.portionNo} username={this.data.currentUser}/>
           }
 	  <Link to={'/ItemView/'+this.props.foodItem._id}>Discuss</Link>
           </td>

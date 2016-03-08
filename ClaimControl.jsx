@@ -1,6 +1,12 @@
 ClaimControl = React.createClass({
+    
+    getDefaultProps(){
+	return {
+	       claims: false
+	       };
+    },
 
-    calculatePortions(){
+    calculatePortionsLeft(){
 	var x = 0;
 	var claims = this.props.claims;
 	if (claims){
@@ -9,28 +15,34 @@ ClaimControl = React.createClass({
         		x = x + claims.portions;
 	        }
             }
-    	 return this.props.portions - x;
+    	 return (this.props.portions - x);
 	 }
-	 return this.props.portions
+	 return this.props.portions;
 
     },
 
     makeClaim(){
-	var portionClaim = ReactDom.findDOMNode(this.refs.PSR).value.trim();
+	var portionClaim = ReactDom.findDOMNode(this.refs.CSR).value.trim();
+
+        console.log(portionClaim)
 	
     },
 
     render(){
+	return(
 	<div>
-	
-	{this.props.claims < this.props.protions? 
-	    <select onchange={this.makeClaim}>
-		<NumberOptions portions={this.calculatePortions()}/>
+	{this.calculatePortionsLeft() <=  this.props.portions
+	? 
+	<div>Claim:
+	    <select name="claimSelect" ref="CSR" onChange={this.makeClaim}>
+		<NumberOptions portions={this.calculatePortionsLeft()}/>
             </select>
-	: ''}
+	</div>
+	: 
+	''}
 	
 
-	</div>
+	</div>);
     }
 
 });
