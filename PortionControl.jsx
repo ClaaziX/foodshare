@@ -2,9 +2,7 @@ PortionControl = React.createClass({
     
     render(){
 	return(
-	      <select name="portionSelect" ref="PSR">
-	      	      <NumberOptions portions={this.props.portions} />
-	      </select>
+	      <NumberOptions ref="PSR" options={this.props.portions} />
 	);
     }
 
