@@ -77,7 +77,7 @@ ItemCreation = React.createClass({
               <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
               
               <div>Please Select The Number of Portions:</div>
-	          <NumberOptions options="20" />
+	          <NumberOptions options="20" ref="PSR"/>
 	      <input type="submit" id="submit" />
             </form>
 		 );

@@ -10,7 +10,7 @@ NumberOptions = React.createClass({
 
     render() {
 	return(
-		<select name="optionSelect"  ref="PSR" >
+		<select >
 			{this.genPtNo(this.props.options)}
 		</select>
 	);
