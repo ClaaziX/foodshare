@@ -10,7 +10,7 @@ NumberOptions = React.createClass({
 
     render() {
 	return(
-		<select >
+		<select onChange={this.props.optionChange}>
 			{this.genPtNo(this.props.options)}
 		</select>
 	);

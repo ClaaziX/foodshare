@@ -22,27 +22,36 @@ ClaimControl = React.createClass({
     },
 
     makeClaim(){
-	var portionClaim = ReactDom.findDOMNode(this.refs.CSR).value.trim();
-
-        console.log(portionClaim)
+        var inputVal = ReactDOM.findDOMNode(this.refs.CSR).value.trim();
 	
+	FoodItemsC.update({_id : this.props.id}, {$push : {
+	    		       	 		 	  claims : {
+								username : this.props.username,
+								createdAt : new Date(),
+								portions : inputVal,
+								accepted : false
+								}
+						  }	   });
+
+								 
+
+	ReactDOM.findDOMNode(this.refs.CSR).value = "1"
     },
 
     render(){
+
 	return(
 	<div>
 	{this.calculatePortionsLeft() <=  this.props.portions
 	? 
 	<div>Claim:
-	    <select name="claimSelect" ref="CSR" onChange={this.makeClaim}>
-		<NumberOptions portions={this.calculatePortionsLeft()}/>
-            </select>
+            <NumberOptions options={this.calculatePortionsLeft()} ref="CSR" optionChange={this.makeClaim}/>
 	</div>
 	: 
 	''}
-	
+	</div>
 
-	</div>);
+	);
     }
 
 });

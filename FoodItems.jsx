@@ -52,7 +52,7 @@ genPrtnImg: function () {
 	    ?
             <button className="delete" onClick={this.deleteThisItem}>x</button> 
 	    : 
-   	    <ClaimControl claims={this.props.foodItem.claims} portions={this.props.foodItem.portionNo} username={this.data.currentUser}/>
+   	    <ClaimControl id={this.props.foodItem._id}  claims={this.props.foodItem.claims} portions={this.props.foodItem.portionNo} username={this.data.currentUser}/>
           }
 	  <Link to={'/ItemView/'+this.props.foodItem._id}>Discuss</Link>
           </td>
