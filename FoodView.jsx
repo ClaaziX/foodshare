@@ -11,12 +11,24 @@ FoodView = React.createClass({
 
   // Loads items from the FoodItems collection and puts them on this.data.foodItems
   getMeteorData() {
+
+    currentUser = Meteor.user()
+  
     queryS = '.*'+this.state.filter+'.*';
 
-    let query = {foodName : {'$regex' : queryS}};
+    if (this.props.location.pathname=='/Messages'){
+       listMessageQuery = {username : {'$eq' : currentUser.username}};
+    } else {
+       listMessageQuery = {username : {'$ne' : currentUser.username}};
+    }
+    console.log(listMessageQuery);
+    console.log(currentUser);
+    filterQuery = {foodName : {'$regex' : queryS}};
+
+    
     return {
-      foodItems: FoodItemsC.find(query, {sort: {createdAt: -1}}).fetch(),
-      currentUser: Meteor.user()
+      foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
+      currentUser: currentUser
     };
   },
 
@@ -37,6 +49,7 @@ FoodView = React.createClass({
 
 
   render: function() {
+    console.log(this.props.location.pathname=='/Messages')
     return (
 	<div>
 
