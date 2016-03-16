@@ -17,12 +17,11 @@ FoodView = React.createClass({
     queryS = '.*'+this.state.filter+'.*';
 
     if (this.props.location.pathname=='/Messages'){
-       listMessageQuery = {username : {'$eq' : currentUser.username}};
+       listMessageQuery = {username : currentUser.username};
     } else {
        listMessageQuery = {username : {'$ne' : currentUser.username}};
     }
-    console.log(listMessageQuery);
-    console.log(currentUser);
+
     filterQuery = {foodName : {'$regex' : queryS}};
 
     
@@ -49,8 +48,7 @@ FoodView = React.createClass({
 
 
   render: function() {
-    console.log(this.props.location.pathname=='/Messages')
-    return (
+       return (
 	<div>
 
 	<input type="text" placeholder="Search" onChange={this.filterList}/>

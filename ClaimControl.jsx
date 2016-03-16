@@ -6,20 +6,6 @@ ClaimControl = React.createClass({
 	       };
     },
 
-    calculatePortionsLeft(){
-	var x = 0;
-	var claims = this.props.claims;
-	if (claims){
-           for(claim in claims){
-                if(claim.accepted){
-        		x = x + claims.portions;
-	        }
-            }
-    	 return (this.props.portions - x);
-	 }
-	 return this.props.portions;
-
-    },
 
     makeClaim(){
         var inputVal = ReactDOM.findDOMNode(this.refs.CSR).value.trim();
@@ -42,10 +28,10 @@ ClaimControl = React.createClass({
 
 	return(
 	<div>
-	{this.calculatePortionsLeft() <=  this.props.portions
+	{this.props.portionsLeft <=  this.props.portions
 	? 
 	<div>Claim:
-            <NumberOptions options={this.calculatePortionsLeft()} ref="CSR" optionChange={this.makeClaim}/>
+            <NumberOptions options={this.props.portionsLeft} ref="CSR" optionChange={this.makeClaim}/>
 	</div>
 	: 
 	''}
