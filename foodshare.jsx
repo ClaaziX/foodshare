@@ -29,12 +29,14 @@ if (Meteor.isClient) {
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />
 		       <Route path='/PrivateChat' component={PrivateChat} />
+		       <Route path='/login' component={login} />
 
 		</Route>
 		
 	</Router>
 	);
-      ReactRouterSSR.Run(AppRoutes);
+	injectTapEventPlugin();
+	ReactRouterSSR.Run(AppRoutes);
   });
 }
 

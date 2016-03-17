@@ -38,3 +38,6 @@ random
 reload
 logging
 cfs:filesystem
+accounts-facebook
+qnub:accounts-react-material-ui
+service-configuration

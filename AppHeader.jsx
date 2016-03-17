@@ -1,6 +1,7 @@
 var {
     AppCanvas,
     AppBar,
+    Dialog,
     Styles,
     RaisedButton,
     IconMenu,
@@ -15,37 +16,102 @@ var {
     Tab,
     Slider,
     FlatButton,
-    FontIcon,
     AppBar,
     IconButton,
     NavigationClose,
     IconMenu,
     MoreVertIcon,
-    MenuItem
+    MenuItem,
+    Snackbar,
+    SwipeableViews
     } = MUI;
 
-    var {SvgIcons} = MUI.Libs;
+var { FontIcon, SvgIcons } = MUI.Libs;
    
 var { ThemeManager, LightRawTheme } = Styles;
 
-const {Link} = ReactRouter;
+const { Link } = ReactRouter;
+
+const logoutContentStyle = {
+								width: '100%',
+								maxWidth: 'none',
+							};
 
 AppHeader = React.createClass({
+
+	mixins: [ReactRouter.History],
+
+	getInitialState(){
+	    return{
+			openLogout: false,
+			openLogMess: false,
+	    }
+	},
 
     childContextTypes: {
         muiTheme: React.PropTypes.object
     },
  
-    getChildContext() {
-        return {
-            muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
-        };
+	getChildContext() {
+		return {
+			muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
+		}
+	},
+
+    handleLogout : function () {
+    	Meteor.logout();
+		this.setState({openLogout: false});
+		this.history.pushState('/');
+		this.logOutPop();
+    },
+
+    logOutPop : function () {
+    	this.setState({openLogMess: true});
+    },
+
+    handleOpen : function () {
+    	this.setState({openLogout: true});
+    },
+
+    handleClose : function () {
+    	this.setState({openLogout: false});
+    },
+
+	handleRequestClose : function () {
+    	this.setState({openLogMess: false});
+    },
+
+    handlePassChange : function () {
+		this.history.pushState('/login');
+    },
+
+    handleActiveTab : function (tab) {
+    	var path = tab.props.route.toString();
+    	console.log(path)
+    	this.history.pushState(path);
     },
 
     render : function(){
+
+		const actions = [
+			<FlatButton
+			label="Logout"
+			primary={true}
+			onTouchTap={this.handleLogout}
+			/>,
+			<FlatButton
+			label="Change Password"
+			primary={true}
+			onTouchTap={this.handlePassChange}
+			/>,
+			<FlatButton
+			label="Cancel"
+			secondary={true}
+			onTouchTap={this.handleClose}
+			/>,
+		];
+
 	    return(
-
-
 
 		<div className="container">
 
@@ -56,44 +122,76 @@ AppHeader = React.createClass({
 			<div className="headContain">
 				<AppBar
 				    title="Food Sharing"
-				    iconElementLeft={<AccountsUIWrapper />}
+				    iconElementLeft={
+					    	Meteor.userId() ?
+					    		<div>
+									<IconButton onClick={this.handleOpen}> 
+						    			<SvgIcons.ActionAccountCircle color='White'/>
+						    		</IconButton>
+										<Dialog
+										  title="Logout"
+										  actions={actions}
+										  modal={true}
+										  contentStyle={logoutContentStyle}
+										  open={this.state.openLogout}
+										>
+										Do you really want to logout?
+										</Dialog>
+									</div>
+					    		
+					    		:
+
+					    		<IconButton linkButton={true} containerElement={<Link to={'/login'} />}> 
+					    			<SvgIcons.ActionAccountCircle color='White'/>
+					    		</IconButton>
+					    	}
 				    iconElementRight={
 
 							<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
-		          					<SvgIcons.ContentAddCircle color='Green'/>
+		          					<SvgIcons.ContentAddCircle color='White'/>
 		          				</IconButton>
 		        			}
-					        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
 		  	</div>
 
 
 		    <div className="tabsContain">
-				<FlatButton label="List"
-					containerElement={<Link to={'/'} />}
-					linkButton={true}
-					labelPosition="before"
-					primary={true}
-				/>
 
-
-				<FlatButton label="Map"
-					containerElement={<Link to={'/MapView'} />}
-					linkButton={true}
-					labelPosition="before"
-					primary={true}
-				/>
-
-				<FlatButton label="Messages"
-					containerElement={<Link to={'/PrivateChat'} />}
-					linkButton={true}
-					labelPosition="before"
-					primary={true}
-				/>
+				<Tabs>
+					<Tab
+						label="LIST"
+						route="/"
+						onActive={this.handleActiveTab}
+					/>
+					<Tab
+						label="MAP"
+						route="/MapView"
+						onActive={this.handleActiveTab}
+					/>
+					<Tab
+						label="NOTICES"
+						route="/PrivateChat"
+						onActive={this.handleActiveTab}
+					/>
+				</Tabs>
 
 			</div>
 
+			<div>
+		        <Snackbar
+		          open={this.state.openLogMess}
+		          message="You've been logged out!"
+		          autoHideDuration={3600}
+		          onRequestClose={this.handleRequestClose}
+		        />
+			</div>
+			
+			<Accounts.ui.Dialogs />
+
 		</div>    
+
+		
 	    );
 
     }
