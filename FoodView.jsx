@@ -12,7 +12,7 @@ FoodView = React.createClass({
   // Loads items from the FoodItems collection and puts them on this.data.foodItems
   getMeteorData() {
 
-    currentUser = Meteor.user()
+    currentUser = Meteor.user() ? Meteor.user() : '';
   
     queryS = '.*'+this.state.filter+'.*';
 
