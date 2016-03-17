@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 		<Route path='/' component={AppHeader}>
 		       <Route path='/ItemView/:itemID' component={ItemView} />
 		       <IndexRoute component={FoodView} />
-
+		       <Route path='/Messages' component={FoodView}/>
 		       <Route path='/UserSettings' component={UserSettings} />
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />

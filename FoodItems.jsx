@@ -7,6 +7,23 @@ FoodItems = React.createClass({
   propTypes: {
     foodItem: React.PropTypes.object.isRequired
   },
+
+    calculatePortionsLeft(){
+	var x = 0;
+	var claims = this.props.foodItem.claims;
+	if (claims){
+           for(claim in claims){
+                if(claim.accepted){
+        		x = x + claims.portions;
+	        }
+            }
+    	 return (this.props.foodItem.portionNo - x);
+	 }
+	 return this.props.foodItem.portionNo;
+
+    },
+
+
  
   getMeteorData(){
 	return{
@@ -18,28 +35,22 @@ FoodItems = React.createClass({
     FoodItemsC.remove(this.props.foodItem._id);
   },
 
-  claimThisItem() {
-    var pCla = this.props.foodItem.portionsClaimed;
-    var pNum = this.props.foodItem.portionNo - pCla;
-    var itemId = this.props.foodItem._id;
-    if (pNum > 0) {
-      pCla++;
-      FoodItemsC.update(itemId, {$set: {portionsClaimed: pCla} });
-    }else{ alert("Sorry! No more portions left!"); }
-  },
-
 genPrtnImg: function () {
-  var pCla = this.props.foodItem.portionsClaimed;
+  var pCla = this.props.foodItem.portionNo - this.calculatePortionsLeft();
   var pNum = this.props.foodItem.portionNo - pCla;
+
   var x = [];
   for (i = 0; i < pNum; i++){
     x.push(<img src='http://enviroauditcouk.fatcow.com/foodshare/carrot-icon.png' />);
   }
+
   var z = [];
   for (n = 0; n < pCla; n++){
     z.push(<img src='http://enviroauditcouk.fatcow.com/foodshare/carrot-icon-claimed.png' />);
   }
-  return <div>{x}{z}</div>;
+
+  return <div>{z}{x}</div>;
+
 },
 
   render() {
@@ -48,8 +59,11 @@ genPrtnImg: function () {
         <tr>
           <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
           <td><h1>{this.props.foodItem.foodName}</h1>
-          { this.data.currentUser  == this.props.foodItem.username ?
-            <button className="delete" onClick={this.deleteThisItem}>x</button> : <button className="claim" onClick={this.claimThisItem}>Claim</button>
+          { this.data.currentUser  == this.props.foodItem.username 
+	    ?
+            <button className="delete" onClick={this.deleteThisItem}>x</button> 
+	    : 
+   	    <ClaimControl id={this.props.foodItem._id}  claims={this.props.foodItem.claims} portions={this.props.foodItem.portionNo} username={this.data.currentUser} portionsLeft={this.calculatePortionsLeft()}/>
           }
 	  <Link to={'/ItemView/'+this.props.foodItem._id}>Discuss</Link>
           </td>
