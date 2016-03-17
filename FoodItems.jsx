@@ -36,7 +36,6 @@ FoodItems = React.createClass({
   },
 
 genPrtnImg: function () {
-
   var pCla = this.props.foodItem.portionNo - this.calculatePortionsLeft();
   var pNum = this.props.foodItem.portionNo - pCla;
 

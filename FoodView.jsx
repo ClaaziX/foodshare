@@ -41,7 +41,18 @@ FoodView = React.createClass({
   renderFoodItems() {
     // Get foodItems from this.data.foodItems
     return this.data.foodItems.map((foodItem) => {
-      return <FoodItems key={foodItem._id} foodItem={foodItem} />;   
+      return (
+      	     <div>
+		<FoodItems key={foodItem._id} foodItem={foodItem} />
+		{(this.props.location.pathname=='/Messages') && foodItem.claims
+		?
+		<Request claims={foodItem.claims}/>
+		:
+		''}
+	     </div>
+
+
+      );   
     });
   },
 
