@@ -42,16 +42,14 @@ FoodView = React.createClass({
     // Get foodItems from this.data.foodItems
     return this.data.foodItems.map((foodItem) => {
       return (
-      	     <div>
-		<FoodItems key={foodItem._id} foodItem={foodItem} />
-		{(this.props.location.pathname=='/Messages') && foodItem.claims
-		?
-		<Request claims={foodItem.claims}/>
-		:
-		''}
-	     </div>
-
-
+        <div> 	     
+      		<FoodItems key={foodItem._id} foodItem={foodItem} />
+      		{(this.props.location.pathname=='/Messages') && foodItem.claims
+      		?
+      		<Request claims={foodItem.claims}/>
+      		:
+      		''}
+        </div>  
       );   
     });
   },
@@ -63,9 +61,9 @@ FoodView = React.createClass({
 	<div>
 
 	<input type="text" placeholder="Search" onChange={this.filterList}/>
-	<table className="itemListView">
+	
 		{this.renderFoodItems()} 
-  </table>
+  
 	</div>
 
 

@@ -55,6 +55,7 @@ genPrtnImg: function () {
 
   render() {
     return (
+      <table className="itemListView"> 
       <tbody>
         <tr>
           <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
@@ -78,6 +79,7 @@ genPrtnImg: function () {
           <td>{this.props.foodItem.username}</td>
         </tr>
       </tbody>
+      </table>
     );
   }
 });
