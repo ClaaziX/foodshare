@@ -4,7 +4,7 @@ login = React.createClass({
 	mixins: [ReactRouter.History],
 
 	handleLogin : function () {
-		this.history.pushState('/');
+		this.history.push('/');
 	},
 
 	render : function () {

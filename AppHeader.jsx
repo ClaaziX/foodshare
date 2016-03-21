@@ -61,7 +61,7 @@ AppHeader = React.createClass({
     handleLogout : function () {
     	Meteor.logout();
 		this.setState({openLogout: false});
-		this.history.pushState('/');
+		this.history.push('/');
 		this.logOutPop();
     },
 
@@ -82,13 +82,13 @@ AppHeader = React.createClass({
     },
 
     handlePassChange : function () {
-		this.history.pushState('/login');
+		this.history.push('/login');
+		this.setState({openLogout: false});
     },
 
     handleActiveTab : function (tab) {
-    	var path = tab.props.route.toString();
-    	console.log(path)
-    	this.history.pushState(path);
+    	var path = tab.props.route;
+    	this.history.push(path);
     },
 
     render : function(){
