@@ -1,6 +1,8 @@
 var {
     List,
-    ListItem
+    ListItem,
+    Divider,
+    Colors
     } = MUI;
 
 Request = React.createClass({
@@ -9,7 +11,10 @@ Request = React.createClass({
 
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
-			       return <ListItem primaryText={claim.username}/>;
+			       return (<div>
+			       	       <ListItem primaryText={claim.username+ " requested " + claim.portions + " portions."} />
+			       	       <Divider	 />
+				       </div>);
 			       });
 			       }
 	},
@@ -18,6 +23,7 @@ Request = React.createClass({
 	render(){
 		return(
 			<List subheader="Item Requests">
+			      <Divider />
 			      {this.generateRequests()}
 			</List>
 		);
