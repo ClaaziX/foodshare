@@ -171,7 +171,7 @@ AppHeader = React.createClass({
 					/>
 					<Tab
 						label="NOTICES"
-						route="/PrivateChat"
+						route="/Messages"
 						onActive={this.handleActiveTab}
 					/>
 				</Tabs>
