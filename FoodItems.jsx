@@ -89,10 +89,12 @@ FoodItems = React.createClass({
         this.setState({openClaim: false});
     },
 
-
+    genProfImg() {
+   	return
+    	<img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />;
+    },
 
   render() {
-
 
     const actions = [     
         <ClaimControl 
@@ -123,7 +125,10 @@ FoodItems = React.createClass({
 			<CardMedia 
 				expandable={true}
 				overlay={
-					<CardTitle title={this.props.foodItem.foodName} subtitle={this.props.foodItem.foodDesc} />
+					<CardTitle
+						title={this.props.foodItem.foodDesc}
+						subtitle={"Offered By: " + this.props.foodItem.username}
+					/>
 				}
 			>
 				<img src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg" />
