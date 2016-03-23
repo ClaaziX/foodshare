@@ -37,9 +37,9 @@ ItemView = React.createClass({
 	render() {
 		 return (
 		 <div>
-			<table className="itemListView">
-		 	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/>
-			</table>
+
+	 	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/>
+
 			<form className="new-comment" onSubmit={this.addComment}>
 			      Comment: <input type="text" name="comment" ref="comment" />
 			</form>
