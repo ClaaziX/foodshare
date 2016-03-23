@@ -40,6 +40,7 @@ Request = React.createClass({
 				return (
 					<ListItem
 						primaryText={claim.username + " requested " + claim.portions + " portions"}
+						key={this.props.key}
 					/>
 
 				);
