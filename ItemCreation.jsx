@@ -1,9 +1,32 @@
+var {
+  TextField,
+  RaisedButton,
+  FlatButton,
+  Dialog
+    } = MUI;
+
+const { Link } = ReactRouter;
+
+const errContentStyle = {
+								width: '100%',
+								maxWidth: 'none',
+							};
+
 ItemCreation = React.createClass({
   
+  mixins: [ReactRouter.History],
+
   getInitialState(){
     return{
       files: [],
       arrayOfImageIds: [],
+      portionSelect: 1,
+      foodName: "",
+      foodDesc: "",
+      formComplete: false,
+      attempt: false,
+      butCol:true,
+      openErrMess: false
     }
   },
 
@@ -14,9 +37,7 @@ ItemCreation = React.createClass({
         
         Images.insert(newFile, function (error, fileObj) {
         if (err) {
-          console.log(err);
         } else {
-          console.log(fileObj);
         }
       });
     });
@@ -30,56 +51,145 @@ ItemCreation = React.createClass({
     this.refs.dropzone.open();
   },
 
-
-    handleSubmit(event) {
-    event.preventDefault();
- 
-    // Find the text field via the React ref
-    var foodName = ReactDOM.findDOMNode(this.refs.FNR).value.trim();
-    var	foodDesc = ReactDOM.findDOMNode(this.refs.FDR).value.trim();
-    var portionSelect = ReactDOM.findDOMNode(this.refs.PSR).value.trim();
-    // var imgURL = arrayOfImageIds[0];
-
+  handleSubmit() {
+  	this.setState({attempt: true})
+  	this.formCompleteCheck();
+  	if (this.state.formComplete) {
     FoodItemsC.insert({
-      foodName: foodName,
-      foodDesc: foodDesc,
-      portionNo: portionSelect,
+      foodName: this.state.foodName,
+      foodDesc: this.state.foodDesc,
+      portionNo: this.state.portionSelect,
       portionsClaimed: 0,
       // imgURL: imgURL,
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username,  // username of logged in user
       createdAt: new Date() // current time
     });
- 
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.FNR).value = "";
-    ReactDOM.findDOMNode(this.refs.FDR).value = "";
-    ReactDOM.findDOMNode(this.refs.PSR).value = "1";
+    this.history.push('/');
+	}else{
+		this.setState({
+			openErrMess: true
+		});
+
+	}
   },
 
+	setPrtNo(prtNo) {
+	this.setState({portionSelect: prtNo})
+	},
+
+	handleName(event) {
+		this.setState({
+			foodName: event.target.value,
+		});
+		this.formCompleteCheck();
+	},
+
+	handleDesc(event) {
+		this.setState({
+			foodDesc: event.target.value,
+		});
+		this.formCompleteCheck();
+	},
+
+	formCompleteCheck() {
+		var nameLength = this.state.foodName.length;
+		var descLength = this.state.foodDesc.length;
+		if (nameLength > 3 && descLength > 3 ){
+			this.setState({formComplete: true})
+		}else{
+			this.setState({formComplete: false})
+		}
+	},
+
+	handleClose(event) {
+		this.setState({
+			openErrMess: false
+		});
+	},
 
 	render() {
-		 return (
-		 	    <form className="new-foodItem" onSubmit={this.handleSubmit}>
-	            
-              <input type="text" name="foodName" ref="FNR" placeholder="Please enter the name of the food" /><br />
-	            
-              <div>
-                
-                {this.state.files.length > 0 ? <div>
-                  <p>Uploading {this.state.files.length} picture...</p>
-                  <div>{this.state.files.map((file) => <img className="imgPreview" src={file.preview} /> )}</div>
-                  </div> : <Dropzone ref="dropzone" onDrop={this.onDrop}>
-                  <div>Try dropping some files here, or click to select files to upload.</div>
-                </Dropzone>}
-              </div>
-              
-              <input type="text" name="foodDesc" ref="FDR" placeholder="Please enter a description of the food" /><br />
-              
-              <div>Please Select The Number of Portions:</div>
-	          <NumberOptions options="20" ref="PSR"/>
-	      <input type="submit" id="submit" />
-            </form>
-		 );
+		const actions = [
+			<FlatButton
+			label="Ok!"
+			secondary={true}
+			onTouchTap={this.handleClose}
+			/>,
+		];
+		var nameLengths = this.state.foodName.length;
+		var descLengths = this.state.foodDesc.length;
+		return (
+			<div>
+				{ Meteor.userId() ?
+					<div>
+						{this.state.files.length > 0 ? <div >
+							<p>Uploading {this.state.files.length} picture...</p>
+							<div>{this.state.files.map((file) => <img className="imgPreview" src={file.preview} /> )}</div>
+							</div>
+						: 
+							<Dropzone ref="dropzone" onDrop={this.onDrop}>
+							<div>Try dropping some files here, or click to select files to upload.</div>
+							</Dropzone>
+						}
+						{ nameLengths < 3 && this.state.attempt ?
+							<TextField
+							hintText="Please enter a name..."
+							errorText="Meed more characters!"
+							value={this.state.foodName}
+							onChange={this.handleName}
+							/>
+							:
+							<TextField
+							hintText="Please enter a name..."
+							value={this.state.foodName}
+							onChange={this.handleName}
+							/>
+						}
+						<br/>
+						{ descLengths < 3 && this.state.attempt ?
+							<TextField
+							hintText="Please enter a description..."
+							floatingLabelText="Describe your items..."
+							errorText="Need more characters!"
+							multiLine={true}
+							rows={2}
+							value={this.state.foodDesc}
+							onChange={this.handleDesc}
+						/>
+						:
+							<TextField
+							hintText="Please enter a description..."
+							floatingLabelText="Describe your items..."
+							multiLine={true}
+							rows={2}
+							value={this.state.foodDesc}
+							onChange={this.handleDesc}
+							/>
+						}
+						<br/>
+						Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+						{ this.state.formComplete ?
+							<RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+						:	
+							<RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+						}
+						</div>
+						:
+						<div>
+						You must login in, in order to post food!
+						<RaisedButton label="Login" secondary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/login'} />}  />
+						<RaisedButton label="Home" primary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/'} />}  />
+						</div>
+				}
+				<Dialog
+				title="Please Complete Fields"
+				actions={actions}
+				contentStyle={errContentStyle}
+				open={this.state.openErrMess}
+				>
+				Please complete all necessary fields!
+				</Dialog>
+			</div>
+		);
 	}
 });

@@ -15,6 +15,11 @@ font-family: 'Crete Round', serif;
   background: white;
 }
 
+.searchContain {
+  width: 100%;
+  text-align: center;
+}
+
 header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #BEF2D4, #C8F2BE 100%);

@@ -116,7 +116,7 @@ AppHeader = React.createClass({
 		<div className="container">
 
 			<div className="contentContain">
-				{this.props.children} 
+				{this.props.children}
 			</div>
 
 			<div className="headContain">

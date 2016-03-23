@@ -1,3 +1,7 @@
+var {
+  AutoComplete
+    } = MUI;
+
 FoodView = React.createClass({
 
   // This mixin makes the getMeteorData method work
@@ -24,7 +28,6 @@ FoodView = React.createClass({
 
     filterQuery = {foodName : {'$regex' : queryS}};
 
-    
     return {
       foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
       currentUser: currentUser
@@ -32,11 +35,11 @@ FoodView = React.createClass({
   },
 
   filterList(event) {
-    //Change the state of the filtering in play
     this.setState({
       filter: event.target.value
     });
   },
+
 
   renderFoodItems() {
     // Get foodItems from this.data.foodItems
@@ -56,17 +59,22 @@ FoodView = React.createClass({
 
 
 
-  render: function() {
-       return (
-	<div>
-
-	<input type="text" placeholder="Search" onChange={this.filterList}/>
-	
-		{this.renderFoodItems()} 
-  
-	</div>
-
-
-    );
-  }
+	render: function() {
+		var searchNames = FoodItemsC.find().map(function(foodItem) {
+  			return foodItem.foodName;
+		});
+		return (
+			<div>
+				<div className="searchContain">
+					<AutoComplete
+					floatingLabelText="Search..."
+					filter={AutoComplete.caseInsensitiveFilter}
+					dataSource={searchNames}
+					onUpdateInput={this.filterList}
+					/>
+				</div>
+				{this.renderFoodItems()}
+			</div>
+		);
+	}
 });

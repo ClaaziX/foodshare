@@ -1,43 +1,45 @@
+var {
+	FlatButton
+    } = MUI;
+
 ClaimControl = React.createClass({
     
     getDefaultProps(){
 	return {
-	       claims: false
+	       claims: false,
+	       value: 1
 	       };
     },
 
 
-    makeClaim(){
-        var inputVal = ReactDOM.findDOMNode(this.refs.CSR).value.trim();
-	
+    makeClaim(inputVal){
+    	this.setState({value: inputVal});
+    },
+
+	submitClaim(){
 	FoodItemsC.update({_id : this.props.id}, {$push : {
-	    		       	 		 	  claims : {
+	    		       	 	claims : {
 								username : this.props.username,
 								createdAt : new Date(),
-								portions : inputVal,
+								portions : this.state.value,
 								accepted : false
 								}
 						  }	   });
-
-								 
-
-	ReactDOM.findDOMNode(this.refs.CSR).value = "1"
+	this.props.finishIt();
     },
 
-    render(){
+	render(){
 
-	return(
-	<div>
-	{this.props.portionsLeft <=  this.props.portions
-	? 
-	<div>Claim:
-            <NumberOptions options={this.props.portionsLeft} ref="CSR" optionChange={this.makeClaim}/>
-	</div>
-	: 
-	''}
-	</div>
-
-	);
-    }
+		return(
+			<div>
+			<NumberOptions options={this.props.portionsLeft} optionChange={this.makeClaim} />
+			<FlatButton
+			    label="Claim"
+			    primary={true}
+			    onTouchTap={this.submitClaim}
+			/>
+			</div>
+		);
+	}
 
 });

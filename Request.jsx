@@ -2,31 +2,58 @@ var {
     List,
     ListItem,
     Divider,
-    Colors
+    Styles,
+    IconButton,
+    IconMenu,
+    MenuItem,
+    MoreVertIcon
     } = MUI;
+
+const { NavigationMoreVert } = MUI.Libs;
+
+
 
 Request = React.createClass({
 
 	generateRequests(){
 
+		const iconButtonElement = [
+			<IconButton
+			touch={true}
+			tooltip="more"
+			tooltipPosition="bottom-left"
+			>
+			<MoreVertIcon color={Styles.Colors.grey400} />
+			</IconButton>
+		];
+
+		const rightIconMenu = [
+			<IconMenu iconButtonElement={iconButtonElement}>
+			<MenuItem>Reply</MenuItem>
+			<MenuItem>Forward</MenuItem>
+			<MenuItem>Delete</MenuItem>
+			</IconMenu>
+		];
+
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
-			       return (<div>
-			       	       <ListItem primaryText={claim.username+ " requested " + claim.portions + " portions."} />
-			       	       <Divider	 />
-				       </div>);
-			       });
-			       }
-	},
+				return (
+					<ListItem
+						primaryText={claim.username + " requested " + claim.portions + " portions"}
+					/>
 
+				);
+			});
+		}
+	},
 
 	render(){
 		return(
 			<List subheader="Item Requests">
-			      <Divider />
-			      {this.generateRequests()}
+				<Divider />
+				{this.generateRequests()}
 			</List>
-		);
-	}
+			);
+		}
 
-});
+	});

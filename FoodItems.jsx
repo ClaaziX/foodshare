@@ -1,5 +1,29 @@
-// Task component - represents a single todo item
+var {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  FlatButton,
+  CardText,
+  Paper,
+  Styles,
+  Dialog,
+  DropDownMenu,
+  MenuItem
+    } = MUI;
+
+var { FontIcon, SvgIcons } = MUI.Libs;
+   
+var { ThemeManager, LightRawTheme } = Styles;
+
 const {Link} = ReactRouter;
+
+const claimContentStyle = {
+                width: '100%',
+                maxWidth: 'none',
+              };
+
 
 FoodItems = React.createClass({
 
@@ -8,78 +32,138 @@ FoodItems = React.createClass({
     foodItem: React.PropTypes.object.isRequired
   },
 
-    calculatePortionsLeft(){
-	var x = 0;
-	var claims = this.props.foodItem.claims;
-	if (claims){
-           for(claim in claims){
-                if(claim.accepted){
-        		x = x + claims.portions;
-	        }
-            }
-    	 return (this.props.foodItem.portionNo - x);
-	 }
-	 return this.props.foodItem.portionNo;
-
-    },
-
-
- 
-  getMeteorData(){
-	return{
-		currentUser: Meteor.user() ? Meteor.user().username : ''
-		};
+  getInitialState(){
+      return{
+      openClaim: false,
+      }
   },
+
+  calculatePortionsLeft(){
+    var x = 0;
+    var claims = this.props.foodItem.claims;
+    if (claims){
+             for(claim in claims){
+                  if(claim.accepted){
+          		x = x + claims.portions;
+            }
+              }
+      	 return (this.props.foodItem.portionNo - x);
+     }
+     return this.props.foodItem.portionNo;
+
+  },
+ 
+	getMeteorData(){
+		return{
+			currentUser: Meteor.user() ? Meteor.user().username : ''
+			};
+	},
 
   deleteThisItem() {
     FoodItemsC.remove(this.props.foodItem._id);
   },
 
-genPrtnImg: function () {
-  var pCla = this.props.foodItem.portionNo - this.calculatePortionsLeft();
-  var pNum = this.props.foodItem.portionNo - pCla;
+  genPrtnImg: function () {
+    var pCla = this.props.foodItem.portionNo - this.calculatePortionsLeft();
+    var pNum = this.props.foodItem.portionNo - pCla;
 
-  var x = [];
-  for (i = 0; i < pNum; i++){
-    x.push(<img src='http://enviroauditcouk.fatcow.com/foodshare/carrot-icon.png' />);
-  }
+    var x = [];
+    for (i = 0; i < pNum; i++){
+      x.push(<SvgIcons.MapsLocalDining color={Styles.Colors.green500} />);
+    }
 
-  var z = [];
-  for (n = 0; n < pCla; n++){
-    z.push(<img src='http://enviroauditcouk.fatcow.com/foodshare/carrot-icon-claimed.png' />);
-  }
+    var z = [];
+    for (n = 0; n < pCla; n++){
+      z.push(<SvgIcons.MapsLocalDining color={Styles.Colors.grey500} />);
+    }
 
-  return <div>{z}{x}</div>;
+    return <div>{z}{x}</div>;
 
-},
+  },
+
+    handleOpen : function () {
+        this.setState({openClaim: true});
+    },
+
+    handleClose : function () {
+        this.setState({openClaim: false});
+    },
+
+
 
   render() {
+
+
+    const actions = [     
+        <ClaimControl 
+            id={this.props.foodItem._id}
+            claims={this.props.foodItem.claims}
+            portions={this.props.foodItem.portionNo}
+            username={this.data.currentUser}
+            portionsLeft={this.calculatePortionsLeft()}
+            finishIt={this.handleClose}
+        />,
+        <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleClose}
+        />,
+    ];
+
     return (
-      <table className="itemListView"> 
-      <tbody>
-        <tr>
-          <td rowSpan="3"><img className="itemSmlPic" src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"></img></td>
-          <td><h1>{this.props.foodItem.foodName}</h1>
-          { this.data.currentUser  == this.props.foodItem.username 
-	    ?
-            <button className="delete" onClick={this.deleteThisItem}>x</button> 
-	    : 
-   	    <ClaimControl id={this.props.foodItem._id}  claims={this.props.foodItem.claims} portions={this.props.foodItem.portionNo} username={this.data.currentUser} portionsLeft={this.calculatePortionsLeft()}/>
-          }
-	  <Link to={'/ItemView/'+this.props.foodItem._id}>Discuss</Link>
-          </td>
-          <td rowSpan="2"><img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"></img></td>
-        </tr>
-        <tr>
-          <td>{this.props.foodItem.foodDesc}</td>
-        </tr>
-        <tr>
-          <td>Number Of Portions: {this.genPrtnImg()}
-          </td>
-          <td>{this.props.foodItem.username}</td>
-        </tr>
-      </tbody>
-      </table>
+        <Card actAsExpander={true}>
+            <CardHeader
+                title={this.props.foodItem.foodName}
+                subtitle={this.genPrtnImg()}
+                avatar="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"
+                actAsExpander={true}
+                showExpandableButton={true}
+            />
+
+			<CardMedia 
+				expandable={true}
+				overlay={
+					<CardTitle title={this.props.foodItem.foodName} subtitle={this.props.foodItem.foodDesc} />
+				}
+			>
+				<img src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg" />
+			</CardMedia>
+
+            { this.data.currentUser  == this.props.foodItem.username 
+  	    	?
+				<CardActions expandable={true}>
+					<Link to={'/ItemView/'+this.props.foodItem._id}>
+					<FlatButton label="Discuss" />
+					</Link>
+
+					<FlatButton
+					label="Delete"
+					primary={true}
+					onTouchTap={this.deleteThisItem}
+					/>
+				</CardActions>
+  	    	: 
+	            <CardActions expandable={true}>
+	                <FlatButton
+	                    label="Claim"
+	                    primary={true}
+	                    onTouchTap={this.handleOpen}
+	                />
+	                <Dialog
+	                    title="Claim!"
+	                    actions={actions}
+	                    modal={true}
+	                    contentStyle={claimContentStyle}
+	                    open={this.state.openClaim}
+	                    >
+	                    How many portions do you wish to claim?
+	                </Dialog>
+	                <Link to={'/ItemView/'+this.props.foodItem._id}>
+	                    <FlatButton label="Discuss" />
+	                </Link>
+	            </CardActions>
+			}
+        </Card>
     );
-  }
-});
+    }
+    });
