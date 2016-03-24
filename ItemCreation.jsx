@@ -30,22 +30,20 @@ ItemCreation = React.createClass({
     }
   },
 
-  onDrop(files) {
-    console.log(files)
-      FS.Utility.eachFile(e, function(file) {
-        var newFile = new FS.File(file);
-        
-        Images.insert(newFile, function (error, fileObj) {
-        if (err) {
-        } else {
-        }
-      });
-    });
+	onDrop(files) {
+		var uploader = new Slingshot.Upload("myFileUploads");
 
-        this.setState({
-      files: files
-    });
-  },
+		uploader.send(document.getElementById('input').files[0], function (error, downloadUrl) {
+		if (error) {
+		// Log service detailed response
+			console.error('Error uploading', uploader.xhr.response);
+			alert (error);
+		}
+		else {
+			Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
+		}
+		});
+	},
 
   onOpenClick: function () {
     this.refs.dropzone.open();

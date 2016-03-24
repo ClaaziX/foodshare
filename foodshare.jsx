@@ -49,14 +49,5 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   // This code is executed on the server only
-     	
-	
-
-	MyImages.allow({
-		insert: function() { return true; },
-		// update: function(userId,doc) { return true; },
-		// remove: function(userId,doc) { return false; },
-		// download: function(userId, doc) {return true;},
-	});
 }
 

@@ -41,3 +41,5 @@ cfs:filesystem
 accounts-facebook
 qnub:accounts-react-material-ui
 service-configuration
+edgee:slingshot
+ccorcos:clientside-image-manipulation

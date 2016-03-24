@@ -12,3 +12,8 @@ will not show any results if attempting to render createdAt // think wehave to t
 Images:
 need to link into items DB
 need to refreash when form is submitted
+
+Access Key ID:
+AKIAIIDUFFFCCMHK6XHA
+Secret Access Key:
+SGtuZ9m3CG71D4vodwsAOVFcdPv0qbogTa2g5Ns/
