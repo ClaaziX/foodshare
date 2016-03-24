@@ -49,7 +49,7 @@ FoodView = React.createClass({
       		<FoodItems key={foodItem._id} foodItem={foodItem} />
       		{(this.props.location.pathname=='/Messages') && foodItem.claims
       		?
-      		<Request claims={foodItem.claims} key={foodItem._id} />
+      		<Request claims={foodItem.claims}  />
       		:
       		''}
         </div>  
