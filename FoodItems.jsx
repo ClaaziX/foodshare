@@ -29,7 +29,7 @@ FoodItems = React.createClass({
 
   mixins: [ReactMeteorData],
   propTypes: {
-    foodItem: React.PropTypes.object.isRequired
+  foodItem: React.PropTypes.object.isRequired
   },
 
   getInitialState(){
