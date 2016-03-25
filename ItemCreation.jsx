@@ -50,7 +50,6 @@ ItemCreation = React.createClass({
 			}
 			else {
 				Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
-				this.setState({imgURL: downloadURL});
 			}
 		});
 	},
