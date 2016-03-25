@@ -2,15 +2,22 @@ var {
   TextField,
   RaisedButton,
   FlatButton,
-  Dialog
+  Dialog,
+  Paper
     } = MUI;
 
 const { Link } = ReactRouter;
 
 const errContentStyle = {
-								width: '100%',
-								maxWidth: 'none',
-							};
+	width: '100%',
+	maxWidth: 'none',
+};
+
+const paperStyle = {
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block',
+};
 
 ItemCreation = React.createClass({
   
@@ -23,6 +30,7 @@ ItemCreation = React.createClass({
       portionSelect: 1,
       foodName: "",
       foodDesc: "",
+      imgURL: "",
       formComplete: false,
       attempt: false,
       butCol:true,
@@ -30,18 +38,20 @@ ItemCreation = React.createClass({
     }
   },
 
-	onDrop(files) {
-		var uploader = new Slingshot.Upload("myFileUploads");
-
-		uploader.send(document.getElementById('input').files[0], function (error, downloadUrl) {
-		if (error) {
-		// Log service detailed response
-			console.error('Error uploading', uploader.xhr.response);
-			alert (error);
-		}
-		else {
-			Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
-		}
+	onDrop() {
+		console.log("File deceted")
+		var uploader = new Slingshot.Upload("garangleslarp");
+		var theURL = "";
+		uploader.send(document.getElementById('uploadFile').files[0], function (error, downloadUrl) {
+			if (error) {
+			// Log service detailed response
+				console.error('Error uploading', error);
+				alert (error);
+			}
+			else {
+				Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
+				this.setState({imgURL: downloadURL});
+			}
 		});
 	},
 
@@ -50,7 +60,7 @@ ItemCreation = React.createClass({
   },
 
   handleSubmit() {
-  	this.setState({attempt: true})
+  	this.setState({attempt: true});
   	this.formCompleteCheck();
   	if (this.state.formComplete) {
     FoodItemsC.insert({
@@ -58,7 +68,7 @@ ItemCreation = React.createClass({
       foodDesc: this.state.foodDesc,
       portionNo: this.state.portionSelect,
       portionsClaimed: 0,
-      // imgURL: imgURL,
+      imgURL: this.state.imgURL,
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username,  // username of logged in user
       createdAt: new Date() // current time
@@ -93,7 +103,8 @@ ItemCreation = React.createClass({
 	formCompleteCheck() {
 		var nameLength = this.state.foodName.length;
 		var descLength = this.state.foodDesc.length;
-		if (nameLength > 3 && descLength > 3 ){
+		var imgURL = this.state.imgURL;
+		if (nameLength > 3 && descLength > 3 && imgURL !== ""){
 			this.setState({formComplete: true})
 		}else{
 			this.setState({formComplete: false})
@@ -104,6 +115,11 @@ ItemCreation = React.createClass({
 		this.setState({
 			openErrMess: false
 		});
+	},
+
+	fileInput: function () {
+		var fileUploadDom = ReactDOM.findDOMNode(this.refs.uploadFile);
+		fileUploadDom.click();
 	},
 
 	render() {
@@ -120,15 +136,29 @@ ItemCreation = React.createClass({
 			<div>
 				{ Meteor.userId() ?
 					<div>
-						{this.state.files.length > 0 ? <div >
-							<p>Uploading {this.state.files.length} picture...</p>
-							<div>{this.state.files.map((file) => <img className="imgPreview" src={file.preview} /> )}</div>
-							</div>
-						: 
-							<Dropzone ref="dropzone" onDrop={this.onDrop}>
-							<div>Try dropping some files here, or click to select files to upload.</div>
-							</Dropzone>
+
+						<Paper
+							style={paperStyle}
+							zDepth={4}
+						>
+						{ this.state.imgURL == "" ?
+							<img onClick={this.fileInput} width="60%" height="auto" src="/imgs/camera.png" />
+						:
+							<img width="50%" height="auto" src={this.state.imgURL} />
 						}
+						</Paper>
+						<input 
+							type="file"
+							className="inputStyle"
+							ref="uploadFile"
+							id="uploadFile"
+							onChange={this.onDrop} 
+						/>
+
+						<br/>
+						<br/>
+						<br/>
+
 						{ nameLengths < 3 && this.state.attempt ?
 							<TextField
 							hintText="Please enter a name..."
@@ -166,6 +196,8 @@ ItemCreation = React.createClass({
 						}
 						<br/>
 						Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+						<br/>
+						<br/>
 						{ this.state.formComplete ?
 							<RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
 						:	

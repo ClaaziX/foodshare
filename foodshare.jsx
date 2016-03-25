@@ -4,6 +4,7 @@ MyImages = new FS.Collection("myImages", {
 });
 
 
+
 if (Meteor.isClient) {
   // This code is executed on the client only
   Accounts.ui.config({
@@ -48,6 +49,6 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  // This code is executed on the server only
+
 }
 
