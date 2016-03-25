@@ -1,3 +1,10 @@
+let{
+    TextField,
+    RaisedButton
+    } = MUI;
+
+
+
 ItemView = React.createClass({
         mixins: [ReactMeteorData],
 
@@ -9,18 +16,29 @@ ItemView = React.createClass({
 	
 	},
 
+	getInitialState(){
+		return{
+		commentText:"You can leave a comment here"
+		}
+	},
+
 	renderComments(){
 		if (this.data.foodItem.comments){
 		   return this.data.foodItem.comments.map((comment) => {
-		       return <Comment comment={comment.comment} date={comment.createdAt.toString()} username={comment.username}/>;
+		       return <div><Comment comment={comment.comment} date={comment.createdAt.toString()} username={comment.username}/><br /></div>;
 		       });
 		}
 		
 	},
-	 
+	handleComment(event){
+		this.setState({
+			commentText : event.target.value,
+			});
+		},
+
 	addComment(event) {
 		 event.preventDefault()   
-            	 var comment = ReactDOM.findDOMNode(this.refs.comment).value.trim();
+            	 var comment = this.state.commentText
 
 		 FoodItemsC.update({_id: this.data.foodItem._id},{$push : {
 		 	comments:{
@@ -30,7 +48,7 @@ ItemView = React.createClass({
 			}
 		 }});
 
-		 ReactDOM.findDOMNode(this.refs.comment).value = "";
+		 this.setState
 
 	},
 
@@ -38,15 +56,12 @@ ItemView = React.createClass({
 		 return (
 		 <div>
 
-	 	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/>
+	 	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/><br />
 
-			<form className="new-comment" onSubmit={this.addComment}>
-			      Comment: <input type="text" name="comment" ref="comment" />
-			</form>
-
+			<TextField hintText={this.state.commentText} onChange={this.handleComment}/><br />
+			<RaisedButton label="Submit" primary={true} onTouchTap={this.addComment} /><br /><br />
 			       {this.renderComments()}
-
-		</div>
+		 </div>
 			);
 	}
 });
