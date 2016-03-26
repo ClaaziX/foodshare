@@ -11,7 +11,6 @@ ClaimControl = React.createClass({
 	       };
     },
 
-
     makeClaim(inputVal){
     	this.setState({value: inputVal});
     },
