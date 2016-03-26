@@ -19,67 +19,81 @@ const paperStyle = {
   display: 'inline-block',
 };
 
+
+
 ItemCreation = React.createClass({
   
   mixins: [ReactRouter.History],
 
-  getInitialState(){
-    return{
-      files: [],
-      arrayOfImageIds: [],
-      portionSelect: 1,
-      foodName: "",
-      foodDesc: "",
-      imgURL: "",
-      formComplete: false,
-      attempt: false,
-      butCol:true,
-      openErrMess: false
-    }
-  },
-
-	onDrop() {
-		console.log("File deceted")
-		var uploader = new Slingshot.Upload("garangleslarp");
-		var theURL = "";
-		uploader.send(document.getElementById('uploadFile').files[0], function (error, downloadUrl) {
-			if (error) {
-			// Log service detailed response
-				console.error('Error uploading', error);
-				alert (error);
-			}
-			else {
-				Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
-			}
-		});
+	getInitialState(){
+		return{
+			portionSelect: 0,
+			foodName: "",
+			foodDesc: "",
+			imgURL: "",
+			formComplete: false,
+			attempt: false,
+			butCol: true,
+			imgDl: false,
+			openErrMess: false
+		}
 	},
 
-  onOpenClick: function () {
-    this.refs.dropzone.open();
-  },
+	imgChange: function () {
 
-  handleSubmit() {
-  	this.setState({attempt: true});
-  	this.formCompleteCheck();
-  	if (this.state.formComplete) {
-    FoodItemsC.insert({
-      foodName: this.state.foodName,
-      foodDesc: this.state.foodDesc,
-      portionNo: this.state.portionSelect,
-      portionsClaimed: 0,
-      imgURL: this.state.imgURL,
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username,  // username of logged in user
-      createdAt: new Date() // current time
-    });
-    this.history.push('/');
-	}else{
-		this.setState({
-			openErrMess: true
-		});
+		var input = document.getElementById('imgInp').files;
 
-	}
-  },
+		if (input && input[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#blah').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input[0]);
+			this.setState({imgDl: true});
+		}else{
+			alert ("Can't find your file...")
+		}
+	},
+
+	handleSubmit() {
+		this.setState({attempt: true});
+		this.formCompleteCheck();
+		var uploader = new Slingshot.Upload("garangleslarp");
+		var foodName = this.state.foodName;
+		var foodDesc = this.state.foodDesc;
+		var portionSelect = this.state.portionSelect;
+
+			if (this.state.formComplete) {	
+				uploader.send(document.getElementById('imgInp').files[0], function (error, downloadUrl) {
+					if (error) {
+						// Log service detailed response
+						console.error('Error uploading image', error);
+						alert (error);
+					}else{
+						Meteor.users.update(Meteor.userId(), {$push: {"profile.files": downloadUrl}});
+						FoodItemsC.insert({
+							foodName: foodName,
+							foodDesc: foodDesc,
+							portionNo: portionSelect,
+							portionsClaimed: 0,
+							imgURL: downloadUrl,
+							owner: Meteor.userId(),           // _id of logged in user
+							username: Meteor.user().username,  // username of logged in user
+							createdAt: new Date() // current time
+						});
+						console.log("databse updated")
+					}
+				});
+			}else{
+				this.setState({
+					openErrMess: true
+				});
+		}
+
+		this.history.push('/');
+	},
 
 	setPrtNo(prtNo) {
 	this.setState({portionSelect: prtNo})
@@ -102,8 +116,8 @@ ItemCreation = React.createClass({
 	formCompleteCheck() {
 		var nameLength = this.state.foodName.length;
 		var descLength = this.state.foodDesc.length;
-		var imgURL = this.state.imgURL;
-		if (nameLength > 3 && descLength > 3 && imgURL !== ""){
+		var imgDl = this.state.imgDl;
+		if (nameLength > 3 && descLength > 3 && imgDl ){
 			this.setState({formComplete: true})
 		}else{
 			this.setState({formComplete: false})
@@ -117,7 +131,7 @@ ItemCreation = React.createClass({
 	},
 
 	fileInput: function () {
-		var fileUploadDom = ReactDOM.findDOMNode(this.refs.uploadFile);
+		var fileUploadDom = ReactDOM.findDOMNode(this.refs.imgInp);
 		fileUploadDom.click();
 	},
 
@@ -139,20 +153,16 @@ ItemCreation = React.createClass({
 						<Paper
 							style={paperStyle}
 							zDepth={4}
+							onClick={this.fileInput}
 						>
-						{ this.state.imgURL == "" ?
-							<img onClick={this.fileInput} width="60%" height="auto" src="/imgs/camera.png" />
+						{ this.state.imgDl ?
+    						<img id="blah" width="auto" height="300px" src="#" />					
 						:
-							<img width="50%" height="auto" src={this.state.imgURL} />
+							<img  width="auto" height="300px" src="/imgs/camera.png" />
 						}
 						</Paper>
-						<input 
-							type="file"
-							className="inputStyle"
-							ref="uploadFile"
-							id="uploadFile"
-							onChange={this.onDrop} 
-						/>
+
+						<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
 
 						<br/>
 						<br/>

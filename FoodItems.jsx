@@ -117,7 +117,7 @@ FoodItems = React.createClass({
             <CardHeader
                 title={this.props.foodItem.foodName}
                 subtitle={this.genPrtnImg()}
-                avatar="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg"
+                avatar={this.props.foodItem.imgURL}
                 actAsExpander={true}
                 showExpandableButton={true}
             />
@@ -131,7 +131,7 @@ FoodItems = React.createClass({
 					/>
 				}
 			>
-				<img src="http://bed56888308e93972c04-0dfc23b7b97881dee012a129d9518bae.r34.cf1.rackcdn.com/sites/default/files/veggie-heart.jpg" />
+				<img src={this.props.foodItem.imgURL} />
 			</CardMedia>
 
             { this.data.currentUser  == this.props.foodItem.username 
