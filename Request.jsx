@@ -26,13 +26,11 @@ generateRequests(){
 
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
-				var userName = claim.username;
-				var prtNo = claim.portions;
 				return (
 				       <div>
 					<ListItem
-						primaryText={userName}
-						secondaryText={"Has requested " + prtNo + " portions"}
+						primaryText={claim.username}
+						secondaryText={"Has requested " + claim.portions + " portions"}
 						leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
 						primaryTogglesNestedList={true}
 						nestedItems={[
@@ -40,13 +38,13 @@ generateRequests(){
              				 	key={1}
              				 	primaryText="Accept"
              				 	leftIcon={<SvgIcons.ActionCheckCircle color='Green'/>}
-             				 	onTouchTap={this.handleAccept(userName, prtNo)}
+             				 	onTouchTap={this.getAcceptHandler(claim)}
              				 />,
              				 <ListItem
              				 	key={2}
              				 	primaryText="Reject"
-             				 	leftIcon={<SvgIcons.ContentBlock color='Red'/>} 
-             				 	onTouchTap={this.handleReject(userName)}
+             				 	leftIcon={<SvgIcons.ContentBlock color='Red'/>}
+             				 	onTouchTap={this.getRejectHandler(claim)}
              				 />,
             			]}
 
@@ -58,16 +56,23 @@ generateRequests(){
 		}
 	},
 
-	handleAccept : function (user, prtn) {
-		console.log("Accept!")
-		console.log(user, prtn)
+	getAcceptHandler: function(claim) {
+  		handleAccept = function(event) {
+  			console.log("Accept")
+  			console.log(claim)
+			console.log(claim.username)
+			console.log(claim.portions)
+		}
+	  return handleAccept
 	},
 
-	handleReject : function (user) {
-		console.log("Reject!")
-		console.log(user)
+	getRejectHandler: function(claim) {
+  		handleReject = function(event) {
+  			console.log("Reject")
+			console.log(claim)
+		}
+	  return handleReject
 	},
-
 
 	render(){
 		return(

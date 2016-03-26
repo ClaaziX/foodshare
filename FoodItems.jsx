@@ -69,15 +69,15 @@ FoodItems = React.createClass({
 
     var x = [];
     for (i = 0; i < pNum; i++){
-      x.push(<SvgIcons.MapsLocalDining color={Styles.Colors.green500} />);
+      x.push(<img className="carrotImg" src="/imgs/carrot.png" />);
     }
 
     var z = [];
     for (n = 0; n < pCla; n++){
-      z.push(<SvgIcons.MapsLocalDining color={Styles.Colors.grey500} />);
+      z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
     }
 
-    return <div>{z}{x}</div>;
+    return <div>{z}{x}({pNum})</div>;
 
   },
 
@@ -93,7 +93,6 @@ FoodItems = React.createClass({
    	return
     	<img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />;
     },
-
 
   render() {
 
@@ -122,14 +121,12 @@ FoodItems = React.createClass({
 	                title={this.props.foodItem.foodName}
 	                subtitle={this.genPrtnImg()}
 	                avatar={this.props.foodItem.imgURL}
-	                actAsExpander={true}
-	                showExpandableButton={true}
-
+                  actAsExpander={true}
+                  showExpandableButton={true}
 	            />
-	            <CardText expandable={true}>
-	            <Request claims={this.props.foodItem.claims} />
-	            </CardText>
-	            	
+              <CardText expandable={true}>
+              <Request claims={this.props.foodItem.claims} />
+              </CardText>
 				  </Card>
 				:        
 	        <Card>
