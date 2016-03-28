@@ -1,19 +1,5 @@
 Issues:
 
-Search:
-is case sensitive
-when  search is deleted, items do not go back into timeCreatedAt order
+Back Button:
 
-
-
-Rendering:
-will not show any results if attempting to render createdAt // think wehave to tell it what format to display
-
-Images:
-need to link into items DB
-need to refreash when form is submitted
-
-Access Key ID:
-AKIAIIDUFFFCCMHK6XHA
-Secret Access Key:
-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
+Need to stop it from fucking up if there is no history
