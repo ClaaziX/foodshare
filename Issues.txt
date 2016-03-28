@@ -1,5 +1,10 @@
 Issues:
 
-Back Button:
+	Back Button:
 
-Need to stop it from fucking up if there is no history
+		Need to stop it from fucking up if there is no history
+
+	Images:
+
+		Need to crop square versions for avatar
+		Need to resize before upload to reduse server load
