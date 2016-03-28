@@ -23,7 +23,13 @@ var {
     MoreVertIcon,
     MenuItem,
     Snackbar,
-    SwipeableViews
+    SwipeableViews,
+    Toolbar,
+    ToolbarGroup,
+	ToolbarSeparator,
+	ToolbarTitle,
+	Badge,
+	LeftNav
     } = MUI;
 
 var { FontIcon, SvgIcons } = MUI.Libs;
@@ -45,6 +51,7 @@ AppHeader = React.createClass({
 	    return{
 			openLogout: false,
 			openLogMess: false,
+			openNav: false,
 	    }
 	},
 
@@ -56,6 +63,12 @@ AppHeader = React.createClass({
 		return {
 			muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
 		}
+	},
+
+	getMeteorData(){
+		return{
+			currentUser: Meteor.user() ? Meteor.user().username : ''
+			};
 	},
 
     handleLogout : function () {
@@ -91,6 +104,18 @@ AppHeader = React.createClass({
     	this.history.push(path);
     },
 
+    handleOpenNav: function () {
+    	this.setState({openNav: true});
+    },
+
+    handleCloseNav: function () {
+    	this.setState({openNav: false});
+    },
+
+	handleBackClick : function () {
+		this.history.goBack();
+	},
+
     render : function(){
 
 		const actions = [
@@ -123,39 +148,49 @@ AppHeader = React.createClass({
 				<AppBar
 				    title="Food Sharing"
 				    iconElementLeft={
-					    	Meteor.userId() ?
-					    		<div>
-									<IconButton onClick={this.handleOpen}> 
-						    			<SvgIcons.ActionAccountCircle color='White'/>
-						    		</IconButton>
-										<Dialog
-										  title="Logout"
-										  actions={actions}
-										  modal={true}
-										  contentStyle={logoutContentStyle}
-										  open={this.state.openLogout}
-										>
-										Do you really want to logout?
-										</Dialog>
-									</div>
-					    		
-					    		:
-
-					    		<IconButton linkButton={true} containerElement={<Link to={'/login'} />}> 
-					    			<SvgIcons.ActionAccountCircle color='White'/>
-					    		</IconButton>
-					    	}
+				    	<IconButton onTouchTap={this.handleBackClick}>
+							<SvgIcons.ContentUndo color='White'/>
+						</IconButton>}
 				    iconElementRight={
-
-							<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
-		          					<SvgIcons.ContentAddCircle color='White'/>
-		          				</IconButton>
-		        			}
+						<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
+							<SvgIcons.ContentAddCircle color='White'/>
+						</IconButton>}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
 		  	</div>
-
-
+		  	<div className="toolContain">
+		  		<Toolbar>
+		  			<ToolbarGroup float="left">
+		  				{ Meteor.userId() ?
+							<div>
+								<IconButton onTouchTap={this.handleOpen}> 
+									<SvgIcons.ActionAccountCircle color='Black'/>
+								</IconButton>
+								<Dialog
+									title="Logout"
+									actions={actions}
+									modal={true}
+									contentStyle={logoutContentStyle}
+									open={this.state.openLogout}
+								>
+								Do you wish to logout?
+								</Dialog>
+							</div>
+					    :
+					    	<div>
+								<IconButton linkButton={true} containerElement={<Link to={'/login'} />}> 
+									<SvgIcons.ActionAccountCircle color='Black'/>
+								</IconButton>
+							</div>
+					    }
+		  			</ToolbarGroup>
+		  			<ToolbarGroup float="right">
+  						<IconButton onTouchTap={this.handleOpenNav}> 
+							<SvgIcons.CommunicationForum color='Black'/>
+						</IconButton>
+		  			</ToolbarGroup>
+		  		</Toolbar>
+		  	</div>
 		    <div className="tabsContain">
 
 				<Tabs>
@@ -177,7 +212,18 @@ AppHeader = React.createClass({
 				</Tabs>
 
 			</div>
-
+			<div>
+				<LeftNav
+					width={400}
+					openRight={true}
+					open={this.state.openNav}
+					docked={false}
+					onRequestChange={this.handleCloseNav}
+				>
+					<AppBar title="AppBar"/>
+					Notifications & Messages!
+				</LeftNav>
+        	</div>
 			<div>
 				<Snackbar
 					open={this.state.openLogMess}

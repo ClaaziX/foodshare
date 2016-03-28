@@ -78,6 +78,16 @@ header {
   text-align: center;
 }
 
+.toolContain {
+  position: fixed;
+  max-width: 100%;
+  margin: 0 auto;
+  top: 65px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
 .tabsContain {
   position: fixed;
   max-width: 100%;
