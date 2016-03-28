@@ -4,11 +4,35 @@ MyImages = new FS.Collection("myImages", {
 });
 
 Meteor.methods({
+	createClaims(username, prts, ID){
+		FoodItemsC.update(
+			{_id : ID},
+				{$push : {
+					claims : {
+						username : username,
+						createdAt : new Date(),
+						portions : prts,
+						accepted : 0,
+						rejected : false,
+						parentId: ID,
+						}
+					}	
+				} 
+		); 
+		console.log("createClaims ran")
+	},
 	updateClaims(ID, value, userName){
 		FoodItemsC.update(
 				{_id : ID, "claims.username" : userName},
 					{$inc : { "claims.$.accepted" : value } }
-			);
+		);
+	},
+
+	rejectClaim(ID, userName, date){
+		FoodItemsC.update(
+				{_id : ID, "claims.username" : userName},
+					{$set : { "claims.$.rejected" : true } }
+		);
 	}
 
 });

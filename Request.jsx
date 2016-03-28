@@ -37,7 +37,8 @@ Request = React.createClass({
 			openReject: false,
 			prtNo: 0,
 			userName: "",
-			claimID: "",
+			claimId: "",
+			date: "",
 		}
 	},
 
@@ -45,6 +46,7 @@ Request = React.createClass({
 
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
+				console.log(claim)
 				return (
 					<div>
 						{ claim.rejected ?
@@ -80,7 +82,7 @@ Request = React.createClass({
 									<div>
 									<ListItem
 										primaryText={claim.username}
-										secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + "requested portions"}
+										secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + " requested portions"}
 										leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
 										rightIcon={<SvgIcons.CommunicationChatBubble color='Grey' />}
 										onTouchTap={this.getChatHandler(claim)}
@@ -110,6 +112,7 @@ Request = React.createClass({
 				prtNo: claim.portions,
 				userName: claim.username,
 				claimId: claim.parentId,
+				date: claim.createdAt,
 				openAccept: true,
 			});
 		}
@@ -123,6 +126,7 @@ Request = React.createClass({
 				prtNo: claim.portions,
 				userName: claim.username,
 				claimId: claim.parentId,
+				date: claim.createdAt,
 				openReject: true,
 			});
 		}
@@ -134,24 +138,15 @@ Request = React.createClass({
 		handleClose = function(event) {
 		    if (popType == "accept"){
 		        	that.setState({openAccept: false});
-		        }else{
-		        	if (popType == "reject"){
-		        		that.setState({openReject: false});
-		        		if(reject){
-			        		FoodItemsC.update(
-							{_id : that.props.id},
-								{$set : { claims : {username: that.state.userName}, claims : {
-									rejected : true,
-									}
-								}
-							}
-						);
-		        	}
+			}
+			if (popType == "reject"){
+				if(reject){
+					Meteor.call('rejectClaim', that.state.claimId, that.state.userName, that.state.date)
 				}
+				that.setState({openReject: false});
 			}
 	    }
 	    return handleClose
-
 	},
 
 	render(){
@@ -173,7 +168,7 @@ Request = React.createClass({
 
 		const rejectActions = [     
 			<FlatButton
-				label="Reject Claims!"
+				label="Reject Claim!"
 				primary={true}
 				onTouchTap={this.getCloseHandler("reject", true)}
 			/>,

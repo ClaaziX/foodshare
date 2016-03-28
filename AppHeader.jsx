@@ -61,7 +61,7 @@ AppHeader = React.createClass({
     handleLogout : function () {
     	Meteor.logout();
 		this.setState({openLogout: false});
-		this.history.push('/');
+		this.history.push('/login');
 		this.logOutPop();
     },
 
@@ -179,12 +179,14 @@ AppHeader = React.createClass({
 			</div>
 
 			<div>
-		        <Snackbar
-		          open={this.state.openLogMess}
-		          message="You've been logged out!"
-		          autoHideDuration={3600}
-		          onRequestClose={this.handleRequestClose}
-		        />
+				<Snackbar
+					open={this.state.openLogMess}
+					message="You've been logged out!"
+					autoHideDuration={3600}
+					onRequestClose={this.handleRequestClose}
+					action="Close"
+					onTouchTap={this.handleRequestClose}
+				/>
 			</div>
 			
 			<Accounts.ui.Dialogs />

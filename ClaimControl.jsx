@@ -1,5 +1,6 @@
 var {
-	FlatButton
+	FlatButton,
+	Snackbar
     } = MUI;
 
 ClaimControl = React.createClass({
@@ -7,7 +8,7 @@ ClaimControl = React.createClass({
     getDefaultProps(){
 	return {
 	       claims: false,
-	       value: 1
+	       value: 1,
 	       };
     },
 
@@ -21,31 +22,43 @@ ClaimControl = React.createClass({
 				{_id : this.props.id},
 					{$inc : {portionsClaimed: this.state.value}},
 			);
-			Meteor.call('updateClaims', this.props.id, this.state.value, this.props.username)
+			Meteor.call('updateClaims', this.props.id, this.state.value, this.props.username, this.props.date)
 		}else{
-			FoodItemsC.update({_id : this.props.id}, {$push : {
-				claims : {
-					username : this.props.username,
-					createdAt : new Date(),
-					portions : this.state.value,
-					accepted : 0,
-					rejected : false,
-					parentId: this.props.id,
+
+			var dbQuery = FoodItemsC.findOne({ _id : this.props.id});
+			var alreadyClaimed = false;
+			console.log("Attempting Claim...")
+			if (!dbQuery.claims){
+				Meteor.call('createClaims', this.props.username, this.state.value, this.props.id)
+				console.log("No Claims on item detected... Creating Claim!")
+			}else{
+				for(names in dbQuery.claims){
+					if(dbQuery.claims[names].username == this.props.username){
+						alreadyClaimed = true;
+						console.log("Already claimed...exiting")
+						{ break; }
+					}	
 				}
-			}	});
+
+				if(!alreadyClaimed){
+					Meteor.call('createClaims', this.props.username, this.state.value, this.props.id)
+					console.log("username on current claims not detected... Creating Claim!")
+				}
+			}		
 		}
-		this.props.finishIt();
+		this.props.finishIt(alreadyClaimed);
     },
 
 	render(){
 		return(
 			<div>
-			<NumberOptions options={this.props.portionsLeft} optionChange={this.makeClaim} />
-			<FlatButton
-			    label="Claim"
-			    primary={true}
-			    onTouchTap={this.submitIt}
-			/>
+				<NumberOptions options={this.props.portionsLeft} optionChange={this.makeClaim} />
+				<FlatButton
+				    label="Claim"
+				    primary={true}
+				    onTouchTap={this.submitIt}
+				/>
+
 			</div>
 		);
 	}

@@ -9,6 +9,7 @@ var {
   Paper,
   Styles,
   Dialog,
+  Snackbar,
   DropDownMenu,
   MenuItem
     } = MUI;
@@ -35,11 +36,12 @@ FoodItems = React.createClass({
   getInitialState(){
       return{
       openClaim: false,
+      alreadyClaimed: false,
+      claimPop: false
       }
   },
 
   calculatePortionsLeft(){
-  	console.log("Calculating portions left...")
     var x = 0;
     var claims = this.props.foodItem.claims;
     if (claims){
@@ -80,13 +82,27 @@ FoodItems = React.createClass({
         this.setState({openClaim: true});
     },
 
-    handleClose : function () {
+    handleClose : function (alreadyClaimed) {
         this.setState({openClaim: false});
+        this.setState({alreadyClaimed: alreadyClaimed});
+        this.setState({claimPop: true});
     },
 
     genProfImg() {
    	return
     	<img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />;
+    },
+
+    genClaimMess : function () {
+    	if (this.state.alreadyClaimed){
+    		return "You've already claimed that item!"
+    	}else{
+    		return "Item claimed! Please wait for a response."
+    	}
+    },
+
+    handleRequestClose : function () {
+    	this.setState({claimPop: false});
     },
 
   render() {
@@ -98,6 +114,7 @@ FoodItems = React.createClass({
 			    portions={this.props.foodItem.portionNo}
 			    username={this.data.currentUser}
 			    portionsLeft={this.props.foodItem.portionNo - this.calculatePortionsLeft()}
+			    accept={false}
 			    finishIt={this.handleClose}
 			/>,
 			<FlatButton
@@ -176,6 +193,14 @@ FoodItems = React.createClass({
 
 					}
 				</Card>
+				<Snackbar
+					open={this.state.claimPop}
+					message={this.genClaimMess()}
+					autoHideDuration={3600}
+					action="Close"
+					onTouchTap={this.handleRequestClose}
+					onRequestClose={this.handleRequestClose}
+				/>
 				
 			</div>
     );
