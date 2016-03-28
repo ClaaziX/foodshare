@@ -15,27 +15,36 @@ ClaimControl = React.createClass({
     	this.setState({value: inputVal});
     },
 
-	submitClaim(){
-	FoodItemsC.update({_id : this.props.id}, {$push : {
-	    		       	 	claims : {
-								username : this.props.username,
-								createdAt : new Date(),
-								portions : this.state.value,
-								accepted : false
-								}
-						  }	   });
-	this.props.finishIt();
+	submitIt : function () {
+		if(this.props.accept){
+			FoodItemsC.update(
+				{_id : this.props.id},
+					{$inc : {portionsClaimed: this.state.value}},
+			);
+			Meteor.call('updateClaims', this.props.id, this.state.value, this.props.username)
+		}else{
+			FoodItemsC.update({_id : this.props.id}, {$push : {
+				claims : {
+					username : this.props.username,
+					createdAt : new Date(),
+					portions : this.state.value,
+					accepted : 0,
+					rejected : false,
+					parentId: this.props.id,
+				}
+			}	});
+		}
+		this.props.finishIt();
     },
 
 	render(){
-
 		return(
 			<div>
 			<NumberOptions options={this.props.portionsLeft} optionChange={this.makeClaim} />
 			<FlatButton
 			    label="Claim"
 			    primary={true}
-			    onTouchTap={this.submitClaim}
+			    onTouchTap={this.submitIt}
 			/>
 			</div>
 		);

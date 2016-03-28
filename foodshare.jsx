@@ -3,7 +3,15 @@ MyImages = new FS.Collection("myImages", {
   stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
 });
 
+Meteor.methods({
+	updateClaims(ID, value, userName){
+		FoodItemsC.update(
+				{_id : ID, "claims.username" : userName},
+					{$inc : { "claims.$.accepted" : value } }
+			);
+	}
 
+});
 
 if (Meteor.isClient) {
   // This code is executed on the client only

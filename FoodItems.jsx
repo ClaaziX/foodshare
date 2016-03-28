@@ -39,18 +39,14 @@ FoodItems = React.createClass({
   },
 
   calculatePortionsLeft(){
+  	console.log("Calculating portions left...")
     var x = 0;
     var claims = this.props.foodItem.claims;
     if (claims){
-             for(claim in claims){
-                  if(claim.accepted){
-          		x = x + claims.portions;
-            }
-              }
-      	 return (this.props.foodItem.portionNo - x);
-     }
-     return this.props.foodItem.portionNo;
-
+			for(claim in claims){
+          		x = x + claims[claim].accepted;
+      	}
+		} return x
   },
  
 	getMeteorData(){
@@ -64,9 +60,8 @@ FoodItems = React.createClass({
   },
 
   genPrtnImg: function () {
-    var pCla = this.props.foodItem.portionNo - this.calculatePortionsLeft();
+    var pCla = this.calculatePortionsLeft();
     var pNum = this.props.foodItem.portionNo - pCla;
-
     var x = [];
     for (i = 0; i < pNum; i++){
       x.push(<img className="carrotImg" src="/imgs/carrot.png" />);
@@ -77,7 +72,7 @@ FoodItems = React.createClass({
       z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
     }
 
-    return <div>{z}{x}({pNum})</div>;
+    return <div>{x}{z}({pNum})</div>;
 
   },
 
@@ -97,95 +92,91 @@ FoodItems = React.createClass({
   render() {
 
     const actions = [     
-        <ClaimControl 
-            id={this.props.foodItem._id}
-            claims={this.props.foodItem.claims}
-            portions={this.props.foodItem.portionNo}
-            username={this.data.currentUser}
-            portionsLeft={this.calculatePortionsLeft()}
-            finishIt={this.handleClose}
-        />,
-        <FlatButton
-            label="Cancel"
-            secondary={true}
-            onTouchTap={this.handleClose}
-        />,
-    ];
+			<ClaimControl 
+			    id={this.props.foodItem._id}
+			    claims={this.props.foodItem.claims}
+			    portions={this.props.foodItem.portionNo}
+			    username={this.data.currentUser}
+			    portionsLeft={this.props.foodItem.portionNo - this.calculatePortionsLeft()}
+			    finishIt={this.handleClose}
+			/>,
+			<FlatButton
+			    label="Cancel"
+			    secondary={true}
+			    onTouchTap={this.handleClose}
+			/>,
+			];
 
     return (
 			<div>
-				{ this.props.pathName == '/Messages' && this.props.foodItem.claims
-				?
-					<Card>
-	            <CardHeader
-	                title={this.props.foodItem.foodName}
-	                subtitle={this.genPrtnImg()}
-	                avatar={this.props.foodItem.imgURL}
-                  actAsExpander={true}
-                  showExpandableButton={true}
-	            />
-              <CardText expandable={true}>
-              <Request claims={this.props.foodItem.claims} />
-              </CardText>
-				  </Card>
-				:        
-	        <Card>
-	            <CardHeader
-	                title={this.props.foodItem.foodName}
-	                subtitle={this.genPrtnImg()}
-	                avatar={this.props.foodItem.imgURL}
-	                actAsExpander={true}
-	                showExpandableButton={true}
-	            />
+				<Card>
+					<CardHeader
+						title={this.props.foodItem.foodName}
+						subtitle={this.genPrtnImg()}
+						avatar={this.props.foodItem.imgURL}
+						actAsExpander={true}
+						showExpandableButton={true}
+					/>
+					<CardMedia 
+						expandable={true}
+						overlay={
+							<CardTitle
+								title={this.props.foodItem.foodDesc}
+								subtitle={"Offered By: " + this.props.foodItem.username}
+							/>
+						}
+					>
+						<img src={this.props.foodItem.imgURL} />
+					</CardMedia>
 
-	            <CardMedia 
-	            	expandable={true}
-	            	overlay={
-	            		<CardTitle
-	            			title={this.props.foodItem.foodDesc}
-	            			subtitle={"Offered By: " + this.props.foodItem.username}
-	            		/>
-	            	}
-	            >
-	            	<img src={this.props.foodItem.imgURL} />
-	            </CardMedia>
-	          
-	              { this.data.currentUser  == this.props.foodItem.username 
-	              ?
-	        				<CardActions expandable={true}>
-	        					<Link to={'/ItemView/'+this.props.foodItem._id}>
-	        					<FlatButton label="Discuss" />
-	        					</Link>
+					{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
 
-	        					<FlatButton
-	        					label="Delete"
-	        					primary={true}
-	        					onTouchTap={this.deleteThisItem}
-	        					/>
-	        				</CardActions>
-	      	    	: 
-	                <CardActions expandable={true}>
-	                    <FlatButton
-	                        label="Claim"
-	                        primary={true}
-	                        onTouchTap={this.handleOpen}
-	                    />
-	                    <Dialog
-	                        title="Claim!"
-	                        actions={actions}
-	                        modal={true}
-	                        contentStyle={claimContentStyle}
-	                        open={this.state.openClaim}
-	                        >
-	                        How many portions do you wish to claim?
-	                    </Dialog>
-	                    <Link to={'/ItemView/'+this.props.foodItem._id}>
-	                        <FlatButton label="Discuss" />
-	                    </Link>
-	                </CardActions>
-	              }
-					</Card>
-				}
+						<CardText expandable={true}>
+						<Request claims={this.props.foodItem.claims} />
+						</CardText>
+					:			
+					""
+					}
+
+					{ this.data.currentUser == this.props.foodItem.username ?
+
+						<CardActions expandable={true}>
+						<Link to={'/ItemView/'+this.props.foodItem._id}>
+						<FlatButton label="Discuss" />
+						</Link>
+
+						<FlatButton
+							label="Delete"
+							primary={true}
+							onTouchTap={this.deleteThisItem}
+						/>
+						</CardActions>
+
+					:
+
+						<CardActions expandable={true}>
+						<FlatButton
+							label="Claim"
+							primary={true}
+							onTouchTap={this.handleOpen}
+						/>
+						<Dialog
+							title="Claim!"
+							actions={actions}
+							modal={true}
+							contentStyle={claimContentStyle}
+							open={this.state.openClaim}
+						>
+							How many portions do you wish to claim?
+						</Dialog>
+						<Link to={'/ItemView/'+this.props.foodItem._id}>
+						<FlatButton label="Discuss" />
+						</Link>
+						</CardActions>
+
+					}
+				</Card>
+				
 			</div>
     );
    }
