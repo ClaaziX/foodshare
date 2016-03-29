@@ -46,7 +46,6 @@ Request = React.createClass({
 
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
-				console.log(claim)
 				return (
 					<div>
 						{ claim.rejected ?

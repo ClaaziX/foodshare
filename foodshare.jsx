@@ -19,13 +19,28 @@ Meteor.methods({
 					}	
 				} 
 		); 
-		console.log("createClaims ran")
 	},
+
 	updateClaims(ID, value, userName){
+		var itemOwner = FoodItemsC.find( {_id : ID } );
 		FoodItemsC.update(
 				{_id : ID, "claims.username" : userName},
 					{$inc : { "claims.$.accepted" : value } }
 		);
+		FoodItemsC.update(
+			{_id: ID},
+				{$push : {
+				 	privateChat:{
+						claimer: userName,
+						chat: {
+							username: "",
+							chat: "",
+						},
+						createdAt: new Date(),
+						owner: itemOwner.username,
+						parentId: ID,
+					}
+		 }});
 	},
 
 	rejectClaim(ID, userName, date){

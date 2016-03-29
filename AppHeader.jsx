@@ -220,8 +220,7 @@ AppHeader = React.createClass({
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					<AppBar title="AppBar"/>
-					Notifications & Messages!
+					<NavBar />
 				</LeftNav>
         	</div>
 			<div>

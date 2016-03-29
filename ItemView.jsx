@@ -6,12 +6,13 @@ let{
 
 
 ItemView = React.createClass({
-        mixins: [ReactMeteorData],
+	
+	mixins: [ReactMeteorData],
 
 	getMeteorData() {
 
 	return {
-	       foodItem: (FoodItemsC.find({_id: this.props.params.itemID}).fetch()[0])
+		foodItem: (FoodItemsC.find({_id: this.props.params.itemID}).fetch()[0])
 	};
 	
 	},
@@ -25,7 +26,15 @@ ItemView = React.createClass({
 	renderComments(){
 		if (this.data.foodItem.comments){
 		   return this.data.foodItem.comments.map((comment) => {
-		       return <div><Comment comment={comment.comment} date={comment.createdAt.toString()} username={comment.username}/><br /></div>;
+		       return 
+		       	<div>
+		       		<Comment
+		       			comment={comment.comment}
+		       			date={comment.createdAt.toString()}
+		       			username={comment.username}
+		       		/>
+		       		<br />
+		       	</div>;
 		       });
 		}
 		
@@ -37,14 +46,14 @@ ItemView = React.createClass({
 		},
 
 	addComment(event) {
-		 event.preventDefault()   
-            	 var comment = this.state.commentText
+		event.preventDefault()   
+		var comment = this.state.commentText
 
 		 FoodItemsC.update({_id: this.data.foodItem._id},{$push : {
 		 	comments:{
-			username: Meteor.user().username,
-			comment: comment,
-			createdAt: new Date()
+				username: Meteor.user().username,
+				comment: comment,
+				createdAt: new Date()
 			}
 		 }});
 
@@ -52,7 +61,7 @@ ItemView = React.createClass({
 
 	},
 
-	render() {
+	render : function () {
 		 return (
 		 <div>
 
