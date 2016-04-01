@@ -29,6 +29,7 @@ const claimContentStyle = {
 FoodItems = React.createClass({
 
   mixins: [ReactMeteorData],
+
   propTypes: {
   foodItem: React.PropTypes.object.isRequired
   },

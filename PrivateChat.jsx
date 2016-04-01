@@ -1,9 +1,11 @@
 let {
-	Styles,
-	List,
-	ListItem,
-	Avatar,
-	Divider
+    TextField,
+    RaisedButton,
+    Styles,
+    List,
+    ListItem,
+    Avatar,
+    Divider
 } = MUI;
 
 PrivateChat = React.createClass({
@@ -13,17 +15,24 @@ PrivateChat = React.createClass({
 	getMeteorData() {
 		currentUser = Meteor.user() ? Meteor.user() : '';
 		return {
-			currentUser: currentUser,
-		    foodChats: FoodItemsC.find({}, 
-		    	{ privateChat: { $exists: true } }
+		    currentUser: currentUser,
+		    privateMessages: PrivateChatC.find(
+		    	{ between: { $all: [currentUser,this.props.params.messagedUsername] } }
 		    ).fetch()
 		};
 	
 	},
 	
+    getInitialState(){
+	return{
+	    commentText:"You can leave a comment here"
+	}
+    },
+
+
 	generateChat : function (){
-		if(this.data.foodChats.privateChat){
-			return this.data.foodChats.privateChat.map((chat) => {
+		if(this.data.privateMessages.messages){
+		    return this.data.privateMessages.messages.map((chat) => {
 				if(chat.owner == this.data.currentUser){
 					return
 						<div>
@@ -44,6 +53,13 @@ PrivateChat = React.createClass({
 			});
 		}
 	},
+        
+
+    handleComment(event){
+	this.setState({
+	    commentText : event.target.value,
+	});
+    },
 
 	handleOpenChat : function (owner, claimer, ID) {
 		console.log(owner, claimer, ID)
@@ -52,11 +68,11 @@ PrivateChat = React.createClass({
 
 	render : function () {
 		 return (
-		 	<div>
-		 		<List>
-		 			{this.generateChat()}
-		 		</List>
-		 	</div>
-		 	);
+		     <div>
+			 <TextField hintText={this.state.commentText} onChange={this.handleComment}/><br />
+			 <RaisedButton label="Submit" primary={true} onTouchTap={this.addComment} /><br /><br />
+			 {this.generateChat()}
+		     </div>
+		 );
 	}
 });

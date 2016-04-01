@@ -1,5 +1,6 @@
 injectTapEventPlugin();
 
+PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
   stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
@@ -86,6 +87,7 @@ if (Meteor.isClient) {
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />
 		       <Route path='/PrivateChat' component={PrivateChat} />
+		       <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} />
 		       <Route path='/login' component={login} />
 
 		</Route>

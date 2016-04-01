@@ -57,7 +57,9 @@ ItemView = React.createClass({
 			}
 		 }});
 
-		 this.setState
+		 this.setState({
+		     commentText : "You can leave a comment here"
+		 })
 
 	},
 
@@ -69,7 +71,7 @@ ItemView = React.createClass({
 
 			<TextField hintText={this.state.commentText} onChange={this.handleComment}/><br />
 			<RaisedButton label="Submit" primary={true} onTouchTap={this.addComment} /><br /><br />
-			       {this.renderComments()}
+			{this.renderComments()}
 		 </div>
 			);
 	}
