@@ -1,3 +1,5 @@
+injectTapEventPlugin();
+
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
   stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
@@ -90,7 +92,7 @@ if (Meteor.isClient) {
 		
 	</Router>
 	);
-	injectTapEventPlugin();
+
 	ReactRouterSSR.Run(AppRoutes);
   });
 }
