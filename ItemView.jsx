@@ -27,14 +27,14 @@ ItemView = React.createClass({
 		if (this.data.foodItem.comments){
 		   return this.data.foodItem.comments.map((comment) => {
 		       return 
-		       	<div>
+		       	(<div>
 		       		<Comment
 		       			comment={comment.comment}
 		       			date={comment.createdAt.toString()}
 		       			username={comment.username}
 		       		/>
 		       		<br />
-		       	</div>;
+		       	</div>);
 		       });
 		}
 		
