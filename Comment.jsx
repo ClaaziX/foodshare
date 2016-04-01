@@ -44,6 +44,6 @@ Comment = React.createClass({
 			{this.props.comment}
 		</CardText>
 	    </Card>		
-	)}
+	);}
 
 });
