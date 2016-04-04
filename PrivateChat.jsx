@@ -55,13 +55,13 @@ PrivateChat = React.createClass({
 	
 	var message = this.state.messageText;
 	
-	PrivateChatC.update({between: { $all: [currentUser, this.props.params.messagedUsername]}},
+	PrivateChatC.update({between: { $all: [this.data.currentUser, this.props.params.messagedUsername]}},
 			    {$push:{
 				comments:{
-				    username: currentUsername,
+				    username: this.data.currentUser,
 				    message: message,
 				    createAt: new Date()
-				},
+				}
 				
 			    }
 			    },
@@ -83,7 +83,7 @@ PrivateChat = React.createClass({
     },
 
     render : function () {
-	console.log(this.props);
+
 	
 	return (
 	    <div>
