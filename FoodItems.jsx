@@ -35,13 +35,12 @@ FoodItems = React.createClass({
   },
 
   getInitialState(){
-      return{
+      return({
       openClaim: false,
       alreadyClaimed: false,
       claimPop: false
-      }
+      })
   },
-
   calculatePortionsLeft(){
     var x = 0;
     var claims = this.props.foodItem.claims;
@@ -90,8 +89,7 @@ FoodItems = React.createClass({
     },
 
     genProfImg() {
-   	return
-    	<img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />;
+   	return(<img className="profilePic" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />);
     },
 
     genClaimMess : function () {
@@ -106,7 +104,7 @@ FoodItems = React.createClass({
     	this.setState({claimPop: false});
     },
 
-  render() {
+  render : function (){
 
     const actions = [     
 			<ClaimControl 
@@ -122,10 +120,10 @@ FoodItems = React.createClass({
 			    label="Cancel"
 			    secondary={true}
 			    onTouchTap={this.handleClose}
-			/>,
+			/>
 			];
 
-    return (
+    return(
 			<div>
 				<Card>
 					<CardHeader
