@@ -16,7 +16,6 @@ var {
     Tab,
     Slider,
     FlatButton,
-    AppBar,
     IconButton,
     NavigationClose,
     IconMenu,
@@ -220,7 +219,7 @@ AppHeader = React.createClass({
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					<NavBar />
+					<MessageBar/>
 				</LeftNav>
         	</div>
 			<div>
