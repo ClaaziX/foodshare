@@ -11,7 +11,12 @@ var {
   Dialog,
   Snackbar,
   DropDownMenu,
-  MenuItem
+  MenuItem,
+  Tabs,
+  Tab,
+  GridList,
+  GridTile,
+  IconButton
     } = MUI;
 
 var { FontIcon, SvgIcons } = MUI.Libs;
@@ -20,11 +25,23 @@ var { ThemeManager, LightRawTheme } = Styles;
 
 const {Link} = ReactRouter;
 
-const claimContentStyle = {
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 500,
+    height: 400,
+    overflowY: 'auto',
+    marginBottom: 24,
+  },
+  claim: {
                 width: '100%',
                 maxWidth: 'none',
-              };
-
+  },
+};
 
 FoodItems = React.createClass({
 
@@ -125,73 +142,108 @@ FoodItems = React.createClass({
 
     return(
 			<div>
-				<Card>
-					<CardHeader
-						title={this.props.foodItem.foodName}
-						subtitle={this.genPrtnImg()}
-						avatar={this.props.foodItem.imgURL}
-						actAsExpander={true}
-						showExpandableButton={true}
-					/>
-					<CardMedia 
-						expandable={true}
-						overlay={
-							<CardTitle
-								title={this.props.foodItem.foodDesc}
-								subtitle={"Offered By: " + this.props.foodItem.username}
+				<Tabs>
+		            <Tab label={ <IconButton>
+		                        <SvgIcons.ActionViewModule color='White' />
+		                        </IconButton>}>
+		              <div style={styles.root}>
+		                  <GridList
+		                  cellHeight={200}
+		                  style={styles.gridList}
+		                  >
+		                      <GridTile
+		                      key={this.props.foodItem.imgURL}
+		                      title={this.props.foodItem.foodName}
+		                      subtitle={<span>by <b>{this.props.foodItem.username}</b></span>}
+		                      actionIcon={
+		                        <div>
+		                          <IconButton onTouchTap={this.handleOpen}>
+		                            <SvgIcons.ActionShoppingCart color='White' />
+		                          </IconButton>                        
+		                          <IconButton containerElement={ <Link to={'/ItemView/'+this.props.foodItem._id}/> } linkButton={true}>
+		                            <SvgIcons.CommunicationChatBubble color='White' />
+		                          </IconButton>
+		                        </div>
+		                      }
+		                      >
+		                        <img src={this.props.foodItem.imgURL} />
+		                      </GridTile>
+		   
+		                  </GridList>
+		              </div>
+		            </Tab>
+		            <Tab label={<SvgIcons.ActionList color='White' />}>
+		            	<div>
+						<Card>
+							<CardHeader
+								title={this.props.foodItem.foodName}
+								subtitle={this.genPrtnImg()}
+								avatar={this.props.foodItem.imgURL}
+								actAsExpander={true}
+								showExpandableButton={true}
 							/>
-						}
-					>
-						<img src={this.props.foodItem.imgURL} />
-					</CardMedia>
+							<CardMedia 
+								expandable={true}
+								overlay={
+									<CardTitle
+										title={this.props.foodItem.foodDesc}
+										subtitle={"Offered By: " + this.props.foodItem.username}
+									/>
+								}
+							>
+								<img src={this.props.foodItem.imgURL} />
+							</CardMedia>
 
-					{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
+							{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
 
-						<CardText expandable={true}>
-						<Request claims={this.props.foodItem.claims} />
-						</CardText>
-					:			
-					""
-					}
+								<CardText expandable={true}>
+								<Request claims={this.props.foodItem.claims} />
+								</CardText>
+							:			
+							""
+							}
 
-					{ this.data.currentUser == this.props.foodItem.username ?
+							{ this.data.currentUser == this.props.foodItem.username ?
 
-						<CardActions expandable={true}>
-						<Link to={'/ItemView/'+this.props.foodItem._id}>
-						<FlatButton label="Discuss" />
-						</Link>
+								<CardActions expandable={true}>
+								<Link to={'/ItemView/'+this.props.foodItem._id}>
+								<FlatButton label="Discuss" />
+								</Link>
 
-						<FlatButton
-							label="Delete"
-							primary={true}
-							onTouchTap={this.deleteThisItem}
-						/>
-						</CardActions>
+								<FlatButton
+									label="Delete"
+									primary={true}
+									onTouchTap={this.deleteThisItem}
+								/>
+								</CardActions>
 
-					:
+							:
 
-						<CardActions expandable={true}>
-						<FlatButton
-							label="Claim"
-							primary={true}
-							onTouchTap={this.handleOpen}
-						/>
-						<Dialog
-							title="Claim!"
-							actions={actions}
-							modal={true}
-							contentStyle={claimContentStyle}
-							open={this.state.openClaim}
-						>
-							How many portions do you wish to claim?
-						</Dialog>
-						<Link to={'/ItemView/'+this.props.foodItem._id}>
-						<FlatButton label="Discuss" />
-						</Link>
-						</CardActions>
+								<CardActions expandable={true}>
+								<FlatButton
+									label="Claim"
+									primary={true}
+									onTouchTap={this.handleOpen}
+								/>
+								<Dialog
+									title="Claim!"
+									actions={actions}
+									modal={true}
+									contentStyle={styles.claim}
+									open={this.state.openClaim}
+								>
+									How many portions do you wish to claim?
+								</Dialog>
+								<Link to={'/ItemView/'+this.props.foodItem._id}>
+								<FlatButton label="Discuss" />
+								</Link>
+								</CardActions>
 
-					}
-				</Card>
+							}
+						</Card>
+						</div>
+					</Tab>
+			    </Tabs>
 				<Snackbar
 					open={this.state.claimPop}
 					message={this.genClaimMess()}
