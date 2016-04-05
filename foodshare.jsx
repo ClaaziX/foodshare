@@ -7,6 +7,23 @@ MyImages = new FS.Collection("myImages", {
 });
 
 Meteor.methods({
+
+	addPrivateMessage(users, username, message){
+	 		PrivateChatC.update({between: users},
+	 		    {$push:{
+	 			messages:{
+	 			    username: username,
+	 			    message: message,
+	 			    createdAt: new Date()
+	 			}
+				
+	 		    }
+	 		    },
+	 		    {upsert: true}
+			);
+		},
+
+
 	createClaims(username, prts, ID){
 		FoodItemsC.update(
 			{_id : ID},
@@ -23,6 +40,7 @@ Meteor.methods({
 				} 
 		); 
 	},
+
 
 	updateClaims(ID, value, userName){
 		var itemOwner = FoodItemsC.find( {_id : ID } );
