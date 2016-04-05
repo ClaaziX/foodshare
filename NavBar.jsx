@@ -13,7 +13,7 @@ NavBar = React.createClass({
 				Notifications <br />
 				------------- <br />
 				Messages! <br />
-				<PrivateChat />
+
 			</div>
 		);
 	}

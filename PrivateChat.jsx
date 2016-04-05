@@ -1,62 +1,86 @@
 let {
-	Styles,
-	List,
-	ListItem,
-	Avatar,
-	Divider
+    TextField,
+    RaisedButton,
+    Styles,
+    List,
+    ListItem,
+    Avatar,
+    Divider
 } = MUI;
 
 PrivateChat = React.createClass({
 
-	mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
 
-	getMeteorData() {
-		currentUser = Meteor.user() ? Meteor.user() : '';
-		return {
-			currentUser: currentUser,
-		    foodChats: FoodItemsC.find({}, 
-		    	{ privateChat: { $exists: true } }
-		    ).fetch()
-		};
+    getMeteorData() {
+	currentUser = Meteor.user() ? Meteor.user().username : '';
+	return {
+	    currentUser: currentUser,
+	    privateMessages: PrivateChatC.find(
+		{ between: { $all: [currentUser, this.props.params.messagedUsername] } }
+	    ).fetch()[0]
+	};
 	
-	},
-	
-	generateChat : function (){
-		if(this.data.foodChats.privateChat){
-			return this.data.foodChats.privateChat.map((chat) => {
-				if(chat.owner == this.data.currentUser){
-					return
-						<div>
-							<ListItem
-								leftAvatar={<Avatar src="/imgs/bob.jpg" />}
-								primaryText={chat.claimer}
-								secondaryText={
-						            <p>
-						              <span style={{color: Styles.Colors.darkBlack}}>Name of food item</span>
-						            </p>
-									}
-								secondaryTextLines={1}
-								onTouchTap={this.handleOpenChat(chat.owner, chat.claimer, claim.parentId)}
-							/>
-							<Divider inset={true} />
-						</div>
-				}
-			});
-		}
-	},
-
-	handleOpenChat : function (owner, claimer, ID) {
-		console.log(owner, claimer, ID)
-		console.log("open chat in new left nav bar")
-	},
-
-	render : function () {
-		 return (
-		 	<div>
-		 		<List>
-		 			{this.generateChat()}
-		 		</List>
-		 	</div>
-		 	);
+    },
+    
+    getInitialState(){
+	return{
+	    messageText:""
 	}
+    },
+
+
+    generateChat : function (){
+	if(this.data.privateMessages){
+	    return this.data.privateMessages.messages.map((message) => {
+		return(
+
+		    <div>
+		       	<Comment
+		       	    comment={message.message}
+		       	    date={message.createdAt.toString()}
+		       	    username={message.username}
+		       	/>
+		       	<br />
+		    </div>
+
+		)
+	    });
+	}
+
+    },
+    
+    addMessage(event){
+	event.preventDefault();
+	
+	var message = this.state.messageText;
+
+	Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.params.messagedUsername], this.data.currentUser, message);
+
+	this.setState({messageText:null});
+    },
+
+    handleComment(event){
+	this.setState({
+	    messageText : event.target.value,
+	});
+    },
+
+    handleOpenChat : function (owner, claimer, ID) {
+	console.log(owner, claimer, ID)
+	    console.log("open chat in new left nav bar")
+    },
+
+    render : function () {
+
+	console.log(this.data.privateMessages);
+	return (
+	    <div>
+		<br/>
+		<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
+		<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
+		{this.generateChat()}
+	    </div>
+	);
+    }
 });

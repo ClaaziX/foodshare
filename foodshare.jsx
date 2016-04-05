@@ -1,11 +1,29 @@
 injectTapEventPlugin();
 
+PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
   stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
 });
 
 Meteor.methods({
+
+	addPrivateMessage(users, username, message){
+	 		PrivateChatC.update({between: users},
+	 		    {$push:{
+	 			messages:{
+	 			    username: username,
+	 			    message: message,
+	 			    createdAt: new Date()
+	 			}
+				
+	 		    }
+	 		    },
+	 		    {upsert: true}
+			);
+		},
+
+
 	createClaims(username, prts, ID){
 		FoodItemsC.update(
 			{_id : ID},
@@ -22,6 +40,7 @@ Meteor.methods({
 				} 
 		); 
 	},
+
 
 	updateClaims(ID, value, userName){
 		var itemOwner = FoodItemsC.find( {_id : ID } );
@@ -85,9 +104,8 @@ if (Meteor.isClient) {
 		       <Route path='/UserSettings' component={UserSettings} />
 		       <Route path='/ItemCreation' component={ItemCreation} />
 		       <Route path='/MapView' component={MapView} />
-		       <Route path='/PrivateChat' component={PrivateChat} />
+		       <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} />
 		       <Route path='/login' component={login} />
-
 		</Route>
 		
 	</Router>
