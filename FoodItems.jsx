@@ -74,74 +74,67 @@ FoodItems = React.createClass({
   render : function (){
     return(
 			<div>
+	            <div>
+					<Card>
+						<CardHeader
+							title={this.props.foodItem.foodName}
+							subtitle={this.genPrtnImg()}
+							avatar={this.props.foodItem.imgURL}
+							actAsExpander={true}
+							showExpandableButton={true}
+						/>
+						<CardMedia 
+							expandable={true}
+							overlay={
+								<CardTitle
+									title={this.props.foodItem.foodDesc}
+									subtitle={"Offered By: " + this.props.foodItem.username}
+								/>
+							}
+						>
+							<img src={this.props.foodItem.imgURL} />
+						</CardMedia>
 
-			{ this.props.itemView ?
-			<p>This is an Item View!</p>
+						{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
 
-			:
+							<CardText expandable={true}>
+								<Request claims={this.props.foodItem.claims} />
+							</CardText>
+						:			
+						""
+						}
 
-		            	<div>
-						<Card>
-							<CardHeader
-								title={this.props.foodItem.foodName}
-								subtitle={this.genPrtnImg()}
-								avatar={this.props.foodItem.imgURL}
-								actAsExpander={true}
-								showExpandableButton={true}
+						{ this.data.currentUser == this.props.foodItem.username ?
+
+							<CardActions expandable={true}>
+							<Link to={'/ItemView/'+this.props.foodItem._id}>
+							<FlatButton label="Discuss" />
+							</Link>
+
+							<FlatButton
+								label="Delete"
+								primary={true}
+								onTouchTap={this.deleteThisItem}
 							/>
-							<CardMedia 
-								expandable={true}
-								overlay={
-									<CardTitle
-										title={this.props.foodItem.foodDesc}
-										subtitle={"Offered By: " + this.props.foodItem.username}
-									/>
-								}
-							>
-								<img src={this.props.foodItem.imgURL} />
-							</CardMedia>
+							</CardActions>
 
-							{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
+						:
 
-								<CardText expandable={true}>
-									<Request claims={this.props.foodItem.claims} />
-								</CardText>
-							:			
-							""
-							}
+							<CardActions expandable={true}>
+							<FlatButton
+								label="Claim"
+								primary={true}
+								onTouchTap={this.getOpenPop(this.props.foodItem)}
+							/>
 
-							{ this.data.currentUser == this.props.foodItem.username ?
+							<Link to={'/ItemView/'+this.props.foodItem._id}>
+							<FlatButton label="Discuss" />
+							</Link>
+							</CardActions>
 
-								<CardActions expandable={true}>
-								<Link to={'/ItemView/'+this.props.foodItem._id}>
-								<FlatButton label="Discuss" />
-								</Link>
-
-								<FlatButton
-									label="Delete"
-									primary={true}
-									onTouchTap={this.deleteThisItem}
-								/>
-								</CardActions>
-
-							:
-
-								<CardActions expandable={true}>
-								<FlatButton
-									label="Claim"
-									primary={true}
-									onTouchTap={this.getOpenPop(this.props.foodItem)}
-								/>
-
-								<Link to={'/ItemView/'+this.props.foodItem._id}>
-								<FlatButton label="Discuss" />
-								</Link>
-								</CardActions>
-
-							}
-						</Card>
-						</div>
-			}
+						}
+					</Card>
+				</div>
 			</div>
     );
    }
