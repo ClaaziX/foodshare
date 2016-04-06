@@ -8,3 +8,7 @@ Issues:
 
 		Need to crop square versions for avatar
 		Need to resize before upload to reduse server load
+
+	Item View:
+
+		Need to gen portion images but currently doing through parent (in FoodView), which does not exsist when switching to ItemView
