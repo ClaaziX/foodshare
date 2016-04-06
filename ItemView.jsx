@@ -67,7 +67,7 @@ ItemView = React.createClass({
 	return (
 	    <div>
 
-	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem}/><br />
+	 	<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem} itemView={true} /><br />
 
 		<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.commentText}/><br />
 

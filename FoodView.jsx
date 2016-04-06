@@ -1,6 +1,23 @@
 var {
-  AutoComplete
+  AutoComplete,
+  Tab,
+  Tabs,
+  FlatButton,
+  IconButton,
+  Dialog,
+  Snackbar
     } = MUI;
+
+var { SvgIcons } = MUI.Libs;
+
+const styles = {
+  claim: {
+                width: '100%',
+                maxWidth: 'none',
+  },
+};
+
+var actions = [];
 
 FoodView = React.createClass({
 
@@ -10,6 +27,10 @@ FoodView = React.createClass({
   getInitialState() {
     return {
       filter : '',
+      openClaim: false,
+      alreadyClaimed: false,
+      claimPop: false,
+      actions: [],
     }
   },
 
@@ -41,23 +62,80 @@ FoodView = React.createClass({
   },
 
 
-  renderFoodItems() {
+  renderList() {
     // Get foodItems from this.data.foodItems
     return this.data.foodItems.map((foodItem) => {
       return (
         <div> 	     
-      		<FoodItems key={foodItem._id} foodItem={foodItem} pathName={this.props.location.pathname} />
+      		<FoodItems 
+            key={foodItem._id}
+            foodItem={foodItem}
+            pathName={this.props.location.pathname}
+            calculatePortionsLeft={this.calculatePortionsLeft}
+            handlePop={this.handleOpen}
+          />
         </div>  
       );   
     });
   },
 
+  genClaimMess : function () {
+    if (this.state.alreadyClaimed){
+      return "You've already claimed that item!"
+    }else{
+      return "Item claimed! Please wait for a response."
+    }
+  },
 
+  handleRequestClose : function () {
+    this.setState({claimPop: false});
+  },
+
+  handleOpen : function (item) {
+      this.genActions(item);
+      this.setState({openClaim: true});
+  },
+
+  handleClose : function (alreadyClaimed) {
+      this.setState({openClaim: false});
+      this.setState({alreadyClaimed: alreadyClaimed});
+      this.setState({claimPop: true});
+  },
+
+  calculatePortionsLeft(item){
+    var x = 0;
+    var claims = item.claims;
+    if (claims){
+      for(claim in claims){
+              x = x + claims[claim].accepted;
+        }
+    } return x
+  },
+
+  genActions : function (item) {
+    actions = [     
+      <ClaimControl 
+          id={item._id}
+          claims={item.claims}
+          portions={item.portionNo}
+          username={this.data.currentUser}
+          portionsLeft={item.portionNo - this.calculatePortionsLeft(item)}
+          accept={false}
+          finishIt={this.handleClose}
+      />,
+      <FlatButton
+          label="Cancel"
+          secondary={true}
+          onTouchTap={this.handleClose}
+      />
+      ];
+  },
 
 	render: function() {
 		var searchNames = FoodItemsC.find().map(function(foodItem) {
   			return foodItem.foodName;
 		});
+
 		return (
 			<div>
 				<div className="searchContain">
@@ -68,7 +146,40 @@ FoodView = React.createClass({
 					onUpdateInput={this.filterList}
 					/>
 				</div>
-				{this.renderFoodItems()}
+            <Tabs>
+                <Tab 
+                  label={ 
+                    <IconButton>
+                      <SvgIcons.ActionViewModule color='White' />
+                    </IconButton>}
+                >
+                  <GridView 
+                    foodItems={this.data.foodItems}
+                    handlePop={this.handleOpen}
+                  /> 
+                </Tab>
+
+              <Tab label={<SvgIcons.ActionList color='White' />}>
+				          {this.renderList()}
+              </Tab>
+          </Tabs>
+          <Snackbar
+            open={this.state.claimPop}
+            message={this.genClaimMess()}
+            autoHideDuration={3600}
+            action="Close"
+            onTouchTap={this.handleRequestClose}
+            onRequestClose={this.handleRequestClose}
+          />
+          <Dialog
+            title="Claim!"
+            actions={actions}
+            modal={true}
+            contentStyle={styles.claim}
+            open={this.state.openClaim}
+          >
+            How many portions do you wish to claim?
+          </Dialog>
 			</div>
 		);
 	}
