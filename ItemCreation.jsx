@@ -3,10 +3,18 @@ var {
   RaisedButton,
   FlatButton,
   Dialog,
-  Paper
+  Paper,
+  Styles,
+  Swipe,
+  SwipeableViews,
+  Tab,
+  Tabs,
+  IconButton
     } = MUI;
 
 const { Link } = ReactRouter;
+
+var { FontIcon, SvgIcons } = MUI.Libs;
 
 const errContentStyle = {
 	width: '100%',
@@ -19,7 +27,17 @@ const paperStyle = {
   display: 'inline-block',
 };
 
-
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+  slide: {
+    padding: 10,
+  },
+};
 
 ItemCreation = React.createClass({
   
@@ -35,7 +53,8 @@ ItemCreation = React.createClass({
 			attempt: false,
 			butCol: true,
 			imgDl: false,
-			openErrMess: false
+			openErrMess: false,
+			slideIndex: 0
 		}
 	},
 
@@ -130,6 +149,12 @@ ItemCreation = React.createClass({
 		});
 	},
 
+	handleSlideChange : function (value) {
+		this.setState({
+			slideIndex: value
+		});
+	},
+
 	fileInput: function () {
 		var fileUploadDom = ReactDOM.findDOMNode(this.refs.imgInp);
 		fileUploadDom.click();
@@ -149,85 +174,120 @@ ItemCreation = React.createClass({
 			<div>
 				{ Meteor.userId() ?
 					<div>
-
-						<Paper
-							style={paperStyle}
-							zDepth={4}
-							onClick={this.fileInput}
-						>
-						{ this.state.imgDl ?
-    						<img id="blah" width="auto" height="300px" src="#" />					
-						:
-							<img  width="auto" height="300px" src="/imgs/camera.png" />
-						}
-						</Paper>
-
-						<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
-
-						<br/>
-						<br/>
-						<br/>
-
-						{ nameLengths < 3 && this.state.attempt ?
-							<TextField
-							hintText="Please enter a name..."
-							errorText="Meed more characters!"
-							value={this.state.foodName}
-							onChange={this.handleName}
-							/>
-							:
-							<TextField
-							hintText="Please enter a name..."
-							value={this.state.foodName}
-							onChange={this.handleName}
-							/>
-						}
-						<br/>
-						{ descLengths < 3 && this.state.attempt ?
-							<TextField
-							hintText="Please enter a description..."
-							floatingLabelText="Describe your items..."
-							errorText="Need more characters!"
-							multiLine={true}
-							rows={2}
-							value={this.state.foodDesc}
-							onChange={this.handleDesc}
-						/>
-						:
-							<TextField
-							hintText="Please enter a description..."
-							floatingLabelText="Describe your items..."
-							multiLine={true}
-							rows={2}
-							value={this.state.foodDesc}
-							onChange={this.handleDesc}
-							/>
-						}
-						<br/>
-						Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
-						<br/>
-						<br/>
-						{ this.state.formComplete ?
-							<RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
-						:	
-							<RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
-						}
-						</div>
-						:
 						<div>
-						You must login in, in order to post food!
-						<RaisedButton label="Login" secondary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/login'} />}  />
-						<RaisedButton label="Home" primary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/'} />}  />
+							<Tabs
+								onChange={this.handleSlideChange}
+								value={this.state.slideIndex}
+							>
+								<Tab
+									label={
+										<IconButton>
+											<SvgIcons.ImagePhotoCamera color='White'/>} value={0} />
+										</IconButton>
+									}
+									value={0}
+								/>
+								<Tab label="Details" value={1} />
+								<Tab 
+									label={
+										<IconButton>
+											<SvgIcons.MapsAddLocation color='White'/>} value={0} />
+										</IconButton>
+									}
+									value={2} />
+							</Tabs>
+							<SwipeableViews
+								index={this.state.slideIndex}
+								onChangeIndex={this.handleSlideChange}
+							>
+								<div style={styles.slide}>
+									<Paper
+										style={paperStyle}
+										zDepth={4}
+										onClick={this.fileInput}
+									>
+										{ this.state.imgDl ?
+											<img id="blah" width="auto" height="300px" src="#" />					
+										:
+											<img  width="auto" height="300px" src="/imgs/camera.png" />
+										}
+									</Paper>
+
+									<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
+								</div>
+
+								<div style={styles.slide}>
+									{ nameLengths < 3 && this.state.attempt ?
+										<TextField
+										hintText="Please enter a name..."
+										errorText="Meed more characters!"
+										value={this.state.foodName}
+										onChange={this.handleName}
+										/>
+									:
+										<TextField
+										hintText="Please enter a name..."
+										value={this.state.foodName}
+										onChange={this.handleName}
+										/>
+									}
+									<br/>
+									{ descLengths < 3 && this.state.attempt ?
+										<TextField
+										hintText="Please enter a description..."
+										floatingLabelText="Describe your items..."
+										errorText="Need more characters!"
+										multiLine={true}
+										rows={2}
+										value={this.state.foodDesc}
+										onChange={this.handleDesc}
+										/>
+									:
+										<TextField
+										hintText="Please enter a description..."
+										floatingLabelText="Describe your items..."
+										multiLine={true}
+										rows={2}
+										value={this.state.foodDesc}
+										onChange={this.handleDesc}
+										/>
+									}
+									<br/>
+									Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+								</div>
+
+								<div style={styles.slide}>
+									ADD LOCATION
+								</div>
+
+							</SwipeableViews>
 						</div>
+					
+						<div>
+							{ this.state.formComplete ?
+								<RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+							:	
+								<RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.openErrMess} />
+							}
+						</div>
+
+					</div>
+				:
+					<div>
+					You must login in, in order to post food!
+					<RaisedButton label="Login" secondary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/login'} />}  />
+					<RaisedButton label="Home" primary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/'} />}  />
+					</div>
+
 				}
-				<Dialog
-				title="Please Complete Fields"
-				actions={actions}
-				contentStyle={errContentStyle}
-				open={this.state.openErrMess}
-				>
-				Please complete all necessary fields!
-				</Dialog>
+					<Dialog
+					title="Please Complete Fields"
+					actions={actions}
+					contentStyle={errContentStyle}
+					open={this.state.openErrMess}
+					>
+					Please complete all necessary fields!
+					</Dialog>
 			</div>
 		);
 	}
