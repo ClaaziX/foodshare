@@ -6,7 +6,6 @@ var {
   Paper,
   Styles,
   Swipe,
-  SwipeableViews,
   Tab,
   Tabs,
   IconButton
@@ -174,7 +173,7 @@ ItemCreation = React.createClass({
 			<div>
 				{ Meteor.userId() ?
 					<div>
-						<div>
+						      						<div>
 							<Tabs
 								onChange={this.handleSlideChange}
 								value={this.state.slideIndex}
@@ -187,11 +186,15 @@ ItemCreation = React.createClass({
 									}
 									value={0}
 								/>
-								<Tab label="Details" value={1} />
+								<Tab label={
+										<IconButton>
+											<SvgIcons.EditorModeEdit color='White'/>} value={1} />
+										</IconButton>
+								} value={1} />
 								<Tab 
 									label={
 										<IconButton>
-											<SvgIcons.MapsAddLocation color='White'/>} value={0} />
+											<SvgIcons.MapsAddLocation color='White'/>} value={2} />
 										</IconButton>
 									}
 									value={2} />
@@ -202,58 +205,59 @@ ItemCreation = React.createClass({
 							>
 								<div style={styles.slide}>
 									<Paper
-										style={paperStyle}
-										zDepth={4}
-										onClick={this.fileInput}
-									>
-										{ this.state.imgDl ?
-											<img id="blah" width="auto" height="300px" src="#" />					
-										:
-											<img  width="auto" height="300px" src="/imgs/camera.png" />
-										}
-									</Paper>
-
-									<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
+							style={paperStyle}
+							zDepth={4}
+							onClick={this.fileInput}
+						>
+						{ this.state.imgDl ?
+    						<img id="blah" width="auto" height="300px" src="#" />					
+						:
+							<img  width="auto" height="300px" src="/imgs/camera.png" />
+						}
+						</Paper>
+						<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
 								</div>
 
 								<div style={styles.slide}>
-									{ nameLengths < 3 && this.state.attempt ?
-										<TextField
-										hintText="Please enter a name..."
-										errorText="Meed more characters!"
-										value={this.state.foodName}
-										onChange={this.handleName}
-										/>
-									:
-										<TextField
-										hintText="Please enter a name..."
-										value={this.state.foodName}
-										onChange={this.handleName}
-										/>
-									}
-									<br/>
-									{ descLengths < 3 && this.state.attempt ?
-										<TextField
-										hintText="Please enter a description..."
-										floatingLabelText="Describe your items..."
-										errorText="Need more characters!"
-										multiLine={true}
-										rows={2}
-										value={this.state.foodDesc}
-										onChange={this.handleDesc}
-										/>
-									:
-										<TextField
-										hintText="Please enter a description..."
-										floatingLabelText="Describe your items..."
-										multiLine={true}
-										rows={2}
-										value={this.state.foodDesc}
-										onChange={this.handleDesc}
-										/>
-									}
-									<br/>
-									Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+								{ nameLengths < 3 && this.state.attempt ?
+							<TextField
+							hintText="Please enter a name..."
+							errorText="Meed more characters!"
+							value={this.state.foodName}
+							onChange={this.handleName}
+							/>
+							:
+							<TextField
+							hintText="Please enter a name..."
+							value={this.state.foodName}
+							onChange={this.handleName}
+							/>
+						}
+						<br/>
+						{ descLengths < 3 && this.state.attempt ?
+							<TextField
+							hintText="Please enter a description..."
+							floatingLabelText="Describe your items..."
+							errorText="Need more characters!"
+							multiLine={true}
+							rows={2}
+							value={this.state.foodDesc}
+							onChange={this.handleDesc}
+						/>
+						:
+							<TextField
+							hintText="Please enter a description..."
+							floatingLabelText="Describe your items..."
+							multiLine={true}
+							rows={2}
+							value={this.state.foodDesc}
+							onChange={this.handleDesc}
+							/>
+						}
+						<br/>
+						Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+						<br/>
+						<br/>
 								</div>
 
 								<div style={styles.slide}>
