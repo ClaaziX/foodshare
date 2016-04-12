@@ -133,7 +133,8 @@ if (Meteor.isServer) {
    
    FoodItemsC.remove({});
 
-   FoodItemsC.insert({
+    FoodItemsC.insert({
+	_id: '2CobTjTNP7m7RBaRD',
 	foodName: 'this0',
 	foodDesc: 'is flipping poop',
 	portionNo: 10,
@@ -193,7 +194,81 @@ if (Meteor.isServer) {
 
    });
 
-   
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom0',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom1',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom1',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom2',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom3',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom2',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom2',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom1',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
+	comments:{
+	    username: 'tom0',
+	    comment: 'this is the comment i wanted to make how are you',
+	    createdAt: new Date()
+	}}});
+
+
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom0'],'tom3','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom3','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom1'],'tom1','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom1','tom3'],'tom3','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom2'],'tom2','Just something to add in the place of nothingness');
+	
+	
+
 
 
 }
