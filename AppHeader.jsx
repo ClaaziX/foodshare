@@ -44,7 +44,7 @@ const logoutContentStyle = {
 
 AppHeader = React.createClass({
 
-	mixins: [ReactRouter.History],
+	mixins: [ReactRouter.History, ReactMeteorData],
 
 	getInitialState(){
 	    return{
@@ -212,6 +212,7 @@ AppHeader = React.createClass({
 
 			</div>
 			<div>
+			
 				<LeftNav
 					width={400}
 					openRight={true}
@@ -219,7 +220,8 @@ AppHeader = React.createClass({
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					<MessageBar/>
+					
+					{this.data.currentUser == ''?'':<MessageBar/>}
 				</LeftNav>
         	</div>
 			<div>
