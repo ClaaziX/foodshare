@@ -73,6 +73,10 @@ Meteor.methods({
 
 });
 
+
+//PrivateChatC.remove({})
+//FoodItemsC.remove({})
+
 if (Meteor.isClient) {
   // This code is executed on the client only
   Accounts.ui.config({
@@ -87,6 +91,16 @@ if (Meteor.isClient) {
 	  passwordSignupFields: 'USERNAME_AND_EMAIL'
 
       });
+
+
+  //Add some fake data 
+
+  Accounts.createUser({username:'tom0',email:'tom0@mail.com',password:'blahblah'});
+  Accounts.createUser({username:'tom1',email:'tom1@mail.com',password:'blahblah'});
+  Accounts.createUser({username:'tom2',email:'tom2@mail.com',password:'blahblah'});
+  Accounts.createUser({username:'tom3',email:'tom3@mail.com',password:'blahblah'});
+
+  
 
   const {Router, Route, IndexRoute, Link, history} = ReactRouter;
 
@@ -116,6 +130,72 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+   
+   FoodItemsC.remove({});
+
+   FoodItemsC.insert({
+	foodName: 'this0',
+	foodDesc: 'is flipping poop',
+	portionNo: 10,
+	portionsClaimed: 0,
+	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
+	owner: "mS8nxEFL4EaXuroAE",
+	username: 'tom0',
+	createdAt: new Date()
+
+   });
+
+   FoodItemsC.insert({
+	foodName: 'this1',
+	foodDesc: 'is flipping poop',
+	portionNo: 10,
+	portionsClaimed: 0,
+	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
+	owner: "mS8nxEFL4EaXuroAE",
+	username: 'tom0',
+	createdAt: new Date()
+
+   });
+
+   FoodItemsC.insert({
+	foodName: 'this2',
+	foodDesc: 'is flipping poop',
+	portionNo: 10,
+	portionsClaimed: 0,
+	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
+	owner: "mS8nxEFL4EaXuroAE",
+	username: 'tom0',
+	createdAt: new Date()
+
+   });
+
+   FoodItemsC.insert({
+	foodName: 'this3',
+	foodDesc: 'is flipping poop',
+	portionNo: 10,
+	portionsClaimed: 0,
+	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
+	owner: "mS8nxEFL4EaXuroAE",
+	username: 'tom0',
+	createdAt: new Date()
+
+   });
+
+   FoodItemsC.insert({
+	foodName: 'this4',
+	foodDesc: 'is flipping poop',
+	portionNo: 10,
+	portionsClaimed: 0,
+	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
+	owner: "mS8nxEFL4EaXuroAE",
+	username: 'tom0',
+	createdAt: new Date()
+
+   });
+
+   
+
 
 }
+
 
