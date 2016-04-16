@@ -194,7 +194,7 @@ ItemCreation = React.createClass({
 								<Tab 
 									label={
 										<IconButton>
-											<SvgIcons.MapsAddLocation color='White'/>} value={2} />
+											<SvgIcons.MapsPlace color='White'/>} value={2} />
 										</IconButton>
 									}
 									value={2} />
