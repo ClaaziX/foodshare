@@ -205,59 +205,58 @@ ItemCreation = React.createClass({
 							>
 								<div style={styles.slide}>
 									<Paper
-							style={paperStyle}
-							zDepth={4}
-							onClick={this.fileInput}
-						>
-						{ this.state.imgDl ?
-    						<img id="blah" width="auto" height="300px" src="#" />					
-						:
-							<img  width="auto" height="300px" src="/imgs/camera.png" />
-						}
-						</Paper>
-						<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
+										style={paperStyle}
+										zDepth={4}
+										onClick={this.fileInput}
+									>
+										{ this.state.imgDl ?
+				    						<img id="blah" width="auto" height="300px" src="#" />					
+										:
+											<img  width="auto" height="300px" src="/imgs/camera.png" />
+										}
+									</Paper>
+									<input type='file' id="imgInp" ref="imgInp" className="inputStyle" onChange={this.imgChange} />
 								</div>
 
 								<div style={styles.slide}>
-								{ nameLengths < 3 && this.state.attempt ?
-							<TextField
-							hintText="Please enter a name..."
-							errorText="Meed more characters!"
-							value={this.state.foodName}
-							onChange={this.handleName}
-							/>
-							:
-							<TextField
-							hintText="Please enter a name..."
-							value={this.state.foodName}
-							onChange={this.handleName}
-							/>
-						}
-						<br/>
-						{ descLengths < 3 && this.state.attempt ?
-							<TextField
-							hintText="Please enter a description..."
-							floatingLabelText="Describe your items..."
-							errorText="Need more characters!"
-							multiLine={true}
-							rows={2}
-							value={this.state.foodDesc}
-							onChange={this.handleDesc}
-						/>
-						:
-							<TextField
-							hintText="Please enter a description..."
-							floatingLabelText="Describe your items..."
-							multiLine={true}
-							rows={2}
-							value={this.state.foodDesc}
-							onChange={this.handleDesc}
-							/>
-						}
-						<br/>
-						Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
-						<br/>
-						<br/>
+									{ nameLengths < 3 && this.state.attempt ?
+										<TextField
+										hintText="Please enter a name..."
+										errorText="Meed more characters!"
+										value={this.state.foodName}
+										onChange={this.handleName}
+										/>
+									:
+										<TextField
+										hintText="Please enter a name..."
+										value={this.state.foodName}
+										onChange={this.handleName}
+										/>
+									}
+									<br/>
+									{ descLengths < 3 && this.state.attempt ?
+										<TextField
+										hintText="Please enter a description..."
+										floatingLabelText="Describe your items..."
+										errorText="Need more characters!"
+										multiLine={true}
+										rows={2}
+										value={this.state.foodDesc}
+										onChange={this.handleDesc}
+									/>
+									:
+										<TextField
+										hintText="Please enter a description..."
+										floatingLabelText="Describe your items..."
+										multiLine={true}
+										rows={2}
+										value={this.state.foodDesc}
+										onChange={this.handleDesc}
+										/>
+									}
+									<br/>
+									Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+									<br/>
 								</div>
 
 								<div style={styles.slide}>
