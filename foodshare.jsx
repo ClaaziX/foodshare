@@ -9,19 +9,14 @@ MyImages = new FS.Collection("myImages", {
 Meteor.methods({
 
 	addPrivateMessage(users, username, message){
-	 		PrivateChatC.update({between: users},
-	 		    {$push:{
-	 			messages:{
-	 			    username: username,
-	 			    message: message,
-	 			    createdAt: new Date()
-	 			}
-				
-	 		    }
-	 		    },
-	 		    {upsert: true}
-			);
-		},
+	    PrivateChatC.insert({between: users,
+	 			 username: username,
+	 			 message: message,
+	 			 createdAt: new Date(),
+			         seen: false
+	    }
+	    );
+	},
 
 
 	createClaims(username, prts, ID){
@@ -258,6 +253,7 @@ if (Meteor.isServer) {
 	    createdAt: new Date()
 	}}});
 
+    PrivateChatC.remove({});
 
     Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','Just something to add in the place of nothingness');
     Meteor.call('addPrivateMessage',['tom3','tom0'],'tom3','Just something to add in the place of nothingness');
