@@ -262,6 +262,8 @@ if (Meteor.isServer) {
     Meteor.call('addPrivateMessage',['tom3','tom1'],'tom1','Just something to add in the place of nothingness');
     Meteor.call('addPrivateMessage',['tom1','tom3'],'tom3','Just something to add in the place of nothingness');
     Meteor.call('addPrivateMessage',['tom3','tom2'],'tom2','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom2'],'tom2','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom1','tom2'],'tom2','Just something to add in the place of nothingness');
 	
 	
 

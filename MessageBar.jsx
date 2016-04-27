@@ -13,7 +13,7 @@ MessageBar = React.createClass({
 
     renderMessagesList: function(){
 	if(this.data.privateMessages){
-	    return this.data.privateMessages.messages.map((message) => {
+	    return this.data.privateMessages.map((message) => {
 
 		return(
 		    <ListItem	
@@ -42,7 +42,7 @@ MessageBar = React.createClass({
 	    currentUser: currentUser,
 	    privateMessages: PrivateChatC.find(
 		{between: {$exists: true, $all: [currentUser]}}
-	    ).fetch()[0]
+	    ).fetch()
 	};
 
 
