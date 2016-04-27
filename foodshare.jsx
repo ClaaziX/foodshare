@@ -255,15 +255,15 @@ if (Meteor.isServer) {
 
     PrivateChatC.remove({});
 
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom0'],'tom3','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom3','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom1'],'tom1','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom1','tom3'],'tom3','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom2'],'tom2','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom2'],'tom2','Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom1','tom2'],'tom2','Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','0:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom0'],'tom3','1:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom3','2:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','3:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom1'],'tom1','4:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom1','tom3'],'tom3','5:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom3','tom2'],'tom2','6:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom0','tom2'],'tom2','7:Just something to add in the place of nothingness');
+    Meteor.call('addPrivateMessage',['tom1','tom2'],'tom2','8:Just something to add in the place of nothingness');
 	
 	
 
