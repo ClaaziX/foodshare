@@ -1,5 +1,8 @@
 injectTapEventPlugin();
 
+//db.privateChat.aggregate([{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}])
+
+
 PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
@@ -9,7 +12,7 @@ MyImages = new FS.Collection("myImages", {
 Meteor.methods({
 
 	addPrivateMessage(users, username, message){
-	    PrivateChatC.insert({between: users,
+	    PrivateChatC.insert({between: users.sort(),
 	 			 username: username,
 	 			 message: message,
 	 			 createdAt: new Date(),
