@@ -40,7 +40,7 @@ MessageBar = React.createClass({
 	currentUser = Meteor.user() ? Meteor.user().username : '';
 	return {
 	    currentUser: currentUser,
-	    privateMessages: Meteor.call('getMessageBarMessages', currentUser)
+	    privateMessages: Meteor.call('bullshit', currentUser, function(error,result){console.log('anything');})
 	};
 
 

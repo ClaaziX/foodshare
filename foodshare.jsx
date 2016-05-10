@@ -11,9 +11,9 @@ MyImages = new FS.Collection("myImages", {
 
 Meteor.methods({
 
-	getMessageBarMessages(currentUser){
-		return PrivateChatC.aggregate([{$match:{between:{$in:[currentUser]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}]);
-	},
+	// getMessageBarMessages(currentUser){
+	// 	return PrivateChatC.aggregate([{$match:{between:{$in:[currentUser]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}]);
+	// },
 	    
 
 	addPrivateMessage(users, username, message){
@@ -133,6 +133,13 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+
+   Meteor.methods({
+
+	getMessageBarMessages(currentUser){
+		return PrivateChatC.aggregate([{$match:{between:{$in:[currentUser]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}]);
+	}});
+
    
    FoodItemsC.remove({});
 

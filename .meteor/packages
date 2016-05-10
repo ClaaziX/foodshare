@@ -44,4 +44,4 @@ service-configuration
 edgee:slingshot
 ccorcos:clientside-image-manipulation
 tmikeladze:react-swipeable-views
-monbro:mongodb-mapreduce-aggregation
+meteorhacks:aggregate
