@@ -36,11 +36,11 @@ MessageBar = React.createClass({
     },
 
     getMeteorData: function(){
-
+        Meteor.subscribe("sidebar")
 	currentUser = Meteor.user() ? Meteor.user().username : '';
 	return {
 	    currentUser: currentUser,
-	    privateMessages: Meteor.call('bullshit', currentUser, function(error,result){console.log('anything');})
+	    privateMessages: clientSidebar.find()[0]
 	};
 
 
@@ -48,7 +48,7 @@ MessageBar = React.createClass({
 
 
     render : function(){
-	console.log(this.data.privateMessages);
+    	console.log('Data Response ' + this.data.privateMessages)
 	return(
 	    <List subheader="Messages">
 		{this.renderMessagesList()}

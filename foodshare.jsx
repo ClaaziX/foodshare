@@ -2,7 +2,7 @@ injectTapEventPlugin();
 
 //db.privateChat.aggregate([{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}])
 
-
+clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
 MyImages = new FS.Collection("myImages", {
@@ -82,6 +82,8 @@ Meteor.methods({
 
 if (Meteor.isClient) {
   // This code is executed on the client only
+  //clientSidebar = new Meteor.Collection('clientSidebar');
+
   Accounts.ui.config({
       
 	  requestPermissions: {
@@ -134,13 +136,8 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
 
-   Meteor.methods({
 
-	getMessageBarMessages(currentUser){
-		return PrivateChatC.aggregate([{$match:{between:{$in:[currentUser]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}]);
-	}});
 
-   
    FoodItemsC.remove({});
 
     FoodItemsC.insert({
@@ -281,6 +278,14 @@ if (Meteor.isServer) {
     Meteor.call('addPrivateMessage',['tom1','tom2'],'tom2','8:Just something to add in the place of nothingness');
 	
 	
+   Meteor.publish(   "sidebar", 
+		     function (){
+		     	      ReactiveAggregate(	this, 
+						PrivateChatC,
+						[{$match:{between:{$in:['tom3']}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}}],
+4						{clientCollection: "clientSidebar"}
+						);
+	});
 
 
 

@@ -64,6 +64,7 @@ http@1.1.1
 id-map@1.0.4
 insecure@1.0.4
 izzilab:material-ui@0.2.6
+jcbernack:reactive-aggregate@0.6.0
 jquery@1.11.4
 jsx@0.2.3
 launch-screen@1.0.4
