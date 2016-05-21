@@ -18,12 +18,12 @@ MessageBar = React.createClass({
 		return(
 		    <ListItem	
                         leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
-			rightIconButton={<SvgIcons.CommunicationChatBubble />}
+			rightIconButton={<SvgIcons.CommunicationChatBubble color={Styles.Colors.red500}/>}
 			primaryText={message.username}
 			secondaryText={
 			    <p>
-				<span style={{color: Styles.Colors.darkBlack}}>The Date</span><br/>
-					    Little bit of the text from the messages
+				<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
+					    {message.message}
 			    </p>
 				      }
 			secondaryTextLines={2}
@@ -40,7 +40,7 @@ MessageBar = React.createClass({
 	currentUser = Meteor.user() ? Meteor.user().username : '';
 	return {
 	    currentUser: currentUser,
-	    privateMessages: clientSidebar.find()[0]
+	    privateMessages: clientSidebar.find().fetch()
 	};
 
 
@@ -48,7 +48,6 @@ MessageBar = React.createClass({
 
 
     render : function(){
-    	console.log('Data Response ' + this.data.privateMessages)
 	return(
 	    <List subheader="Messages">
 		{this.renderMessagesList()}
