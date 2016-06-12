@@ -7,6 +7,8 @@ var {
 
 var {SvgIcons}=MUI.Libs;
 
+const { Link } = ReactRouter;
+
 MessageBar = React.createClass({
 
     mixins: [ReactMeteorData],
@@ -14,22 +16,23 @@ MessageBar = React.createClass({
     renderMessagesList: function(){
 	if(this.data.privateMessages){
 	    return this.data.privateMessages.map((message) => {
+		item = 		    <ListItem	
+                leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
+		
+		rightIconButton={!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''}
+		containerElement={<Link to={"/PrivateChat/" + message.between.splice(0, message.between.indexOf(this.data.currentUser))[0]} />}
+		primaryText={message.username}
+		secondaryText={
+		    <p>
+			<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
+			{message.message}
+		    </p>
+		}
+		secondaryTextLines={2}
 
-		return(
-		    <ListItem	
-                        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
-			rightIconButton={<SvgIcons.CommunicationChatBubble color={Styles.Colors.red500}/>}
-			primaryText={message.username}
-			secondaryText={
-			    <p>
-				<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
-					    {message.message}
-			    </p>
-				      }
-			secondaryTextLines={2}
-
-		    />
-		)
+		/>
+		
+		return(item)
 	    });
 	}
 
