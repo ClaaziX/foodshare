@@ -44,3 +44,5 @@ service-configuration
 edgee:slingshot
 ccorcos:clientside-image-manipulation
 tmikeladze:react-swipeable-views
+meteorhacks:aggregate
+jcbernack:reactive-aggregate

@@ -1,3 +1,5 @@
+//#
+
 let {
     TextField,
     RaisedButton,
@@ -18,7 +20,7 @@ PrivateChat = React.createClass({
 	    currentUser: currentUser,
 	    privateMessages: PrivateChatC.find(
 		{ between: { $all: [currentUser, this.props.params.messagedUsername] } }
-	    ).fetch()[0]
+	    ).fetch()
 	};
 	
     },
@@ -32,7 +34,7 @@ PrivateChat = React.createClass({
 
     generateChat : function (){
 	if(this.data.privateMessages){
-	    return this.data.privateMessages.messages.map((message) => {
+	    return this.data.privateMessages.map((message) => {
 		return(
 
 		    <div>
@@ -49,6 +51,10 @@ PrivateChat = React.createClass({
 	}
 
     },
+
+    messagesSeen : function (){
+	Meteor.call('markPMSeen', this.data.currentUser, this.props.params.messagedUsername);
+	},
     
     addMessage(event){
 	event.preventDefault();
@@ -80,6 +86,7 @@ PrivateChat = React.createClass({
 		<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
 		<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
 		{this.generateChat()}
+		{this.messagesSeen()}
 	    </div>
 	);
     }
