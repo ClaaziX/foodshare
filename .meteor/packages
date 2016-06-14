@@ -46,3 +46,6 @@ ccorcos:clientside-image-manipulation
 tmikeladze:react-swipeable-views
 meteorhacks:aggregate
 jcbernack:reactive-aggregate
+dburles:factory@=0.4.2
+digilord:faker
+tinytest

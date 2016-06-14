@@ -91,12 +91,6 @@ if (Meteor.isClient) {
     });
 
 
-    //Add some fake data 
-
-    Accounts.createUser({username:'tom0',email:'tom0@mail.com',password:'blahblah'});
-    Accounts.createUser({username:'tom1',email:'tom1@mail.com',password:'blahblah'});
-    Accounts.createUser({username:'tom2',email:'tom2@mail.com',password:'blahblah'});
-    Accounts.createUser({username:'tom3',email:'tom3@mail.com',password:'blahblah'});
 
     
 
@@ -132,6 +126,7 @@ if (Meteor.isServer) {
 
 
     FoodItemsC.remove({});
+
 
     FoodItemsC.insert({
 	_id: '2CobTjTNP7m7RBaRD',
