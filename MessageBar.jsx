@@ -16,11 +16,14 @@ MessageBar = React.createClass({
     renderMessagesList: function(){
 	if(this.data.privateMessages){
 	    return this.data.privateMessages.map((message) => {
+	    otherUser = message.between;
+	    otherUser.splice(otherUser.indexOf(this.data.currentUser),1)
+	    console.log(message.between)
 		item = 		    <ListItem	
                 leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
 		
 		rightIconButton={!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''}
-		containerElement={<Link to={"/PrivateChat/" + message.between.splice(0, message.between.indexOf(this.data.currentUser))[0]} />}
+		containerElement={<Link to={"/PrivateChat/" + otherUser[0]} />}
 		primaryText={message.username}
 		secondaryText={
 		    <p>
@@ -39,8 +42,10 @@ MessageBar = React.createClass({
     },
 
     getMeteorData: function(){
-        Meteor.subscribe("sidebar")
+
 	currentUser = Meteor.user() ? Meteor.user().username : '';
+        Meteor.subscribe("sidebar", currentUser);
+
 	return {
 	    currentUser: currentUser,
 	    privateMessages: clientSidebar.find().fetch()

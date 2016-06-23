@@ -1,5 +1,7 @@
 injectTapEventPlugin();
 
+
+
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
@@ -91,9 +93,6 @@ if (Meteor.isClient) {
     });
 
 
-
-    
-
     const {Router, Route, IndexRoute, Link, history} = ReactRouter;
 
     const browserHistory = history.createHistory();  
@@ -122,155 +121,72 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+    
+    //Reset all the databases before we add the test data in.
 
+    //Remove Users
+    Meteor.users.remove({});
 
-
+    //Remove Fooditems
     FoodItemsC.remove({});
 
-
-    FoodItemsC.insert({
-	_id: '2CobTjTNP7m7RBaRD',
-	foodName: 'this0',
-	foodDesc: 'is flipping poop',
-	portionNo: 10,
-	portionsClaimed: 0,
-	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
-	owner: "mS8nxEFL4EaXuroAE",
-	username: 'tom0',
-	createdAt: new Date()
-
-    });
-
-    FoodItemsC.insert({
-	foodName: 'this1',
-	foodDesc: 'is flipping poop',
-	portionNo: 10,
-	portionsClaimed: 0,
-	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
-	owner: "mS8nxEFL4EaXuroAE",
-	username: 'tom0',
-	createdAt: new Date()
-
-    });
-
-    FoodItemsC.insert({
-	foodName: 'this2',
-	foodDesc: 'is flipping poop',
-	portionNo: 10,
-	portionsClaimed: 0,
-	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
-	owner: "mS8nxEFL4EaXuroAE",
-	username: 'tom0',
-	createdAt: new Date()
-
-    });
-
-    FoodItemsC.insert({
-	foodName: 'this3',
-	foodDesc: 'is flipping poop',
-	portionNo: 10,
-	portionsClaimed: 0,
-	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
-	owner: "mS8nxEFL4EaXuroAE",
-	username: 'tom0',
-	createdAt: new Date()
-
-    });
-
-    FoodItemsC.insert({
-	foodName: 'this4',
-	foodDesc: 'is flipping poop',
-	portionNo: 10,
-	portionsClaimed: 0,
-	imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom0/herbertFlag.png",
-	owner: "mS8nxEFL4EaXuroAE",
-	username: 'tom0',
-	createdAt: new Date()
-
-    });
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom0',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom1',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom1',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom2',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom3',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom2',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom2',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom1',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
-    FoodItemsC.update({_id: '2CobTjTNP7m7RBaRD'},{$push : {
-	comments:{
-	    username: 'tom0',
-	    comment: 'this is the comment i wanted to make how are you',
-	    createdAt: new Date()
-	}}});
-
+    //Remove privateChat
     PrivateChatC.remove({});
 
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','0:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom0'],'tom3','1:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom3','2:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom3'],'tom0','3:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom1'],'tom1','4:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom1','tom3'],'tom3','5:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom3','tom2'],'tom2','6:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom0','tom2'],'tom2','7:Just something to add in the place of nothingness');
-    Meteor.call('addPrivateMessage',['tom1','tom2'],'tom2','8:Just something to add in the place of nothingness');
+    //Create user accounts
+    var numUsers = 5;
+    for(i = 0; i < numUsers; i++){
+    	  Accounts.createUser({username:'tom'+i,email:'tom'+i+'@mail.com', password:'password'});
+    }
+
+    //Create food items by random users
+    var numFoodItems = 20;
+    var numPortions = 10;
+    for(i = 0; i < numFoodItems; i++){
+        currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)]
+    	FoodItemsC.insert({
+     		foodName: faker.lorem.words(),
+      		foodDesc: faker.lorem.sentence(),
+      		portionNo: Math.floor(Math.random()*numPortions),
+      		portionsClaimed: 0,
+      		imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom3/beansbeans.jpg",
+      		owner: currUser._id,
+      		username: currUser.username,
+      		createdAt: new Date()
+      	});
+    	  
+    }
+
+    //Create comments by random users
+    var numComments = 35;
+    for(i = 0; i < numComments; i++){
+          currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)];
+    	  currItem = FoodItemsC.find().fetch()[Math.floor(Math.random()*numFoodItems)];
+	      FoodItemsC.update({_id: currItem._id},{$push : {
+	      	comments:{
+			username: currUser.username,
+	    		comment: faker.lorem.sentences(),
+	    		createdAt: new Date()
+			}}});
+  
+     }    
     
+    //Create private messages between people
+    var numMessages = 100;
+    for(i = 0; i < numComments; i++){
+    	  randNumFirst = Math.floor(Math.random()*numUsers);
+	  randNumSecond = (randNumFirst + ((Math.floor(Math.random()*(numUsers-1)))+1) ) % numUsers;
+          allUsers = Meteor.users.find().fetch();
+	  firstUser = allUsers[randNumFirst].username;
+	  secondUser = allUsers[randNumSecond].username;
+          Meteor.call('addPrivateMessage',[firstUser,secondUser],firstUser,faker.lorem.sentences());
+     }    
     
     Meteor.publish(   "sidebar", 
-		      function (){
+		      function (username){
 		     	  ReactiveAggregate(	this, 
 					    PrivateChatC,
-					    [{$match:{between:{$in:['tom3']}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}},{$sort:{createdAt:-1}}],					{clientCollection: "clientSidebar"}
+					    [{$match:{between:{$in:[username]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}},{$sort:{createdAt:-1}}],					{clientCollection: "clientSidebar"}
 			  );
 		      });
 
