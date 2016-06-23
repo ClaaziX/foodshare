@@ -40,6 +40,7 @@ check@1.1.0
 chuangbo:cookie@1.1.0
 coffeescript@1.0.11
 cosmos:browserify@0.10.0
+dburles:factory@0.4.2
 dburles:google-maps@1.1.5
 ddp@1.2.2
 ddp-client@1.2.1
@@ -48,6 +49,7 @@ ddp-rate-limiter@1.0.0
 ddp-server@1.2.2
 deps@1.0.9
 diff-sequence@1.0.1
+digilord:faker@1.0.7
 ecmascript@0.1.6
 ecmascript-runtime@0.2.6
 edgee:slingshot@0.7.1
@@ -121,6 +123,7 @@ srp@1.0.4
 standard-minifiers@1.0.2
 templating@1.1.5
 templating-tools@1.0.0
+tinytest@1.0.6
 tmikeladze:react-swipeable-views@0.0.1
 tracker@1.0.9
 ui@1.0.8
