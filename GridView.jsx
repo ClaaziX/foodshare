@@ -49,7 +49,7 @@ GridView = React.createClass({
 				>
 					{foodS.map(tile => (
 					  <GridTile
-					  key={tile.imgURL}
+					  key={tile._id}
 					  title={tile.foodName}
 					  subtitle={<span>by <b>{tile.username}</b></span>}
 					  actionIcon={
