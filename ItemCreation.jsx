@@ -8,8 +8,11 @@ var {
   Swipe,
   Tab,
   Tabs,
-  IconButton
-    } = MUI;
+  IconButton,
+  Step,
+  Stepper,
+  StepLabel
+  } = MUI;
 
 const { Link } = ReactRouter;
 
@@ -221,8 +224,8 @@ ItemCreation = React.createClass({
 								<div style={styles.slide}>
 									{ nameLengths < 3 && this.state.attempt ?
 										<TextField
-										hintText="Please enter a name..."
-										errorText="Meed more characters!"
+										hintText="Please enter the name of the food item"
+										errorText="Need more characters!"
 										value={this.state.foodName}
 										onChange={this.handleName}
 										/>
