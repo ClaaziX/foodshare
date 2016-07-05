@@ -13,12 +13,11 @@ Meteor.methods({
 
     addPrivateMessage(users, username, message){
 	PrivateChatC.insert({between: users.sort(),
-	 		     username: username,
-	 		     message: message,
-	 		     createdAt: new Date(),
-			     seen: false
-	}
-	);
+		 		     username: username,
+		 		     message: message,
+		 		     createdAt: new Date(),
+				     seen: false
+		});
     },
 
     markPMSeen(user, messaged){

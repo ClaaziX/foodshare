@@ -116,7 +116,7 @@ AppHeader = React.createClass({
 	},
 
     render : function(){
-
+    	var winWidth = window.innerWidth;
 		const actions = [
 			<FlatButton
 			label="Logout"
@@ -214,14 +214,32 @@ AppHeader = React.createClass({
 			<div>
 			
 				<LeftNav
-					width={400}
+					width={winWidth}
 					openRight={true}
 					open={this.state.openNav}
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					
-					{this.data.currentUser == ''?'':<MessageBar/>}
+					<div className="headContain">
+						<AppBar
+						    title="Messages"
+						    iconElementLeft={
+						    	<IconButton onTouchTap={this.handleCloseNav}>
+									<SvgIcons.ContentBackspace color='White'/>
+								</IconButton>}
+						    iconElementRight={
+								<IconButton onTouchTap={this.handleOpen}>
+									<SvgIcons.ActionSettings color='White'/>
+								</IconButton>}
+							targetOrigin={{horizontal: 'right', vertical: 'top'}}
+				  		/>
+		  			</div>
+					{this.data.currentUser == '' ? 
+						<div className="vertAlign">
+						You have no messages, go share some food! :)
+	    				</div>
+					: 
+						<MessageBar/>}
 				</LeftNav>
         	</div>
 			<div>

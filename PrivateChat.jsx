@@ -19,7 +19,7 @@ PrivateChat = React.createClass({
 	return {
 	    currentUser: currentUser,
 	    privateMessages: PrivateChatC.find(
-		{ between: { $all: [currentUser, this.props.params.messagedUsername] } }
+		{ between: { $all: [currentUser, this.props.messagedUsername] } }
 	    ).fetch()
 	};
 	
@@ -35,16 +35,16 @@ PrivateChat = React.createClass({
     generateChat : function (){
 	if(this.data.privateMessages){
 	    return this.data.privateMessages.map((message) => {
-		return(
+			return(
 
-		    <div>
-		       	<Comment
-		       	    comment={message.message}
-		       	    date={message.createdAt.toString()}
-		       	    username={message.username}
-		       	/>
-		       	<br />
-		    </div>
+			    <div>
+			       	<Comment
+			       	    comment={message.message}
+			       	    date={message.createdAt.toString()}
+			       	    username={message.username}
+			       	/>
+			       	<br />
+			    </div>
 
 		)
 	    });
@@ -53,7 +53,7 @@ PrivateChat = React.createClass({
     },
 
     messagesSeen : function (){
-	Meteor.call('markPMSeen', this.data.currentUser, this.props.params.messagedUsername);
+	Meteor.call('markPMSeen', this.data.currentUser, this.props.messagedUsername);
 	},
     
     addMessage(event){
@@ -61,7 +61,7 @@ PrivateChat = React.createClass({
 	
 	var message = this.state.messageText;
 
-	Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.params.messagedUsername], this.data.currentUser, message);
+	Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.messagedUsername], this.data.currentUser, message);
 
 	this.setState({messageText:null});
     },

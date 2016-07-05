@@ -269,3 +269,13 @@ form {
 .itemListView tr:first-child td:last-child{
   border-width:0px 0px 1px 1px;
 }
+.vertAlign{
+  height:100%;
+  display: table;
+  width: 100%;
+}
+
+.vertAlign span {
+  vertical-align:middle;
+  display: table-cell;
+}
