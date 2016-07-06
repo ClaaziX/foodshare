@@ -24,7 +24,7 @@ ClaimControl = React.createClass({
 					{$inc : {portionsClaimed: this.state.value}},
 			);
 			Meteor.call('updateClaims', this.props.id, this.state.value, this.props.username, this.props.date)
-			var message = currentUser + " has accepted your claim for " + this.state.value + " of " + this.props.id.foodName;
+			var message = currentUser + " has accepted your claim for " + this.state.value + " of " + this.props.foodName;
 			Meteor.call('addPrivateMessage', [currentUser, this.props.username], currentUser, message)
 			console.log(currentUser)
 			console.log(this.props.username)

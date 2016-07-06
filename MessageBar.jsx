@@ -22,12 +22,12 @@ MessageBar = React.createClass({
 	},
 
 	getMeteorData: function(){
-        Meteor.subscribe("sidebar")
 		currentUser = Meteor.user() ? Meteor.user().username : '';
 			return {
 			    currentUser: currentUser,
 			    privateMessages: clientSidebar.find().fetch()
 			};
+		Meteor.subscribe("sidebar", currentUser);
     },
 
     renderMessagesList: function(){
