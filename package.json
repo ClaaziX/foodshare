@@ -1,0 +1,35 @@
+{
+  "name": "foodshare",
+  "version": "0.0.1",
+  "description": "Foodsharing app",
+  "main": "foodshare.jsx",
+  "dependencies": {
+    "material-ui": "^0.15.1",
+    "react": "^15.2.0",
+    "react-addons-create-fragment": "^15.2.0",
+    "react-addons-css-transition-group": "^15.2.0",
+    "react-addons-linked-state-mixin": "^15.2.0",
+    "react-addons-perf": "^15.2.0",
+    "react-addons-pure-render-mixin": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-addons-transition-group": "^15.2.0",
+    "react-addons-update": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-router": "^2.5.2",
+    "react-tap-event-plugin": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClaaziX/foodshare.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ClaaziX/foodshare/issues"
+  },
+  "homepage": "https://github.com/ClaaziX/foodshare#readme"
+}
