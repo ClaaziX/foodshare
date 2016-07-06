@@ -1,13 +1,13 @@
-var {
+import {
   Styles,
   GridList,
   GridTile,
   IconButton
-    } = MUI;
+    } from 'material-ui';
 
-var { FontIcon, SvgIcons } = MUI.Libs;
+import { FontIcon, SvgIcons } from 'material-ui';
    
-var { ThemeManager, LightRawTheme } = Styles;
+import { ThemeManager, LightRawTheme } from 'material-ui';
 
 const {Link} = ReactRouter;
 

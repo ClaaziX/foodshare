@@ -1,11 +1,11 @@
-var {
+import {
     List,
     ListItem,
     Avatar,
     Styles
-} = MUI;
+} from 'material-ui';
 
-var {SvgIcons}=MUI.Libs;
+import {SvgIcons} from 'material-ui';
 
 const { Link } = ReactRouter;
 

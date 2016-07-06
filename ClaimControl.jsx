@@ -1,7 +1,7 @@
-var {
+import {
 	FlatButton,
 	Snackbar
-    } = MUI;
+    } from 'material-ui';
 
 ClaimControl = React.createClass({
     

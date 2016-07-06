@@ -1,4 +1,4 @@
-var {
+import {
   TextField,
   RaisedButton,
   FlatButton,
@@ -12,11 +12,11 @@ var {
   Step,
   Stepper,
   StepLabel
-  } = MUI;
+  } from 'material-ui';
 
 const { Link } = ReactRouter;
 
-var { FontIcon, SvgIcons } = MUI.Libs;
+import { FontIcon, SvgIcons } from 'material-ui';
 
 const errContentStyle = {
 	width: '100%',

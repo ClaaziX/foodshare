@@ -1,4 +1,4 @@
-var {
+import {
   AutoComplete,
   Tab,
   Tabs,
@@ -6,9 +6,9 @@ var {
   IconButton,
   Dialog,
   Snackbar
-    } = MUI;
+    } from 'material-ui';
 
-var { SvgIcons } = MUI.Libs;
+import { SvgIcons } from 'material-ui';
 
 const styles = {
   claim: {

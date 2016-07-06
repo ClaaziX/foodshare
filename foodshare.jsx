@@ -1,6 +1,8 @@
+injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");

@@ -1,7 +1,7 @@
-var {
+import {
   DropDownMenu,
   MenuItem
-    } = MUI;
+    } from 'material-ui';
 
 NumberOptions = React.createClass({
 

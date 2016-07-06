@@ -1,4 +1,4 @@
-var { 
+import { 
     Card,
     CardActions,
     CardHeader,
@@ -6,7 +6,7 @@ var {
     CardTitle,
     FlatButton,
     CardText
-    } = MUI ;
+    } from 'material-ui' ;
 
 Comment = React.createClass({
 

@@ -12,7 +12,6 @@ session                 # Client-side reactive dictionary for your app
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
 
-standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
@@ -23,11 +22,9 @@ accounts-password
 accounts-base
 cfs:standard-packages
 cfs:gridfs
-react
 raix:ui-dropped-event
 praneybehl:react-dropzone
 reactrouter:react-router
-izzilab:material-ui
 cosmos:browserify
 reactrouter:react-router-ssr
 dburles:google-maps
@@ -39,7 +36,6 @@ reload
 logging
 cfs:filesystem
 accounts-facebook
-qnub:accounts-react-material-ui
 service-configuration
 edgee:slingshot
 ccorcos:clientside-image-manipulation
@@ -49,3 +45,6 @@ jcbernack:reactive-aggregate
 dburles:factory@=0.4.2
 digilord:faker
 tinytest
+standard-minifier-css
+standard-minifier-js
+react-meteor-data

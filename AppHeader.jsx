@@ -1,6 +1,7 @@
-var {
+import AppBar from 'material-ui/AppBar';
+
+import {
     AppCanvas,
-    AppBar,
     Dialog,
     Styles,
     RaisedButton,
@@ -16,24 +17,19 @@ var {
     Tab,
     Slider,
     FlatButton,
-    IconButton,
-    NavigationClose,
-    IconMenu,
-    MoreVertIcon,
-    MenuItem,
     Snackbar,
     SwipeableViews,
     Toolbar,
     ToolbarGroup,
-	ToolbarSeparator,
-	ToolbarTitle,
-	Badge,
-	LeftNav
-    } = MUI;
+    ToolbarSeparator,
+    ToolbarTitle,
+    Badge,
+    LeftNav,
+    FontIcon, 
+    SvgIcons,
+    } from 'material-ui'
 
-var { FontIcon, SvgIcons } = MUI.Libs;
-   
-var { ThemeManager, LightRawTheme } = Styles;
+import { ThemeManager, LightRawTheme } from 'material-ui';
 
 const { Link } = ReactRouter;
 

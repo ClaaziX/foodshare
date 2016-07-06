@@ -1,6 +1,6 @@
-//#
 
-let {
+
+import {
     TextField,
     RaisedButton,
     Styles,
@@ -8,7 +8,7 @@ let {
     ListItem,
     Avatar,
     Divider
-} = MUI;
+} from 'material-ui';
 
 PrivateChat = React.createClass({
 

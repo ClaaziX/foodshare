@@ -1,4 +1,4 @@
-let {
+import {
     ActionInfo,
     List,
     ListItem,
@@ -11,16 +11,16 @@ let {
     Avatar,
     FlatButton,
     Dialog
-    } = MUI;
+    } from 'material-ui';
 
-let {
+import {
     Colors
-    } = Styles;
+    } from 'material-ui';
 
 
-const { 
+import { 
       SvgIcons,
-      } = MUI.Libs;
+      } from 'material-ui';
 
 const claimContentStyle = {
                 width: '100%',

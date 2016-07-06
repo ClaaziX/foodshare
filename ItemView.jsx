@@ -1,7 +1,7 @@
-let{
+import {
     TextField,
     RaisedButton
-} = MUI;
+} from 'material-ui';
 
 
 
