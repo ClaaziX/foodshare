@@ -12,27 +12,23 @@ ClaimControl = React.createClass({
 	       };
     },
 
-    getMeteorData() {
-	currentUser = Meteor.user() ? Meteor.user().username : '';
-	return {
-	    currentUser: currentUser
-	};
-	
-    },
-
     makeClaim(inputVal){
     	this.setState({value: inputVal});
     },
 
 	submitIt : function () {
+		var currentUser = Meteor.user() ? Meteor.user().username : '';
 		if(this.props.accept){
 			FoodItemsC.update(
 				{_id : this.props.id},
 					{$inc : {portionsClaimed: this.state.value}},
 			);
 			Meteor.call('updateClaims', this.props.id, this.state.value, this.props.username, this.props.date)
-			var message = this.data.currentUser + "has accepted your claim for" + this.state.value + "of" + this.props.id;
-			Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.username], this.data.currentUser, message)
+			var message = currentUser + " has accepted your claim for " + this.state.value + " of " + this.props.id.foodName;
+			Meteor.call('addPrivateMessage', [currentUser, this.props.username], currentUser, message)
+			console.log(currentUser)
+			console.log(this.props.username)
+			console.log(message)
 
 		}else{
 

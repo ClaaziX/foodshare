@@ -21,8 +21,17 @@ MessageBar = React.createClass({
 	    }
 	},
 
-    renderMessagesList: function(){
+	getMeteorData: function(){
+        Meteor.subscribe("sidebar")
+		currentUser = Meteor.user() ? Meteor.user().username : '';
+			return {
+			    currentUser: currentUser,
+			    privateMessages: clientSidebar.find().fetch()
+			};
+    },
 
+    renderMessagesList: function(){
+    	console.log(this.data.privateMessages)
 	if(this.data.privateMessages){
 	    return this.data.privateMessages.map((message) => {
 			item = 
@@ -48,7 +57,7 @@ MessageBar = React.createClass({
 			
 			return(item)
 	    });
-	}
+	}else{ <div className="vertAlign">You have no messages! Go share some food :)</div>}
 	},
 
 	openPmess: function(currUs) {
@@ -58,15 +67,6 @@ MessageBar = React.createClass({
 			}
 	  return handleOpen
 	},
-
-    getMeteorData: function(){
-        Meteor.subscribe("sidebar")
-		currentUser = Meteor.user() ? Meteor.user().username : '';
-		return {
-		    currentUser: currentUser,
-		    privateMessages: clientSidebar.find().fetch()
-		};
-    },
 
     handleCloseNav: function () {
     	this.setState({openNav: false});
