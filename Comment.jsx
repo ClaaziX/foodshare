@@ -10,14 +10,18 @@ var {
 
 Comment = React.createClass({
 
+	getTimeSince(date){
+		TimeSince.calcTime(date)
+	},
+
 	render(){
 	return(
-           this.props.username == Meteor.user().username ?
-	   
+       this.props.username == Meteor.user().username ?
+	  
 	   <Card>
 		<CardHeader
 			title={this.props.username}
-			subtitle={this.props.date}
+			subtitle={this.getTimeSince(this.props.date)}
 			avatar="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"
 			style={{
 				float:'right'			
@@ -33,13 +37,14 @@ Comment = React.createClass({
 	   <Card>
 		<CardHeader
 		title={this.props.username}
-		subtitle={this.props.date}
+		subtitle={TimeSince.calcTime(this.props.date)}
 		avatar="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"
 		/>
 		<CardText>
 			{this.props.comment}
 		</CardText>
-	    </Card>		
+	    </Card>	
+	    
 	);}
 
 });

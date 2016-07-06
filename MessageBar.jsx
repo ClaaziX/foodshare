@@ -77,7 +77,7 @@ MessageBar = React.createClass({
 
 
     render : function(){
-    	var winWidth = window.innerWidth - (window.innerWidth*0.80);
+    	var winWidth = window.innerWidth*0.80;
 	return(
 		<div>
 		    <List subheader="Messages">
