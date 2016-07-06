@@ -32,32 +32,33 @@ MessageBar = React.createClass({
 
     renderMessagesList: function(){
     	console.log(this.data.privateMessages)
-	if(this.data.privateMessages){
-	    return this.data.privateMessages.map((message) => {
-			item = 
-				<ListItem	
-			        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
-					
-					rightIconButton={
-						!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''
-					}
-					onTouchTap={
-						this.openPmess(message.username)
-					}
-					primaryText={message.username}
-					secondaryText={
-					    <p>
-						<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
-						{message.message}
-					    </p>
-					}
-					secondaryTextLines={2}
+    	console.log(this.data.currentUser)
+		if(this.data.privateMessages){
+		    return this.data.privateMessages.map((message) => {
+				item = 
+					<ListItem	
+				        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
+						
+						rightIconButton={
+							!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''
+						}
+						onTouchTap={
+							this.openPmess(message.username)
+						}
+						primaryText={message.username}
+						secondaryText={
+						    <p>
+							<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
+							{message.message}
+						    </p>
+						}
+						secondaryTextLines={2}
 
-				/>
-			
-			return(item)
-	    });
-	}else{ <div className="vertAlign">You have no messages! Go share some food :)</div>}
+					/>
+				
+				return(item)
+		    });
+		}else{ <div className="vertAlign">You have no messages! Go share some food :)</div>}
 	},
 
 	openPmess: function(currUs) {

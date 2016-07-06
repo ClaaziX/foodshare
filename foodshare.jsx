@@ -18,6 +18,7 @@ Meteor.methods({
 		 		     createdAt: new Date(),
 				     seen: false
 		});
+	console.log("PM added: " + users, username, message)
     },
 
     markPMSeen(user, messaged){
