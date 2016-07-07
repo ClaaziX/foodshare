@@ -5,7 +5,7 @@ import {
     Styles
 } from 'material-ui';
 
-import {SvgIcons} from 'material-ui';
+import {SvgIcons} from 'material-ui/svg-icons';
 
 const { Link } = ReactRouter;
 

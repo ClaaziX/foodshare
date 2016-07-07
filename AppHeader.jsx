@@ -26,8 +26,10 @@ import {
     Badge,
     LeftNav,
     FontIcon, 
-    SvgIcons,
+
     } from 'material-ui'
+
+import {SvgIcons} from 'material-ui/svg-icons';
 
 import { ThemeManager, LightRawTheme } from 'material-ui';
 

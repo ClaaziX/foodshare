@@ -19,8 +19,8 @@ import {
 
 
 import { 
-      SvgIcons,
-      } from 'material-ui';
+      SvgIcons
+      } from 'material-ui/svg-icons';
 
 const claimContentStyle = {
                 width: '100%',

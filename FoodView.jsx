@@ -8,7 +8,7 @@ import {
   Snackbar
     } from 'material-ui';
 
-import { SvgIcons } from 'material-ui';
+import { SvgIcons } from 'material-ui/svg-icons';
 
 const styles = {
   claim: {

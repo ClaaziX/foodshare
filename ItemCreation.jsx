@@ -16,7 +16,7 @@ import {
 
 const { Link } = ReactRouter;
 
-import { FontIcon, SvgIcons } from 'material-ui';
+import { FontIcon, SvgIcons } from 'material-ui/svg-icons';
 
 const errContentStyle = {
 	width: '100%',
