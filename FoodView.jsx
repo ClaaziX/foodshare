@@ -8,8 +8,8 @@ import {
   Snackbar
     } from 'material-ui';
 
-import { SvgIcons } from 'material-ui/svg-icons';
-
+import {ActionViewModule} from 'material-ui/svg-icons/action/view-module';
+import {ActionList} from 'material-ui/svg-icons/action/list';
 const styles = {
   claim: {
                 width: '100%',
@@ -150,7 +150,7 @@ FoodView = React.createClass({
                 <Tab 
                   label={ 
                     <IconButton>
-                      <SvgIcons.ActionViewModule color='White' />
+                      <ActionViewModule color='White' />
                     </IconButton>}
                 >
                   <GridView 
@@ -159,7 +159,7 @@ FoodView = React.createClass({
                   /> 
                 </Tab>
 
-              <Tab label={<SvgIcons.ActionList color='White' />}>
+              <Tab label={<ActionList color='White' />}>
 				          {this.renderList()}
               </Tab>
           </Tabs>

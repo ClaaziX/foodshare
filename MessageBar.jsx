@@ -5,7 +5,8 @@ import {
     Styles
 } from 'material-ui';
 
-import {SvgIcons} from 'material-ui/svg-icons';
+import {CommunicationChatBubble} from 'material-ui/svg-icons/communication/chat-bubble';
+
 
 const { Link } = ReactRouter;
 
@@ -22,7 +23,7 @@ MessageBar = React.createClass({
 		item = 		    <ListItem	
                 leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
 		
-		rightIconButton={!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''}
+		rightIconButton={!message.seen && message.username != this.data.currentUser ? <CommunicationChatBubble /> : ''}
 		containerElement={<Link to={"/PrivateChat/" + otherUser[0]} />}
 		primaryText={message.username}
 		secondaryText={

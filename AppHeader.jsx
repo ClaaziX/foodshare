@@ -29,9 +29,16 @@ import {
 
     } from 'material-ui'
 
-import {SvgIcons} from 'material-ui/svg-icons';
+import {ContentUndo} from 'material-ui/svg-icons/content/undo';
+import {ContentAddCircle} from 'material-ui/svg-icons/content/add-circle';
+import {ActionAccountCircle} from 'material-ui/svg-icons/action/account-circle';
+import {CommunicationForum} from 'material-ui/svg-icons/communication/forum';
 
-import { ThemeManager, LightRawTheme } from 'material-ui';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {lightBaseTheme} from 'material-ui/styles/baseThemes/lightBaseTheme';
+
+
+
 
 const { Link } = ReactRouter;
 
@@ -58,7 +65,7 @@ AppHeader = React.createClass({
  
 	getChildContext() {
 		return {
-			muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
+			muiTheme: getMuiTheme(lightBaseTheme)
 		}
 	},
 
@@ -146,11 +153,11 @@ AppHeader = React.createClass({
 				    title="Food Sharing"
 				    iconElementLeft={
 				    	<IconButton onTouchTap={this.handleBackClick}>
-							<SvgIcons.ContentUndo color='White'/>
+							<ContentUndo color='White'/>
 						</IconButton>}
 				    iconElementRight={
 						<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
-							<SvgIcons.ContentAddCircle color='White'/>
+							<ContentAddCircle color='White'/>
 						</IconButton>}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
@@ -161,7 +168,7 @@ AppHeader = React.createClass({
 		  				{ Meteor.userId() ?
 							<div>
 								<IconButton onTouchTap={this.handleOpen}> 
-									<SvgIcons.ActionAccountCircle color='Black'/>
+									<ActionAccountCircle color='Black'/>
 								</IconButton>
 								<Dialog
 									title="Logout"
@@ -176,14 +183,14 @@ AppHeader = React.createClass({
 					    :
 					    	<div>
 								<IconButton linkButton={true} containerElement={<Link to={'/login'} />}> 
-									<SvgIcons.ActionAccountCircle color='Black'/>
+									<ActionAccountCircle color='Black'/>
 								</IconButton>
 							</div>
 					    }
 		  			</ToolbarGroup>
 		  			<ToolbarGroup float="right">
   						<IconButton onTouchTap={this.handleOpenNav}> 
-							<SvgIcons.CommunicationForum color='Black'/>
+							<CommunicationForum color='Black'/>
 						</IconButton>
 		  			</ToolbarGroup>
 		  		</Toolbar>

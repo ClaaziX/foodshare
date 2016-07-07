@@ -5,7 +5,8 @@ import {
   IconButton
     } from 'material-ui';
 
-import { FontIcon, SvgIcons } from 'material-ui/svg-icons';
+import { ActionShoppingCart } from 'material-ui/svg-icons/action/shopping-cart';
+import {CommunicationChatBubble} from 'material-ui/svg-icons/communication/chat-bubble';
    
 import { ThemeManager, LightRawTheme } from 'material-ui';
 
@@ -55,10 +56,10 @@ GridView = React.createClass({
 					  actionIcon={
 					    <div>
 					      <IconButton onTouchTap={this.getOpenPop(tile)}>
-					        <SvgIcons.ActionShoppingCart color='White' />
+					        <ActionShoppingCart color='White' />
 					      </IconButton>                        
 					      <IconButton containerElement={ <Link to={'/ItemView/'+tile._id}/> } linkButton={true}>
-					        <SvgIcons.CommunicationChatBubble color='White' />
+					        <CommunicationChatBubble color='White' />
 					      </IconButton>
 					    </div>
 					  }

@@ -16,7 +16,9 @@ import {
 
 const { Link } = ReactRouter;
 
-import { FontIcon, SvgIcons } from 'material-ui/svg-icons';
+import {ImagePhotoCamera } from 'material-ui/svg-icons/image/photo-camera';
+import {EditorModeEdit } from 'material-ui/svg-icons/editor/mode-edit';
+import {MapsPlace } from 'material-ui/svg-icons/maps/place';
 
 const errContentStyle = {
 	width: '100%',
@@ -184,20 +186,20 @@ ItemCreation = React.createClass({
 								<Tab
 									label={
 										<IconButton>
-											<SvgIcons.ImagePhotoCamera color='White'/>} value={0} />
+											<ImagePhotoCamera color='White'/>} value={0} />
 										</IconButton>
 									}
 									value={0}
 								/>
 								<Tab label={
 										<IconButton>
-											<SvgIcons.EditorModeEdit color='White'/>} value={1} />
+											<EditorModeEdit color='White'/>} value={1} />
 										</IconButton>
 								} value={1} />
 								<Tab 
 									label={
 										<IconButton>
-											<SvgIcons.MapsPlace color='White'/>} value={2} />
+											<MapsPlace color='White'/>} value={2} />
 										</IconButton>
 									}
 									value={2} />
