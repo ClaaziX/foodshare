@@ -59,7 +59,7 @@ MessageBar = React.createClass({
 
     render : function(){
 	return(
-	    <List subheader="Messages">
+	    <List>
 		{this.renderMessagesList()}
 	    </List>
 	);

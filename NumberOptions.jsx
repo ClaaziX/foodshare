@@ -19,7 +19,7 @@ NumberOptions = React.createClass({
     genPtNo: function (pNo) {
 	var x = [];
 	for (i = 1; i <= pNo; i++){
-	    x.push(<MenuItem value={i} key={i} primaryText={i}/>);
+	    x.push(<MenuItem key={i} primaryText={i}/>);
 	}
 	return x
     },

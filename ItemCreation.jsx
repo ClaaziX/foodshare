@@ -283,8 +283,8 @@ const ItemCreation = React.createClass({
 				:
 					<div>
 					You must login in, in order to post food!
-					<RaisedButton label="Login" secondary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/login'} />}  />
-					<RaisedButton label="Home" primary={true} fullWidth={true} linkButton={true} containerElement={<Link to={'/'} />}  />
+					<RaisedButton label="Login" secondary={true} fullWidth={true} containerElement={<Link to={'/login'} />}  />
+					<RaisedButton label="Home" primary={true} fullWidth={true} containerElement={<Link to={'/'} />}  />
 					</div>
 
 				}

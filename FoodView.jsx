@@ -12,8 +12,8 @@ import {
   Snackbar
     } from 'material-ui';
 
-import {ActionViewModule} from 'material-ui/svg-icons/action/view-module';
-import {ActionList} from 'material-ui/svg-icons/action/list';
+import ActionViewModule from 'material-ui/svg-icons/action/view-module.js';
+import ActionList from 'material-ui/svg-icons/action/list.js';
 const styles = {
   claim: {
                 width: '100%',

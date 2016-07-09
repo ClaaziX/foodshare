@@ -60,7 +60,7 @@ GridView = React.createClass({
 					      <IconButton onTouchTap={this.getOpenPop(tile)}>
 					        <ActionShoppingCart color='White' />
 					      </IconButton>                        
-					      <IconButton containerElement={ <Link to={'/ItemView/'+tile._id}/> } linkButton={true}>
+					      <IconButton containerElement={ <Link to={'/ItemView/'+tile._id}/> }>
 					        <CommunicationChatBubble color='White' />
 					      </IconButton>
 					    </div>

@@ -185,7 +185,7 @@ Request = React.createClass({
 
 		return(
 			<div>
-				<List subheader="Item Requests">
+				<List>
 					<Divider />
 					{this.generateRequests()}
 				</List>

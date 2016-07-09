@@ -148,7 +148,7 @@ const AppHeader = React.createClass({
 							<ContentReply color='White'/>
 						</IconButton>}
 				    iconElementRight={
-						<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
+						<IconButton containerElement={<Link to={'/ItemCreation'} />}>
 							<ContentAddCircle color='White'/>
 						</IconButton>}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -174,7 +174,7 @@ const AppHeader = React.createClass({
 							</div>
 					    :
 					    	<div>
-								<IconButton linkButton={true} containerElement={<Link to={'/login'} />}> 
+								<IconButton containerElement={<Link to={'/login'} />}> 
 									<ActionAccountCircle color='Black'/>
 								</IconButton>
 							</div>
