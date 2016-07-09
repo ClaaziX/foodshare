@@ -1,4 +1,6 @@
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import {
     TextField,
@@ -10,7 +12,7 @@ import {
     Divider
 } from 'material-ui';
 
-PrivateChat = React.createClass({
+const PrivateChat = React.createClass({
 
     mixins: [ReactMeteorData],
 
@@ -91,3 +93,4 @@ PrivateChat = React.createClass({
 	);
     }
 });
+export default PrivateChat;

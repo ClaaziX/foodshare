@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
 import {
   AutoComplete,
   Tab,
@@ -19,7 +23,7 @@ const styles = {
 
 var actions = [];
 
-FoodView = React.createClass({
+const FoodView = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -184,3 +188,4 @@ FoodView = React.createClass({
 		);
 	}
 });
+export default FoodView;

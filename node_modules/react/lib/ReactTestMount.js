@@ -96,17 +96,7 @@ var ReactHostMount = {
     //   }
     // }
 
-    var instance = instantiateReactComponent(nextWrappedElement);
-
-    if (process.env.NODE_ENV !== 'production') {
-      // Mute future events from the top level wrapper.
-      // It is an implementation detail that devtools should not know about.
-      instance._debugID = 0;
-
-      if (process.env.NODE_ENV !== 'production') {
-        ReactInstrumentation.debugTool.onBeginFlush();
-      }
-    }
+    var instance = instantiateReactComponent(nextWrappedElement, false);
 
     // The initial render is synchronous but any updates that happen during
     // rendering, in componentWillMount or componentDidMount, will be batched
@@ -116,7 +106,6 @@ var ReactHostMount = {
     if (process.env.NODE_ENV !== 'production') {
       // The instance here is TopLevelWrapper so we report mount for its child.
       ReactInstrumentation.debugTool.onMountRootComponent(instance._renderedComponent._debugID);
-      ReactInstrumentation.debugTool.onEndFlush();
     }
     return new ReactTestInstance(instance);
   }

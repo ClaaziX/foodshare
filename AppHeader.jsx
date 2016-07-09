@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 
@@ -26,32 +28,28 @@ import {
     ToolbarSeparator,
     ToolbarTitle,
     Badge,
-    LeftNav,
+    Drawer,
     FontIcon, 
 
     } from 'material-ui'
 
-import {ContentUndo} from 'material-ui/svg-icons/content/undo';
-import {ContentAddCircle} from 'material-ui/svg-icons/content/add-circle';
-import {ActionAccountCircle} from 'material-ui/svg-icons/action/account-circle';
-import {CommunicationForum} from 'material-ui/svg-icons/communication/forum';
+import ContentReply from 'material-ui/svg-icons/content/reply.js';
+import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
+import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
+import CommunicationForum from 'material-ui/svg-icons/communication/forum';
 
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {lightBaseTheme} from 'material-ui/styles/baseThemes/lightBaseTheme';
-
-
-
-
-const { Link } = ReactRouter;
 
 const logoutContentStyle = {
 								width: '100%',
 								maxWidth: 'none',
 							};
 
-AppHeader = React.createClass({
+const AppHeader = React.createClass({
 
-	mixins: [ReactRouter.History, ReactMeteorData],
+	mixins: [ReactMeteorData],
 
 	getInitialState(){
 	    return{
@@ -61,15 +59,7 @@ AppHeader = React.createClass({
 	    }
 	},
 
-    childContextTypes: {
-        muiTheme: React.PropTypes.object
-    },
- 
-	getChildContext() {
-		return {
-			muiTheme: getMuiTheme(lightBaseTheme)
-		}
-	},
+
 
 	getMeteorData(){
 		return{
@@ -143,7 +133,7 @@ AppHeader = React.createClass({
 		];
 
 	    return(
-
+		<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
 		<div className="container">
 
 			<div className="contentContain">
@@ -155,7 +145,7 @@ AppHeader = React.createClass({
 				    title="Food Sharing"
 				    iconElementLeft={
 				    	<IconButton onTouchTap={this.handleBackClick}>
-							<ContentUndo color='White'/>
+							<ContentReply color='White'/>
 						</IconButton>}
 				    iconElementRight={
 						<IconButton containerElement={<Link to={'/ItemCreation'} />} linkButton={true}>
@@ -219,8 +209,7 @@ AppHeader = React.createClass({
 
 			</div>
 			<div>
-			
-				<LeftNav
+				<Drawer
 					width={400}
 					openRight={true}
 					open={this.state.openNav}
@@ -229,7 +218,7 @@ AppHeader = React.createClass({
 				>
 					
 					{this.data.currentUser == ''?'':<MessageBar/>}
-				</LeftNav>
+				</Drawer>
         	</div>
 			<div>
 				<Snackbar
@@ -241,16 +230,13 @@ AppHeader = React.createClass({
 					onTouchTap={this.handleRequestClose}
 				/>
 			</div>
-			
-			<Accounts.ui.Dialogs />
 
-		</div>    
-
-		
+		</div>
+		</MuiThemeProvider>
 	    );
 
     }
+});
 
-})	 
 
-module.exports = AppHeader;
+export default AppHeader;

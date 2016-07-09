@@ -3,6 +3,8 @@ injectTapEventPlugin();
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+import { Accounts } from 'meteor/std:accounts-ui';
 
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");
@@ -85,7 +87,7 @@ if (Meteor.isClient) {
     import FoodView from './FoodView.jsx';
     import UserSettings from './UserSettings.jsx';
     import ItemCreation from './ItemCreation.jsx';
-    import MapView from './MapView.jsx';    
+    import MapView from './MapView.jsx';
     import PrivateChat from './PrivateChat.jsx';
     import login from './login.jsx';
 
@@ -103,14 +105,9 @@ if (Meteor.isClient) {
 
     });
 
-
-    const {Router, Route, IndexRoute, Link, history} = ReactRouter;
-
-    const browserHistory = history.createHistory();  
-
     Meteor.startup(function () {
 	// Use Meteor.startup to render the component after the page is ready
-	AppRoutes = (
+	ReactDOM.render(
 
 	    <Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
@@ -125,9 +122,8 @@ if (Meteor.isClient) {
 		</Route>
 		
 	    </Router>
-	);
+	, document.getElementById('render-target'));
 
-	ReactRouterSSR.Run(AppRoutes);
     });
 }
 

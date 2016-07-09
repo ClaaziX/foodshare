@@ -24,9 +24,7 @@ cfs:standard-packages
 cfs:gridfs
 raix:ui-dropped-event
 praneybehl:react-dropzone
-reactrouter:react-router
 cosmos:browserify
-reactrouter:react-router-ssr
 dburles:google-maps
 check
 spacebars
@@ -48,3 +46,5 @@ tinytest
 standard-minifier-css
 standard-minifier-js
 react-meteor-data
+reactrouter:react-router-ssr
+std:accounts-ui

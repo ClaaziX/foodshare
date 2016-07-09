@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
 import {
   Card,
   CardActions,
@@ -22,8 +26,6 @@ import {
 
    
 import { ThemeManager, LightRawTheme } from 'material-ui';
-
-const {Link} = ReactRouter;
 
 
 FoodItems = React.createClass({

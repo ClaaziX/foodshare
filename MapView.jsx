@@ -1,4 +1,8 @@
-MapView = React.createClass({
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
+const MapView = React.createClass({
  mixins: [ReactMeteorData],
   componentDidMount() {
     GoogleMaps.load();
@@ -52,3 +56,4 @@ GoogleMap = React.createClass({
     return <div className="map-container"></div>;
   }
 });
+export default MapView;

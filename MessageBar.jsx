@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
 import {
     List,
     ListItem,
@@ -6,9 +10,6 @@ import {
 } from 'material-ui';
 
 import {CommunicationChatBubble} from 'material-ui/svg-icons/communication/chat-bubble';
-
-
-const { Link } = ReactRouter;
 
 MessageBar = React.createClass({
 

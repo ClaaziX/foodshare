@@ -1,7 +1,9 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+import { Accounts } from 'meteor/std:accounts-ui';
 
-login = React.createClass({ 
-
-	mixins: [ReactRouter.History],
+const login = React.createClass({ 
 
 	handleLogin : function () {
 		this.history.push('/');
@@ -15,3 +17,4 @@ login = React.createClass({
 	  	);
 	  }
 	});
+export default login;

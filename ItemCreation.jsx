@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
 import {
   TextField,
   RaisedButton,
@@ -13,8 +17,6 @@ import {
   Stepper,
   StepLabel
   } from 'material-ui';
-
-const { Link } = ReactRouter;
 
 import {ImagePhotoCamera } from 'material-ui/svg-icons/image/photo-camera';
 import {EditorModeEdit } from 'material-ui/svg-icons/editor/mode-edit';
@@ -43,9 +45,7 @@ const styles = {
   },
 };
 
-ItemCreation = React.createClass({
-  
-  mixins: [ReactRouter.History],
+const ItemCreation = React.createClass({
 
 	getInitialState(){
 		return{
@@ -300,3 +300,4 @@ ItemCreation = React.createClass({
 		);
 	}
 });
+export default ItemCreation;
