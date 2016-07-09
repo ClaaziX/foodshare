@@ -4,7 +4,7 @@ injectTapEventPlugin();
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import { Accounts } from 'meteor/std:accounts-ui';
+import Accounts from 'meteor/std:accounts-ui';
 
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");

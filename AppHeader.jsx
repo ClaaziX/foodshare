@@ -33,10 +33,7 @@ import {
 
     } from 'material-ui'
 
-import ContentReply from 'material-ui/svg-icons/content/reply.js';
-import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
-import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
-import CommunicationForum from 'material-ui/svg-icons/communication/forum';
+import SvgIcons from 'material-ui/svg-icons';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -145,11 +142,11 @@ const AppHeader = React.createClass({
 				    title="Food Sharing"
 				    iconElementLeft={
 				    	<IconButton onTouchTap={this.handleBackClick}>
-							<ContentReply color='White'/>
+							<SvgIcons.ContentReply color='White'/>
 						</IconButton>}
 				    iconElementRight={
 						<IconButton containerElement={<Link to={'/ItemCreation'} />}>
-							<ContentAddCircle color='White'/>
+							<SvgIcons.ContentAddCircle color='White'/>
 						</IconButton>}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
@@ -160,7 +157,7 @@ const AppHeader = React.createClass({
 		  				{ Meteor.userId() ?
 							<div>
 								<IconButton onTouchTap={this.handleOpen}> 
-									<ActionAccountCircle color='Black'/>
+									<SvgIcons.ActionAccountCircle color='Black'/>
 								</IconButton>
 								<Dialog
 									title="Logout"
@@ -175,14 +172,14 @@ const AppHeader = React.createClass({
 					    :
 					    	<div>
 								<IconButton containerElement={<Link to={'/login'} />}> 
-									<ActionAccountCircle color='Black'/>
+									<SvgIcons.ActionAccountCircle color='Black'/>
 								</IconButton>
 							</div>
 					    }
 		  			</ToolbarGroup>
 		  			<ToolbarGroup float="right">
   						<IconButton onTouchTap={this.handleOpenNav}> 
-							<CommunicationForum color='Black'/>
+							<SvgIcons.CommunicationForum color='Black'/>
 						</IconButton>
 		  			</ToolbarGroup>
 		  		</Toolbar>
