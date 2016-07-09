@@ -80,6 +80,15 @@ Meteor.methods({
 
 if (Meteor.isClient) {
     // This code is executed on the client only
+    
+    import AppHeader from './AppHeader.jsx';
+    import FoodView from './FoodView.jsx';
+    import UserSettings from './UserSettings.jsx';
+    import ItemCreation from './ItemCreation.jsx';
+    import MapView from './MapView.jsx';    
+    import PrivateChat from './PrivateChat.jsx';
+    import login from './login.jsx';
+
 
     Accounts.ui.config({
 	

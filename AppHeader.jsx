@@ -1,3 +1,5 @@
+import React from 'react';
+
 import AppBar from 'material-ui/AppBar';
 
 import {
@@ -250,3 +252,5 @@ AppHeader = React.createClass({
     }
 
 })	 
+
+module.exports = AppHeader;
