@@ -115,7 +115,7 @@ const ItemCreation = React.createClass({
 				});
 		}
 
-		this.history.push('/');
+		this.router.push('/');
 	},
 
 	setPrtNo(prtNo) {

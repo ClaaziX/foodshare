@@ -9,61 +9,94 @@ import {
     Styles
 } from 'material-ui';
 
-import {CommunicationChatBubble} from 'material-ui/svg-icons/communication/chat-bubble';
+import SvgIcons from 'material-ui/svg-icons';
 
-MessageBar = React.createClass({
+const MessageBar = React.createClass({
 
     mixins: [ReactMeteorData],
 
-    renderMessagesList: function(){
-	if(this.data.privateMessages){
-	    return this.data.privateMessages.map((message) => {
-	    otherUser = message.between;
-	    otherUser.splice(otherUser.indexOf(this.data.currentUser),1)
-	    console.log(message.between)
-		item = 		    <ListItem	
-                leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
-		
-		rightIconButton={!message.seen && message.username != this.data.currentUser ? <CommunicationChatBubble /> : ''}
-		containerElement={<Link to={"/PrivateChat/" + otherUser[0]} />}
-		primaryText={message.username}
-		secondaryText={
-		    <p>
-			<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
-			{message.message}
-		    </p>
-		}
-		secondaryTextLines={2}
+    getInitialState(){
+	    return{
+			openNav: false,
+			userCurr: "noone",
+	    }
+	},
 
-		/>
-		
-		return(item)
-	    });
-	}
+	getMeteorData: function(){
+		   
+		currentUser = Meteor.user() ? Meteor.user().username : '';
+		Meteor.subscribe("sidebar", currentUser);
+			return {
+			    currentUser: currentUser,
+			    privateMessages: clientSidebar.find().fetch().sort({ createdAt: 1 })
+			};
 
     },
 
-    getMeteorData: function(){
+    renderMessagesList: function(){
+		if(this.data.privateMessages){
+		    return this.data.privateMessages.map((message) => {
+				item = 
+					<ListItem	
+				        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
+						
+						rightIconButton={
+							!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''
+						}
+						onTouchTap={
+							this.openPmess(message.username)
+						}
+						primaryText={message.username}
+						secondaryText={
+						    <p>
+							<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
+							{message.message}
+						    </p>
+						}
+						secondaryTextLines={2}
 
-	currentUser = Meteor.user() ? Meteor.user().username : '';
-        Meteor.subscribe("sidebar", currentUser);
+					/>
+				
+				return(item)
+		    });
+		}else{ <div className="vertAlign">You have no messages! Go share some food :)</div>}
+	},
 
-	return {
-	    currentUser: currentUser,
-	    privateMessages: clientSidebar.find().fetch()
-	};
+	openPmess: function(currUs) {
+		var that = this;
+  		handleOpen = function(event) {
+  			that.setState({openNav: true, userCurr: currUs});
+			}
+	  return handleOpen
+	},
 
-
+    handleCloseNav: function () {
+    	this.setState({openNav: false});
     },
 
 
     render : function(){
+    	var winWidth = window.innerWidth*0.83;
 	return(
-	    <List>
-		{this.renderMessagesList()}
-	    </List>
+		<div>
+		    <List>
+			{this.renderMessagesList()}
+		    </List>
+		    <div>
+				<Drawer
+					width={winWidth}
+					openSecondary={true}
+					open={this.state.openNav}
+					docked={false}
+					onRequestChange={this.handleCloseNav}
+				>
+					<PrivateChat messagedUsername={this.state.userCurr} />
+				</Drawer>
+			</div>
+		</div>
 	);
 
     }
 
-})
+});
+export default MessageBar;

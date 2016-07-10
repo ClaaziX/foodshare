@@ -46,5 +46,4 @@ tinytest
 standard-minifier-css
 standard-minifier-js
 react-meteor-data
-reactrouter:react-router-ssr
 std:accounts-ui

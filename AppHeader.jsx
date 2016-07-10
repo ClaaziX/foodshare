@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, Link, IndexRoute, browserHistory, withRouter } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 
@@ -48,6 +48,12 @@ const AppHeader = React.createClass({
 
 	mixins: [ReactMeteorData],
 
+	propTypes:  {
+		router: React.PropTypes.shape({
+		push: React.PropTypes.func.isRequired
+  	}).isRequired
+	},
+
 	getInitialState(){
 	    return{
 			openLogout: false,
@@ -55,8 +61,6 @@ const AppHeader = React.createClass({
 			openNav: false,
 	    }
 	},
-
-
 
 	getMeteorData(){
 		return{
@@ -67,7 +71,7 @@ const AppHeader = React.createClass({
     handleLogout : function () {
     	Meteor.logout();
 		this.setState({openLogout: false});
-		this.history.push('/login');
+		browserHistory.push('/login');
 		this.logOutPop();
     },
 
@@ -88,13 +92,16 @@ const AppHeader = React.createClass({
     },
 
     handlePassChange : function () {
-		this.history.push('/login');
+		browserHistory.push('/login');
 		this.setState({openLogout: false});
     },
 
-    handleActiveTab : function (tab) {
-    	var path = tab.props.route;
-    	this.history.push(path);
+	
+	handleActiveTab : function(path) {
+	    activeTab = function (event) {
+    		browserHistory.push(path);
+    	}
+    	return activeTab
     },
 
     handleOpenNav: function () {
@@ -106,11 +113,12 @@ const AppHeader = React.createClass({
     },
 
 	handleBackClick : function () {
-		this.history.goBack();
+		this.Router.goBack();
 	},
 
     render : function(){
 
+    	var winWidth = window.innerWidth;
 		const actions = [
 			<FlatButton
 			label="Logout"
@@ -153,10 +161,10 @@ const AppHeader = React.createClass({
 		  	</div>
 		  	<div className="toolContain">
 		  		<Toolbar>
-		  			<ToolbarGroup float="left">
+		  			<ToolbarGroup firstChild={true}>
 		  				{ Meteor.userId() ?
 							<div>
-								<IconButton onTouchTap={this.handleOpen}> 
+								<IconButton onTouchTap={this.handleOpen} tooltip="Account" tooltipPosition="bottom-right"> 
 									<SvgIcons.ActionAccountCircle color='Black'/>
 								</IconButton>
 								<Dialog
@@ -171,14 +179,14 @@ const AppHeader = React.createClass({
 							</div>
 					    :
 					    	<div>
-								<IconButton containerElement={<Link to={'/login'} />}> 
+								<IconButton containerElement={<Link to={'/login'} />} tooltip="Account" tooltipPosition="bottom-right"> 
 									<SvgIcons.ActionAccountCircle color='Black'/>
 								</IconButton>
 							</div>
 					    }
 		  			</ToolbarGroup>
-		  			<ToolbarGroup float="right">
-  						<IconButton onTouchTap={this.handleOpenNav}> 
+		  			<ToolbarGroup lastChild={true}>
+  						<IconButton onTouchTap={this.handleOpenNav} tooltip="Messages" tooltipPosition="bottom-left"> 
 							<SvgIcons.CommunicationForum color='Black'/>
 						</IconButton>
 		  			</ToolbarGroup>
@@ -188,33 +196,48 @@ const AppHeader = React.createClass({
 
 				<Tabs>
 					<Tab
-						label="LIST"
-						route="/"
-						onActive={this.handleActiveTab}
+						label="ITEM VIEW"
+						onActive={this.handleActiveTab("/")}
 					/>
 					<Tab
-						label="MAP"
-						route="/MapView"
-						onActive={this.handleActiveTab}
+						label="MAP VIEW"
+						onActive={this.handleActiveTab("/MapView")}
 					/>
 					<Tab
-						label="NOTICES"
-						route="/Messages"
-						onActive={this.handleActiveTab}
+						label="YOUR ITEMS"
+						onActive={this.handleActiveTab("/Messages")}
 					/>
 				</Tabs>
 
 			</div>
 			<div>
 				<Drawer
-					width={400}
-					openRight={true}
+					width={winWidth}
+					openSecondary={true}
 					open={this.state.openNav}
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					
-					{this.data.currentUser == ''?'':<MessageBar/>}
+					<div className="headContain">
+						<AppBar
+						    title="Messages"
+						    iconElementLeft={
+						    	<IconButton onTouchTap={this.handleCloseNav}>
+									<SvgIcons.ContentBackspace color='White'/>
+								</IconButton>}
+						    iconElementRight={
+								<IconButton onTouchTap={this.handleOpen}>
+									<SvgIcons.ActionSettings color='White'/>
+								</IconButton>}
+							targetOrigin={{horizontal: 'right', vertical: 'top'}}
+				  		/>
+		  			</div>
+					{this.data.currentUser == '' ? 
+						<div className="vertAlign">
+						You have no messages, go share some food! :)
+	    				</div>
+					: 
+						<MessageBar/>}
 				</Drawer>
         	</div>
 			<div>
