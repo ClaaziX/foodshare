@@ -48,11 +48,9 @@ const AppHeader = React.createClass({
 
 	mixins: [ReactMeteorData],
 
-	propTypes:  {
-		router: React.PropTypes.shape({
-		push: React.PropTypes.func.isRequired
-  	}).isRequired
-	},
+	contextTypes : {
+   		     router: React.PropTypes.object
+  		     },
 
 	getInitialState(){
 	    return{
@@ -113,7 +111,7 @@ const AppHeader = React.createClass({
     },
 
 	handleBackClick : function () {
-		this.Router.goBack();
+		this.context.router.goBack();
 	},
 
     render : function(){
