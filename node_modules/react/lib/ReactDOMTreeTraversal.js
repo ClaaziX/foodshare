@@ -11,8 +11,6 @@
 
 'use strict';
 
-var _prodInvariant = require('./reactProdInvariant');
-
 var invariant = require('fbjs/lib/invariant');
 
 /**
@@ -20,27 +18,27 @@ var invariant = require('fbjs/lib/invariant');
  * different trees.
  */
 function getLowestCommonAncestor(instA, instB) {
-  !('_hostNode' in instA) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getNodeFromInstance: Invalid argument.') : _prodInvariant('33') : void 0;
-  !('_hostNode' in instB) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getNodeFromInstance: Invalid argument.') : _prodInvariant('33') : void 0;
+  !('_nativeNode' in instA) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getNodeFromInstance: Invalid argument.') : invariant(false) : void 0;
+  !('_nativeNode' in instB) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getNodeFromInstance: Invalid argument.') : invariant(false) : void 0;
 
   var depthA = 0;
-  for (var tempA = instA; tempA; tempA = tempA._hostParent) {
+  for (var tempA = instA; tempA; tempA = tempA._nativeParent) {
     depthA++;
   }
   var depthB = 0;
-  for (var tempB = instB; tempB; tempB = tempB._hostParent) {
+  for (var tempB = instB; tempB; tempB = tempB._nativeParent) {
     depthB++;
   }
 
   // If A is deeper, crawl up.
   while (depthA - depthB > 0) {
-    instA = instA._hostParent;
+    instA = instA._nativeParent;
     depthA--;
   }
 
   // If B is deeper, crawl up.
   while (depthB - depthA > 0) {
-    instB = instB._hostParent;
+    instB = instB._nativeParent;
     depthB--;
   }
 
@@ -50,8 +48,8 @@ function getLowestCommonAncestor(instA, instB) {
     if (instA === instB) {
       return instA;
     }
-    instA = instA._hostParent;
-    instB = instB._hostParent;
+    instA = instA._nativeParent;
+    instB = instB._nativeParent;
   }
   return null;
 }
@@ -60,14 +58,14 @@ function getLowestCommonAncestor(instA, instB) {
  * Return if A is an ancestor of B.
  */
 function isAncestor(instA, instB) {
-  !('_hostNode' in instA) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'isAncestor: Invalid argument.') : _prodInvariant('35') : void 0;
-  !('_hostNode' in instB) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'isAncestor: Invalid argument.') : _prodInvariant('35') : void 0;
+  !('_nativeNode' in instA) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'isAncestor: Invalid argument.') : invariant(false) : void 0;
+  !('_nativeNode' in instB) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'isAncestor: Invalid argument.') : invariant(false) : void 0;
 
   while (instB) {
     if (instB === instA) {
       return true;
     }
-    instB = instB._hostParent;
+    instB = instB._nativeParent;
   }
   return false;
 }
@@ -76,9 +74,9 @@ function isAncestor(instA, instB) {
  * Return the parent instance of the passed-in instance.
  */
 function getParentInstance(inst) {
-  !('_hostNode' in inst) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getParentInstance: Invalid argument.') : _prodInvariant('36') : void 0;
+  !('_nativeNode' in inst) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'getParentInstance: Invalid argument.') : invariant(false) : void 0;
 
-  return inst._hostParent;
+  return inst._nativeParent;
 }
 
 /**
@@ -88,7 +86,7 @@ function traverseTwoPhase(inst, fn, arg) {
   var path = [];
   while (inst) {
     path.push(inst);
-    inst = inst._hostParent;
+    inst = inst._nativeParent;
   }
   var i;
   for (i = path.length; i-- > 0;) {
@@ -111,12 +109,12 @@ function traverseEnterLeave(from, to, fn, argFrom, argTo) {
   var pathFrom = [];
   while (from && from !== common) {
     pathFrom.push(from);
-    from = from._hostParent;
+    from = from._nativeParent;
   }
   var pathTo = [];
   while (to && to !== common) {
     pathTo.push(to);
-    to = to._hostParent;
+    to = to._nativeParent;
   }
   var i;
   for (i = 0; i < pathFrom.length; i++) {

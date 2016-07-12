@@ -7,7 +7,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule forEachAccumulated
- * 
  */
 
 'use strict';
@@ -20,12 +19,12 @@
  * allocate an array).
  */
 
-function forEachAccumulated(arr, cb, scope) {
+var forEachAccumulated = function (arr, cb, scope) {
   if (Array.isArray(arr)) {
     arr.forEach(cb, scope);
   } else if (arr) {
     cb.call(scope, arr);
   }
-}
+};
 
 module.exports = forEachAccumulated;

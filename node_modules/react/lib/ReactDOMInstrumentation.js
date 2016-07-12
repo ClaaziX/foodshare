@@ -11,11 +11,6 @@
 
 'use strict';
 
-var debugTool = null;
+var ReactDOMDebugTool = require('./ReactDOMDebugTool');
 
-if (process.env.NODE_ENV !== 'production') {
-  var ReactDOMDebugTool = require('./ReactDOMDebugTool');
-  debugTool = ReactDOMDebugTool;
-}
-
-module.exports = { debugTool: debugTool };
+module.exports = { debugTool: ReactDOMDebugTool };

@@ -4,7 +4,7 @@ injectTapEventPlugin();
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import Accounts from 'meteor/std:accounts-ui';
+import {Accounts, STATES} from 'meteor/std:accounts-ui';
 
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");
@@ -91,21 +91,15 @@ if (Meteor.isClient) {
     import PrivateChat from './PrivateChat.jsx';
     import login from './login.jsx';
 
-
-    Accounts.ui.config({
-	
-	requestPermissions: {
-	    facebook: ['user_likes'],
-	    github: ['user', 'repo']
-	},
-	requestOfflineToken: {
-	    google: true
-	},
-	passwordSignupFields: 'USERNAME_AND_EMAIL'
-
-    });
-
     Meteor.startup(function () {
+
+        //Config the accounts
+	Accounts.ui.config({
+		passwordSignupFields: 'USERNAME_AND_EMAIL',
+		onSignedInHook : () => browserHistory.push('/')
+	});
+
+
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
 
@@ -118,9 +112,8 @@ if (Meteor.isClient) {
 		    <Route path='/ItemCreation' component={ItemCreation} />
 		    <Route path='/MapView' component={MapView} />
 		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} />
-		    <Route path='/login' component={login} />
+		    <Route path='/login' component={Accounts.ui.LoginForm} formState={STATES.SIGN_IN} />
 		</Route>
-		
 	    </Router>
 	, document.getElementById('render-target'));
 

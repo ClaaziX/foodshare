@@ -85,7 +85,7 @@ var ReactCSSTransitionGroupChild = React.createClass({
     CSSCore.addClass(node, className);
 
     // Need to do this to actually trigger a transition.
-    this.queueClassAndNode(activeClassName, node);
+    this.queueClass(activeClassName);
 
     // If the user specified a timeout delay.
     if (userSpecifiedDelay) {
@@ -98,29 +98,24 @@ var ReactCSSTransitionGroupChild = React.createClass({
     }
   },
 
-  queueClassAndNode: function (className, node) {
-    this.classNameAndNodeQueue.push({
-      className: className,
-      node: node
-    });
+  queueClass: function (className) {
+    this.classNameQueue.push(className);
 
     if (!this.timeout) {
-      this.timeout = setTimeout(this.flushClassNameAndNodeQueue, TICK);
+      this.timeout = setTimeout(this.flushClassNameQueue, TICK);
     }
   },
 
-  flushClassNameAndNodeQueue: function () {
+  flushClassNameQueue: function () {
     if (this.isMounted()) {
-      this.classNameAndNodeQueue.forEach(function (obj) {
-        CSSCore.addClass(obj.node, obj.className);
-      });
+      this.classNameQueue.forEach(CSSCore.addClass.bind(CSSCore, ReactDOM.findDOMNode(this)));
     }
-    this.classNameAndNodeQueue.length = 0;
+    this.classNameQueue.length = 0;
     this.timeout = null;
   },
 
   componentWillMount: function () {
-    this.classNameAndNodeQueue = [];
+    this.classNameQueue = [];
     this.transitionTimeouts = [];
   },
 
@@ -131,8 +126,6 @@ var ReactCSSTransitionGroupChild = React.createClass({
     this.transitionTimeouts.forEach(function (timeout) {
       clearTimeout(timeout);
     });
-
-    this.classNameAndNodeQueue.length = 0;
   },
 
   componentWillAppear: function (done) {

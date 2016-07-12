@@ -20,12 +20,12 @@ var ReactSimpleEmptyComponent = function (placeholderElement, instantiate) {
   this._renderedComponent = instantiate(placeholderElement);
 };
 _assign(ReactSimpleEmptyComponent.prototype, {
-  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
-    return ReactReconciler.mountComponent(this._renderedComponent, transaction, hostParent, hostContainerInfo, context);
+  mountComponent: function (transaction, nativeParent, nativeContainerInfo, context) {
+    return ReactReconciler.mountComponent(this._renderedComponent, transaction, nativeParent, nativeContainerInfo, context);
   },
   receiveComponent: function () {},
-  getHostNode: function () {
-    return ReactReconciler.getHostNode(this._renderedComponent);
+  getNativeNode: function () {
+    return ReactReconciler.getNativeNode(this._renderedComponent);
   },
   unmountComponent: function () {
     ReactReconciler.unmountComponent(this._renderedComponent);

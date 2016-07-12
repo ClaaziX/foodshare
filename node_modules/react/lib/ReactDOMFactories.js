@@ -12,6 +12,7 @@
 'use strict';
 
 var ReactElement = require('./ReactElement');
+var ReactElementValidator = require('./ReactElementValidator');
 
 var mapObject = require('fbjs/lib/mapObject');
 
@@ -23,7 +24,6 @@ var mapObject = require('fbjs/lib/mapObject');
  */
 function createDOMFactory(tag) {
   if (process.env.NODE_ENV !== 'production') {
-    var ReactElementValidator = require('./ReactElementValidator');
     return ReactElementValidator.createFactory(tag);
   }
   return ReactElement.createFactory(tag);

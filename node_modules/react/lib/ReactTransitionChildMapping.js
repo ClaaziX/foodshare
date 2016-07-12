@@ -19,18 +19,12 @@ var ReactTransitionChildMapping = {
    * simple syntactic sugar around flattenChildren().
    *
    * @param {*} children `this.props.children`
-   * @param {number=} selfDebugID Optional debugID of the current internal instance.
    * @return {object} Mapping of key to child
    */
-  getChildMapping: function (children, selfDebugID) {
+  getChildMapping: function (children) {
     if (!children) {
       return children;
     }
-
-    if (process.env.NODE_ENV !== 'production') {
-      return flattenChildren(children, selfDebugID);
-    }
-
     return flattenChildren(children);
   },
 

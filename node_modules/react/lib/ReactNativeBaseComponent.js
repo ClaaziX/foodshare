@@ -19,9 +19,9 @@ var ReactNativeComponentTree = require('./ReactNativeComponentTree');
 var ReactNativeEventEmitter = require('./ReactNativeEventEmitter');
 var ReactNativeTagHandles = require('./ReactNativeTagHandles');
 var ReactMultiChild = require('./ReactMultiChild');
-var UIManager = require('react-native/lib/UIManager');
+var UIManager = require('UIManager');
 
-var deepFreezeAndThrowOnMutationInDev = require('react-native/lib/deepFreezeAndThrowOnMutationInDev');
+var deepFreezeAndThrowOnMutationInDev = require('deepFreezeAndThrowOnMutationInDev');
 
 var registrationNames = ReactNativeEventEmitter.registrationNames;
 var putListener = ReactNativeEventEmitter.putListener;
@@ -150,7 +150,7 @@ ReactNativeBaseComponent.Mixin = {
    *
    * @return {null} Null.
    */
-  getHostNode: function () {
+  getNativeNode: function () {
     return this._rootNodeID;
   },
 
@@ -159,12 +159,12 @@ ReactNativeBaseComponent.Mixin = {
    * @param {Transaction} transaction For creating/updating.
    * @return {string} Unique iOS view tag.
    */
-  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+  mountComponent: function (transaction, nativeParent, nativeContainerInfo, context) {
     var tag = ReactNativeTagHandles.allocateTag();
 
     this._rootNodeID = tag;
-    this._hostParent = hostParent;
-    this._hostContainerInfo = hostContainerInfo;
+    this._nativeParent = nativeParent;
+    this._nativeContainerInfo = nativeContainerInfo;
 
     if (process.env.NODE_ENV !== 'production') {
       for (var key in this.viewConfig.validAttributes) {
@@ -176,7 +176,7 @@ ReactNativeBaseComponent.Mixin = {
 
     var updatePayload = ReactNativeAttributePayload.create(this._currentElement.props, this.viewConfig.validAttributes);
 
-    var nativeTopRootTag = hostContainerInfo._tag;
+    var nativeTopRootTag = nativeContainerInfo._tag;
     UIManager.createView(tag, this.viewConfig.uiViewClassName, nativeTopRootTag, updatePayload);
 
     ReactNativeComponentTree.precacheNode(this, tag);

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import Accounts from 'meteor/std:accounts-ui';
+import Accounts from 'meteor/std:accounts-basic';
 
 const login = React.createClass({ 
 
@@ -12,7 +12,7 @@ const login = React.createClass({
 	render : function () {
 	  	return(
 		    <div>
-		    	<Accounts.ui.LoginFormSet redirect={this.handleLogin} />
+		    	<Accounts.ui.LoginForm redirect={this.handleLogin} />
 		    </div>
 	  	);
 	  }

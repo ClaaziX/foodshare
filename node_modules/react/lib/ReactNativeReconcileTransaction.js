@@ -16,8 +16,6 @@ var _assign = require('object-assign');
 var CallbackQueue = require('./CallbackQueue');
 var PooledClass = require('./PooledClass');
 var Transaction = require('./Transaction');
-var ReactInstrumentation = require('./ReactInstrumentation');
-var ReactUpdateQueue = require('./ReactUpdateQueue');
 
 /**
  * Provides a `CallbackQueue` queue for collecting `onDOMReady` callbacks during
@@ -45,13 +43,6 @@ var ON_DOM_READY_QUEUEING = {
  * each other.
  */
 var TRANSACTION_WRAPPERS = [ON_DOM_READY_QUEUEING];
-
-if (process.env.NODE_ENV !== 'production') {
-  TRANSACTION_WRAPPERS.push({
-    initialize: ReactInstrumentation.debugTool.onBeginFlush,
-    close: ReactInstrumentation.debugTool.onEndFlush
-  });
-}
 
 /**
  * Currently:
@@ -90,13 +81,6 @@ var Mixin = {
    */
   getReactMountReady: function () {
     return this.reactMountReady;
-  },
-
-  /**
-   * @return {object} The queue to collect React async events.
-   */
-  getUpdateQueue: function () {
-    return ReactUpdateQueue;
   },
 
   /**

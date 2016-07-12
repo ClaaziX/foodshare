@@ -47,3 +47,4 @@ standard-minifier-css
 standard-minifier-js
 react-meteor-data
 std:accounts-ui
+std:accounts-basic

@@ -20,21 +20,21 @@ var ReactDOMEmptyComponent = function (instantiate) {
   // ReactCompositeComponent uses this:
   this._currentElement = null;
   // ReactDOMComponentTree uses these:
-  this._hostNode = null;
-  this._hostParent = null;
-  this._hostContainerInfo = null;
+  this._nativeNode = null;
+  this._nativeParent = null;
+  this._nativeContainerInfo = null;
   this._domID = null;
 };
 _assign(ReactDOMEmptyComponent.prototype, {
-  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
-    var domID = hostContainerInfo._idCounter++;
+  mountComponent: function (transaction, nativeParent, nativeContainerInfo, context) {
+    var domID = nativeContainerInfo._idCounter++;
     this._domID = domID;
-    this._hostParent = hostParent;
-    this._hostContainerInfo = hostContainerInfo;
+    this._nativeParent = nativeParent;
+    this._nativeContainerInfo = nativeContainerInfo;
 
     var nodeValue = ' react-empty: ' + this._domID + ' ';
     if (transaction.useCreateElement) {
-      var ownerDocument = hostContainerInfo._ownerDocument;
+      var ownerDocument = nativeContainerInfo._ownerDocument;
       var node = ownerDocument.createComment(nodeValue);
       ReactDOMComponentTree.precacheNode(this, node);
       return DOMLazyTree(node);
@@ -49,7 +49,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
     }
   },
   receiveComponent: function () {},
-  getHostNode: function () {
+  getNativeNode: function () {
     return ReactDOMComponentTree.getNodeFromInstance(this);
   },
   unmountComponent: function () {

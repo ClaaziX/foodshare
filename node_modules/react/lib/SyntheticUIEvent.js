@@ -26,7 +26,7 @@ var UIEventInterface = {
     }
 
     var target = getEventTarget(event);
-    if (target.window === target) {
+    if (target != null && target.window === target) {
       // target is a window object
       return target;
     }

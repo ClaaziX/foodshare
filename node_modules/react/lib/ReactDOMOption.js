@@ -18,33 +18,12 @@ var ReactDOMComponentTree = require('./ReactDOMComponentTree');
 var ReactDOMSelect = require('./ReactDOMSelect');
 
 var warning = require('fbjs/lib/warning');
-var didWarnInvalidOptionChildren = false;
-
-function flattenChildren(children) {
-  var content = '';
-
-  // Flatten children and warn if they aren't strings or numbers;
-  // invalid types are ignored.
-  ReactChildren.forEach(children, function (child) {
-    if (child == null) {
-      return;
-    }
-    if (typeof child === 'string' || typeof child === 'number') {
-      content += child;
-    } else if (!didWarnInvalidOptionChildren) {
-      didWarnInvalidOptionChildren = true;
-      process.env.NODE_ENV !== 'production' ? warning(false, 'Only strings and numbers are supported as <option> children.') : void 0;
-    }
-  });
-
-  return content;
-}
 
 /**
- * Implements an <option> host component that warns when `selected` is set.
+ * Implements an <option> native component that warns when `selected` is set.
  */
 var ReactDOMOption = {
-  mountWrapper: function (inst, props, hostParent) {
+  mountWrapper: function (inst, props, nativeParent) {
     // TODO (yungsters): Remove support for `selected` in <option>.
     if (process.env.NODE_ENV !== 'production') {
       process.env.NODE_ENV !== 'production' ? warning(props.selected == null, 'Use the `defaultValue` or `value` props on <select> instead of ' + 'setting `selected` on <option>.') : void 0;
@@ -52,11 +31,11 @@ var ReactDOMOption = {
 
     // Look up whether this option is 'selected'
     var selectValue = null;
-    if (hostParent != null) {
-      var selectParent = hostParent;
+    if (nativeParent != null) {
+      var selectParent = nativeParent;
 
       if (selectParent._tag === 'optgroup') {
-        selectParent = selectParent._hostParent;
+        selectParent = selectParent._nativeParent;
       }
 
       if (selectParent != null && selectParent._tag === 'select') {
@@ -68,23 +47,17 @@ var ReactDOMOption = {
     // or missing (e.g., for <datalist>), we don't change props.selected
     var selected = null;
     if (selectValue != null) {
-      var value;
-      if (props.value != null) {
-        value = props.value + '';
-      } else {
-        value = flattenChildren(props.children);
-      }
       selected = false;
       if (Array.isArray(selectValue)) {
         // multiple
         for (var i = 0; i < selectValue.length; i++) {
-          if ('' + selectValue[i] === value) {
+          if ('' + selectValue[i] === '' + props.value) {
             selected = true;
             break;
           }
         }
       } else {
-        selected = '' + selectValue === value;
+        selected = '' + selectValue === '' + props.value;
       }
     }
 
@@ -100,22 +73,35 @@ var ReactDOMOption = {
     }
   },
 
-  getHostProps: function (inst, props) {
-    var hostProps = _assign({ selected: undefined, children: undefined }, props);
+  getNativeProps: function (inst, props) {
+    var nativeProps = _assign({ selected: undefined, children: undefined }, props);
 
     // Read state only from initial mount because <select> updates value
     // manually; we need the initial state only for server rendering
     if (inst._wrapperState.selected != null) {
-      hostProps.selected = inst._wrapperState.selected;
+      nativeProps.selected = inst._wrapperState.selected;
     }
 
-    var content = flattenChildren(props.children);
+    var content = '';
+
+    // Flatten children and warn if they aren't strings or numbers;
+    // invalid types are ignored.
+    ReactChildren.forEach(props.children, function (child) {
+      if (child == null) {
+        return;
+      }
+      if (typeof child === 'string' || typeof child === 'number') {
+        content += child;
+      } else {
+        process.env.NODE_ENV !== 'production' ? warning(false, 'Only strings and numbers are supported as <option> children.') : void 0;
+      }
+    });
 
     if (content) {
-      hostProps.children = content;
+      nativeProps.children = content;
     }
 
-    return hostProps;
+    return nativeProps;
   }
 
 };

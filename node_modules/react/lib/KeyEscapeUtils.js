@@ -7,7 +7,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule KeyEscapeUtils
- * 
  */
 
 'use strict';
@@ -15,7 +14,7 @@
 /**
  * Escape and wrap key so it is safe to use as a reactid
  *
- * @param {string} key to be escaped.
+ * @param {*} key to be escaped.
  * @return {string} the escaped key.
  */
 
