@@ -7,30 +7,25 @@ const MapView = React.createClass({
 
       	      render(){
 	      return(
-	      <div>
-	      <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js">
-</script>
+		<section style={{height: "100%"}}>
 		      <GoogleMapLoader
-		              containerElement={
-			                <div
-					      style={{
-					            height: "100%",
-						                }}
-				          />
-					  }
-        googleMapElement={
-          <GoogleMap
-            ref={(map) => console.log(map)}
-            defaultZoom={3}
-            defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+			containerElement={
+				<div id='map' syle={{height:"100%",width:"100%",}}/>
+			}
+        		googleMapElement={
+          		    <GoogleMap
 
-          >
-          </GoogleMap>
-        }
-      />
-    </div>)
-	      }      
+            			defaultZoom={3}
+            			defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+
+			    >
+			    </GoogleMap>
+      
+        		}
+      		      />
+		      </section>
+		      );
+	      	      }      
 
       });
 export default MapView;
