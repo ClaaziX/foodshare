@@ -137,6 +137,7 @@ const AppHeader = React.createClass({
 
 	    return(
 		<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+	
 		<div className="container">
 
 			<div className="contentContain">

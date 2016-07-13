@@ -1,59 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
 const MapView = React.createClass({
- mixins: [ReactMeteorData],
-  componentDidMount() {
-    GoogleMaps.load();
-  },
-  getMeteorData() {
-    return {
-      loaded: GoogleMaps.loaded(),
-      mapOptions: GoogleMaps.loaded() && this._mapOptions()
-    };
-  },
-  _mapOptions() {
-    return {
-      center: new google.maps.LatLng(55.953250, -3.188263),
-      zoom: 14
-    };
-  },
-  render() {
-    if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} />;
 
-    return <div>Loading map...</div>;
-  }
-});
+      	      render(){
+	      return(
+	      <div>
+	      <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js">
+</script>
+		      <GoogleMapLoader
+		              containerElement={
+			                <div
+					      style={{
+					            height: "100%",
+						                }}
+				          />
+					  }
+        googleMapElement={
+          <GoogleMap
+            ref={(map) => console.log(map)}
+            defaultZoom={3}
+            defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
 
-GoogleMap = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    options: React.PropTypes.object.isRequired
-  },
-  componentDidMount() {
-    GoogleMaps.create({
-      name: this.props.name,
-      element: React.findDOMNode(this),
-      options: this.props.options
-    });
+          >
+          </GoogleMap>
+        }
+      />
+    </div>)
+	      }      
 
-    GoogleMaps.ready(this.props.name, function(map) {
-      var marker = new google.maps.Marker({
-        position: map.options.center,
-        map: map.instance
       });
-    });
-  },
-  componentWillUnmount() {
-    if (GoogleMaps.maps[this.props.name]) {
-      google.maps.event.clearInstanceListeners(GoogleMaps.maps[this.props.name].instance);
-      delete GoogleMaps.maps[this.props.name];
-    } 
-  },
-  render() {
-    return <div className="map-container"></div>;
-  }
-});
 export default MapView;
