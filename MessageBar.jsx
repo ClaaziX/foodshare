@@ -28,7 +28,7 @@ const MessageBar = React.createClass({
 		Meteor.subscribe("sidebar", currentUser);
 			return {
 			    currentUser: currentUser,
-			    privateMessages: clientSidebar.find().fetch().sort({ createdAt: 1 })
+			    privateMessages: clientSidebar.find().fetch()
 			};
 
     },

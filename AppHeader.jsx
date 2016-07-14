@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory, withRouter } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
-
+import MessageBar from './MessageBar.jsx';
 import {
     AppCanvas,
     Dialog,
