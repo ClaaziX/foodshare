@@ -1,8 +1,8 @@
-injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 import {Accounts, STATES} from 'meteor/std:accounts-ui';
 
