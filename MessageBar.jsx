@@ -6,10 +6,15 @@ import {
     List,
     ListItem,
     Avatar,
-    Styles
+    Drawer
 } from 'material-ui';
 
+import Colors from 'material-ui/styles';
+
 import SvgIcons from 'material-ui/svg-icons';
+
+import PrivateChat from './PrivateChat.jsx';
+import TimeSince from './TimeSince.jsx';
 
 const MessageBar = React.createClass({
 
@@ -49,7 +54,7 @@ const MessageBar = React.createClass({
 						primaryText={message.username}
 						secondaryText={
 						    <p>
-							<span style={{color: Styles.Colors.darkBlack}}>{message.createdAt.toDateString()}</span><br/>
+							<span style={{color: Colors.darkBlack}}>{this.calcTime(message.createdAt)}</span><br/>
 							{message.message}
 						    </p>
 						}
@@ -60,6 +65,12 @@ const MessageBar = React.createClass({
 				return(item)
 		    });
 		}else{ <div className="vertAlign">You have no messages! Go share some food :)</div>}
+	},
+
+	calcTime: function(date){
+		return(
+			<TimeSince time={date} />
+			);
 	},
 
 	openPmess: function(currUs) {
@@ -79,6 +90,9 @@ const MessageBar = React.createClass({
     	var winWidth = window.innerWidth*0.83;
 	return(
 		<div>
+		<br />
+		<br />
+		<br />
 		    <List>
 			{this.renderMessagesList()}
 		    </List>

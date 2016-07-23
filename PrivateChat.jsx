@@ -12,17 +12,23 @@ import {
     Divider
 } from 'material-ui';
 
+import TimeSince from './TimeSince.jsx';
+
 const PrivateChat = React.createClass({
 
     mixins: [ReactMeteorData],
 
- getMeteorData() {
+ getMeteorData: function() {
 	currentUser = Meteor.user() ? Meteor.user().username : '';
 	return {
 	    currentUser: currentUser,
 	    privateMessages: PrivateChatC.find(
-		{ between: { $all: [currentUser, this.props.messagedUsername] } }
-	    ).fetch().sort({ createdAt: -1 })
+			{ between:
+				{ $all: [currentUser, this.props.messagedUsername] } 
+			}
+	    ).fetch().sort(function(a, b){
+	    	return a.createdAt - b.createdAt
+	    })
 	};
 	
     },
@@ -42,7 +48,7 @@ const PrivateChat = React.createClass({
 				    <div>
 				       	<Comment
 				       	    comment={message.message}
-				       	    date={message.createdAt}
+				       	    date={this.calcTime(message.createdAt)}
 				       	    username={message.username}
 				       	/>
 				       	<br />
@@ -53,6 +59,12 @@ const PrivateChat = React.createClass({
 		}
 		
     },
+
+	calcTime: function(date){
+		return(
+			<TimeSince time={date} />
+			);
+	},
 
     messagesSeen : function (){
 	Meteor.call('markPMSeen', this.data.currentUser, this.props.messagedUsername);
