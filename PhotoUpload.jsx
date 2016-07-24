@@ -6,44 +6,37 @@ const PhotoUpload = React.createClass({
       mixins: [ReactMeteorData],
 
       getMeteorData(){
-	return{imageUpload:false}
+	return{}
       },
 
-      backCall(){
-	console.log('success')
-      },
-      
       getInitialState(){
 	return({imageUpload:false})
       },
 
         onDrop(file){
-	        console.log('Received Files:', file);	   
-		var id;
-     	        images.insert(file[0], function(err, fileObj){
-				       this.backCall()
-				     console.log('fileObj.url',fileObj.url());
 
-				     console.log(fileObj._id);
+     	        fileObj = images.insert(file[0], function(err,fileObj){
+						     //do something to handle errors that get thrown
+						     console.log(err)
+						 }
 
-				     console.log('findone',images.findOne(fileObj._id));
-
-				     //Get the fileObj to display to confirm upload etc
-				     id = fileObj._id;
-				    console.log('id1',id) 
-				    this.data.imageUpload = images.findOne(fileObj._id);
-
-				    console.log('imageupload',this.data.imageUpload);
-	
-		});
-		console.log('id',id);
+		);
+		while(!fileObj.isUploaded()){
+				console.log('has it uploaded yet',fileObj.isUploaded());
+		}
+		console.log('id',fileObj._id);
+		console.log('fileobj', fileObj);
+		console.log('db entry',images.findOne(fileObj._id).url());
+		this.setState({imageUpload:images.findOne(fileObj._id).url()});
+		console.log(this.state.imageUpload);
+		
 	},
         
         render() {
 	     console.log(this.state.imageUpload)
     		 return (
-		     <Dropzone onDrop={this.onDrop}>
-		         {!this.data.imageUpload ? <div>Drop files here for upload</div> : <img src={this.data.imageUpload.url()} />}
+		     <Dropzone check={this.state.imageUpload} onDrop={this.onDrop}>
+		         {!this.state.imageUpload ? <div>Drop files here for upload</div> : <img src={this.state.imageUpload.url()} />}
 	             </Dropzone>
 
 		 );
