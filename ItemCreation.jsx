@@ -63,34 +63,18 @@ const ItemCreation = React.createClass({
 			finished: false,
 			stepIndex: 0,
 
+			imageURL: "",			
+			
 			portionSelect: 0,
 			foodName: "",
 			foodDesc: "",
-			imgURL: "",
+			
 			formComplete: false,
 			attempt: false,
 			butCol: true,
 			imgDl: false,
 			openErrMess: false,
 			slideIndex: 0
-		}
-	},
-
-	imgChange: function () {
-
-		var input = document.getElementById('imgInp').files;
-
-		if (input && input[0]) {
-			var reader = new FileReader();
-
-			reader.onload = function (e) {
-				$('#blah').attr('src', e.target.result);
-			}
-
-			reader.readAsDataURL(input[0]);
-			this.setState({imgDl: true});
-		}else{
-			alert ("Can't find your file...")
 		}
 	},
 
@@ -132,51 +116,6 @@ const ItemCreation = React.createClass({
 		this.router.push('/');
 	},
 
-	setPrtNo(prtNo) {
-	this.setState({portionSelect: prtNo})
-	},
-
-	handleName(event) {
-		this.setState({
-			foodName: event.target.value,
-		});
-		this.formCompleteCheck();
-	},
-
-	handleDesc(event) {
-		this.setState({
-			foodDesc: event.target.value,
-		});
-		this.formCompleteCheck();
-	},
-
-	formCompleteCheck() {
-		var nameLength = this.state.foodName.length;
-		var descLength = this.state.foodDesc.length;
-		var imgDl = this.state.imgDl;
-		if (nameLength > 3 && descLength > 3 && imgDl ){
-			this.setState({formComplete: true})
-		}else{
-			this.setState({formComplete: false})
-		}
-	},
-
-	handleClose(event) {
-		this.setState({
-			openErrMess: false
-		});
-	},
-
-	handleSlideChange : function (value) {
-		this.setState({
-			slideIndex: value
-		});
-	},
-
-	fileInput: function () {
-		var fileUploadDom = ReactDOM.findDOMNode(this.refs.imgInp);
-		fileUploadDom.click();
-	},
 
 	//Stepper Code 
 	handleNext() {
@@ -194,11 +133,15 @@ const ItemCreation = React.createClass({
 	       this.setState({stepIndex: stepIndex - 1});
 	    }
 	},
+	
+	onUpload(url){
+		this.setState({imageURL:url})
+	},
 
 	getStepContent(stepIndex) {
 	    switch (stepIndex) {
       	        case 0:
-        	    return <PhotoUpload/>;
+        	    return <PhotoUpload onUpload={this.onUpload}/>;
       		case 1:
         	    return <AddLocation/>;
       		case 2:
