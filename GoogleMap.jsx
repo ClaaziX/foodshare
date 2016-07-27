@@ -8,6 +8,7 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 const GoogleMap = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
+    markers: React.PropTypes.string.isRequired,
     options: React.PropTypes.object.isRequired
   },
 

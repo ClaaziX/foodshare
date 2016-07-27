@@ -28,11 +28,9 @@ const MapView = React.createClass({
   },
 
   genLocations() {
-    var locations = [];
     return this.data.foodItems.map((foodItem) => {
-      locations.push(foodItem.location);
       return (
-        ({locations})
+        foodItem.location
       );   
     });
   },
@@ -62,7 +60,7 @@ const MapView = React.createClass({
 
   render() {
     if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} />;
+      return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.genLocations} listeners={this.listeners()} />;
 
     return <div>Loading map...</div>;
   }
