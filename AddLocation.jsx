@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GoogleMap from './MapView.jsx'
+
+import GoogleMap from './GoogleMap.jsx'
 
 const AddLocation = React.createClass({
         render() {
@@ -28,12 +29,11 @@ const ALMapView = React.createClass({
   mixins: [ReactMeteorData],
 
   listeners() { 
-  	      return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
+  	return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
   },
 
   componentDidMount() {
-
-  		          GoogleMaps.load();
+  	GoogleMaps.load();
   },
   getMeteorData() {
     return {

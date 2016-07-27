@@ -65,7 +65,7 @@ const PhotoUpload = React.createClass({
     		 return (
 		 <div>
 		     <Dropzone onDrop={this.onDrop} multiple={false}>
-		         {this.state.imageUpload == '' ? <div>Drop files here for upload</div> : <img src={this.state.imageUpload} />}
+		         {this.state.imageUpload == '' ? <div>Drop files here for upload</div> : <img width="350" src={this.state.imageUpload} />}
 	             </Dropzone>
 		     <Snackbar
 			open={this.state.open}
