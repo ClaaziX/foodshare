@@ -11,13 +11,12 @@ const PhotoUpload = React.createClass({
 	return{}
       },
 
-      getInitialState(){
-	return({
-		imageUpload:'',
-		open: false
-	})
-	
-      },
+    getInitialState(){
+		return({
+			imageUpload:'',
+			open: false
+		})
+    },
 
         onDrop(file){
 
@@ -52,10 +51,7 @@ const PhotoUpload = React.createClass({
 		   		}
 			}
 		});
-       
-							       
-
-							       }
+ 						       }
 						 });
 		
 
