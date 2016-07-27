@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from "react-tap-event-plugin";
@@ -9,8 +8,10 @@ import {Accounts, STATES} from 'meteor/std:accounts-ui';
 clientSidebar = new Meteor.Collection('clientSidebar');
 PrivateChatC = new Mongo.Collection("privateChat");
 FoodItemsC = new Mongo.Collection("foodItems");
-MyImages = new FS.Collection("myImages", {
-    stores: [new FS.Store.FileSystem("myImages", {path: "~/uploads"})]
+
+imageStore = new FS.Store.GridFS("images");
+images = new FS.Collection("images", {
+       stores: [imageStore]
 });
 
 Meteor.methods({
@@ -121,6 +122,17 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+
+    //Permission for file upload 
+    images.allow({
+	'insert': function(){
+	    return true;
+	},
+	'download' : function(){
+ 	    return true	
+	}
+	
+    });
     
     //Reset all the databases before we add the test data in.
 

@@ -1,31 +1,46 @@
-import { default as _ } from "lodash";
-import { triggerEvent } from "react-google-maps/lib/utils";
-import { default as update } from "react-addons-update";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import GoogleMap from './GoogleMap.jsx'
 
-const MapView = React.createClass({
+const AddLocation = React.createClass({
+        render() {
+    		 return (
 
- mixins: [ReactMeteorData],
+		 	<div>
+
+			This is where the location will be uploaded
+
+			<ALMapView />
+
+			</div>
+
+		 );
+    	}
+      
+});
+ export default AddLocation;
+
+
+//Map component - bit of boiler plate here but don't think there's a better way at the mo
+
+const ALMapView = React.createClass({
+
+  mixins: [ReactMeteorData],
 
   listeners() { 
-    return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
+  	return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
   },
 
   componentDidMount() {
-    GoogleMaps.load();
+  	GoogleMaps.load();
   },
-
   getMeteorData() {
     return {
       loaded: GoogleMaps.loaded(),
       mapOptions: GoogleMaps.loaded() && this._mapOptions()
     };
   },
-
   _mapOptions() {
     return {
       center: new google.maps.LatLng(55.9532, -3.1882),
@@ -33,13 +48,12 @@ const MapView = React.createClass({
     };
   },
 
+
   render() {
     if (this.data.loaded)
       return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} />;
 
     return <div>Loading map...</div>;
   }
+
 });
-
-export default MapView;
-

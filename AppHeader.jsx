@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory, withRouter } from 'react-router';
 
+import ItemCreation from './ItemCreation.jsx'
 import AppBar from 'material-ui/AppBar';
 import MessageBar from './MessageBar.jsx';
 import {
