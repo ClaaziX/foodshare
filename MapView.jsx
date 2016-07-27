@@ -22,7 +22,7 @@ const MapView = React.createClass({
   },
   _mapOptions() {
     return {
-      center: new google.maps.LatLng(-37.8136, 144.9631),
+      center: new google.maps.LatLng(55.9532, -3.1882),
       zoom: 8
     };
   },
@@ -33,6 +33,7 @@ const MapView = React.createClass({
     return <div>Loading map...</div>;
   }
 });
+
 export default MapView;
 
 const GoogleMap = React.createClass({
@@ -46,13 +47,17 @@ const GoogleMap = React.createClass({
       element: ReactDOM.findDOMNode(this),
       options: this.props.options
     });
+	var listeners = this.props.listeners;
 
-    GoogleMaps.ready(this.props.name, function(map) {
-      var marker = new google.maps.Marker({
-        position: map.options.center,
-        map: map.instance
-      });
-    });
+      		           GoogleMaps.ready(this.props.name, function(map) {
+			   	if (listeners){
+     			      listeners.forEach(function(listener,index){
+				google.maps.event.addListener(map.instance,listener.l,listener.f);
+			      })
+			      }else{var dummyVar}
+
+              		      });	
+
   },
   componentWillUnmount() {
     if (GoogleMaps.maps[this.props.name]) {
@@ -64,3 +69,4 @@ const GoogleMap = React.createClass({
     return <div className="map-container"></div>;
   }
 });
+export default GoogleMap;
