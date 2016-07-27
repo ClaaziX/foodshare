@@ -23,39 +23,9 @@ const GoogleMap = React.createClass({
       },
     })
   },
-  mixins: [ReactMeteorData],
-
-  getMeteorData() {
-
-    currentUser = Meteor.user() ? Meteor.user() : '';
-  
-    queryS = '.*'+this.state.filter+'.*';
-
-    listMessageQuery = {username : {'$ne' : currentUser.username}};
-
-    filterQuery = {foodName : {'$regex' : queryS}};
-
-    return {
-      foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
-      currentUser: currentUser
-    };
-  },
-
-
-  renderList() {
-    console.log("Location function called...")
-    var locations = [];
-    return this.data.foodItems.map((foodItem) => {
-      locations.push(foodItem.location);
-      return (
-        ({locations})
-      );   
-    });
-  },
 
 componentDidMount() {
-  var locations = this.renderList;
-  console.log(locations)
+  console.log(this.props.markers)
   GoogleMaps.create({
     name: this.props.name,
     element: ReactDOM.findDOMNode(this),

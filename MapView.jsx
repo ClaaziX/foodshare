@@ -9,7 +9,33 @@ import GoogleMap from './GoogleMap.jsx'
 
 const MapView = React.createClass({
 
- mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+
+    currentUser = Meteor.user() ? Meteor.user() : '';
+  
+    queryS = '.*'+this.state.filter+'.*';
+
+    listMessageQuery = {username : {'$ne' : currentUser.username}};
+
+    filterQuery = {foodName : {'$regex' : queryS}};
+
+    return {
+      foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
+      currentUser: currentUser
+    };
+  },
+
+  genLocations() {
+    var locations = [];
+    return this.data.foodItems.map((foodItem) => {
+      locations.push(foodItem.location);
+      return (
+        ({locations})
+      );   
+    });
+  },
 
   listeners() { 
     return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
