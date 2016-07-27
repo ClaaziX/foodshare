@@ -164,7 +164,8 @@ if (Meteor.isServer) {
       		imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom3/beansbeans.jpg",
       		owner: currUser._id,
       		username: currUser.username,
-      		createdAt: new Date()
+      		createdAt: new Date(),
+		location: {lat:faker.address.latitude(),lng:faker.address.longitude()}
       	});
     	  
     }
