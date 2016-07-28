@@ -11,30 +11,6 @@ const MapView = React.createClass({
 
   mixins: [ReactMeteorData],
 
-  getMeteorData() {
-
-    currentUser = Meteor.user() ? Meteor.user() : '';
-  
-    queryS = '.*'+this.state.filter+'.*';
-
-    listMessageQuery = {username : {'$ne' : currentUser.username}};
-
-    filterQuery = {foodName : {'$regex' : queryS}};
-
-    return {
-      foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
-      currentUser: currentUser
-    };
-  },
-
-  genLocations() {
-    return this.data.foodItems.map((foodItem) => {
-      return (
-        foodItem.location
-      );   
-    });
-  },
-
   listeners() { 
     return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
   },
@@ -46,7 +22,8 @@ const MapView = React.createClass({
   getMeteorData() {
     return {
       loaded: GoogleMaps.loaded(),
-      mapOptions: GoogleMaps.loaded() && this._mapOptions()
+      mapOptions: GoogleMaps.loaded() && this._mapOptions(),
+      foodItems: FoodItemsC.find({}).fetch()
     };
   },
 
@@ -60,7 +37,7 @@ const MapView = React.createClass({
 
   render() {
     if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.genLocations} listeners={this.listeners()} />;
+      return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.data.foodItems} listeners={this.listeners()} />;
 
     return <div>Loading map...</div>;
   }

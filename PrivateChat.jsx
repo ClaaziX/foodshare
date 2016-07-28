@@ -91,9 +91,16 @@ const PrivateChat = React.createClass({
 	    console.log("open chat in new left nav bar")
     },
 
-	componentDidUpdate() {
-  		var objDiv = document.getElementById('divPM');
-		objDiv.scrollTop = objDiv.scrollHeight;
+	componentWillUpdate(nextProps, nextState) {
+        const node = ReactDOM.findDOMNode(this.refs.scrollbar);
+        const hScrollBarHeight = (node.scrollWidth !== node.clientWidth) ? 20 : 0;
+        this.shouldScrollBottom = (Math.ceil(node.scrollTop) + node.clientHeight + hScrollBarHeight) >= node.scrollHeight;
+    },
+    componentDidUpdate(prevProps, prevState) {
+        const node = ReactDOM.findDOMNode(this.refs.scrollbar);
+        if (this.shouldScrollBottom) {
+            node.scrollTop = node.scrollHeight;
+	    }
 	},
 
     render : function () {

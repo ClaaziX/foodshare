@@ -161,11 +161,11 @@ if (Meteor.isServer) {
       		foodDesc: faker.lorem.sentence(),
       		portionNo: Math.floor(Math.random()*numPortions),
       		portionsClaimed: 0,
-      		imgURL: "https://garangleslarp.s3-eu-west-1.amazonaws.com/tom3/beansbeans.jpg",
+      		imgURL: "http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg",
       		owner: currUser._id,
       		username: currUser.username,
       		createdAt: new Date(),
-		location: {lat:faker.address.latitude(),lng:faker.address.longitude()}
+		location: {lat:faker.address.latitude(), lng:faker.address.longitude()}
       	});
     	  
     }

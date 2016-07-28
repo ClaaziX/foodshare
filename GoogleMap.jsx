@@ -8,7 +8,6 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 const GoogleMap = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    markers: React.PropTypes.string.isRequired,
     options: React.PropTypes.object.isRequired
   },
 
@@ -25,40 +24,48 @@ const GoogleMap = React.createClass({
     })
   },
 
-componentDidMount() {
-  console.log(this.props.markers)
-  GoogleMaps.create({
-    name: this.props.name,
-    element: ReactDOM.findDOMNode(this),
-    options: this.props.options
-  });
+  genMarkers() {
+    return this.props.markers.map((foodItem) => {
+      return (  
+        var marker = new google.maps.Marker({
+          position: foodItem.location,
+          map: "mymap",
+        });
+      );   
+    });
+  },
 
-  var listeners = this.props.listeners;
-  var that = this;
-  GoogleMaps.ready(this.props.name, function(map) {
-    if (listeners){
-      listeners.forEach(function(listener,index){
-        google.maps.event.addListener(map.instance,listener.l,listener.f);
-      })  
-    }else{var dummyVar}
-    
-    var marker = new google.maps.Marker({
-      position: that.state.markerz.position,
-      map: map.instance
+  componentDidMount() {
+    GoogleMaps.create({
+      name: this.props.name,
+      element: ReactDOM.findDOMNode(this),
+      options: this.props.options
     });
 
-  });	
-},
+    var listeners = this.props.listeners;
+    var that = this;
+    GoogleMaps.ready(this.props.name, function(map) {
+      if (listeners){
+        listeners.forEach(function(listener,index){
+          google.maps.event.addListener(map.instance,listener.l,listener.f);
+        })  
+      }else{var dummyVar}
+      
+      that.genMarkers();
 
-componentWillUnmount() {
-  if (GoogleMaps.maps[this.props.name]) {
-    google.maps.event.clearInstanceListeners(GoogleMaps.maps[this.props.name].instance);
-    delete GoogleMaps.maps[this.props.name];
-  } 
-},
+    });	
+  },
 
-render() {
-    return <div className="map-container"></div>;
-  }
-});
+  componentWillUnmount() {
+    if (GoogleMaps.maps[this.props.name]) {
+      google.maps.event.clearInstanceListeners(GoogleMaps.maps[this.props.name].instance);
+      delete GoogleMaps.maps[this.props.name];
+    } 
+  },
+
+  render() {
+    console.log(this.props.markers)
+      return <div className="map-container"></div>;
+    }
+  });
 export default GoogleMap;
