@@ -24,8 +24,38 @@ const GoogleMap = React.createClass({
     })
   },
 
-  genMarkers() {
+  genMarkers(map) {
+    return this.props.markers.map((foodItem) => {
 
+      var obj = foodItem.location;
+      var keys = Object.keys(obj);
+      var coords = [];
+
+      for (var i = 0; i < keys.length; i++) {
+
+        coords.push(obj[keys[i]])
+
+      }
+      console.log(coords)
+
+      var image = {
+        url: "http://www.airsoftmap.net/images/pin_map.png",
+        // This marker is 20 pixels wide by 32 pixels high.
+        size: new google.maps.Size(32, 32),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new google.maps.Point(0, 32)
+      };
+
+      return (
+        new google.maps.Marker({
+          position: new google.maps.LatLng(coords[0], coords[1]),
+          map: map,
+          icon: image,
+        })
+      );   
+    });
   },
 
   componentDidMount() {
@@ -43,17 +73,8 @@ const GoogleMap = React.createClass({
           google.maps.event.addListener(map.instance,listener.l,listener.f);
         })  
       }else{var dummyVar}
-      
-      var marker = new google.maps.Marker({
-        position: {lat: 55.9532, lng: -3.1882},
-        map: map.instance,
-      });
 
-      var marker1 = new google.maps.Marker({
-        position: that.state.markerz.position,
-        map: map.instance,
-      });
-
+      that.genMarkers(map.instance);
 
     });	
   },
@@ -66,7 +87,6 @@ const GoogleMap = React.createClass({
   },
 
   render() {
-    console.log(this.props.markers)
       return <div className="map-container"></div>;
     }
   });
