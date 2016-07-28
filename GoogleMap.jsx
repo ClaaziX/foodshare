@@ -25,14 +25,7 @@ const GoogleMap = React.createClass({
   },
 
   genMarkers() {
-    return this.props.markers.map((foodItem) => {
-      return (  
-        var marker = new google.maps.Marker({
-          position: foodItem.location,
-          map: "mymap",
-        });
-      );   
-    });
+
   },
 
   componentDidMount() {
@@ -51,7 +44,16 @@ const GoogleMap = React.createClass({
         })  
       }else{var dummyVar}
       
-      that.genMarkers();
+      var marker = new google.maps.Marker({
+        position: {lat: 55.9532, lng: -3.1882},
+        map: map.instance,
+      });
+
+      var marker1 = new google.maps.Marker({
+        position: that.state.markerz.position,
+        map: map.instance,
+      });
+
 
     });	
   },
