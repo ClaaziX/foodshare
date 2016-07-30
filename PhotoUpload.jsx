@@ -60,6 +60,9 @@ const PhotoUpload = React.createClass({
         render() {
     		 return (
 		 <div>
+		 	<div>
+
+		 	</div>
 		     <Dropzone onDrop={this.onDrop} multiple={false}>
 		         {this.state.imageUpload == '' ? <div>Drop files here for upload</div> : <img width="350" src={this.state.imageUpload} />}
 	             </Dropzone>

@@ -6,6 +6,7 @@ import {
        Step,
        Stepper,
        StepLabel,
+       StepContent,
        } from 'material-ui/Stepper';
 
 
@@ -99,18 +100,30 @@ const ItemCreation = React.createClass({
 		
 	},
 
-	getStepContent(stepIndex) {
-	    switch (stepIndex) {
-      	        case 0:
-        	    return <PhotoUpload onUpload={this.onUpload}/>;
-      		case 1:
-        	    return <AddLocation/>;
-      		case 2:
-        	    return <AddItem/>;
-      		default:
-		    return 'You\'re a long way from home sonny jim!';
-            }
-        },
+	genStepButtons(step) {
+    const {stepIndex} = this.state;
+    return (
+      <div style={{margin: '12px 0'}}>
+        <RaisedButton
+          label={stepIndex === 2 ? 'Finish' : 'Next'}
+          disableTouchRipple={true}
+          disableFocusRipple={true}
+          primary={true}
+          onTouchTap={this.handleNext}
+          style={{marginRight: 12}}
+        />
+        {step > 0 && (
+          <FlatButton
+            label="Back"
+            disabled={stepIndex === 0}
+            disableTouchRipple={true}
+            disableFocusRipple={true}
+            onTouchTap={this.handlePrev}
+          />
+        )}
+      </div>
+    );
+  },
 
 	render() {
 		const {finished, stepIndex} = this.state;
@@ -118,19 +131,31 @@ const ItemCreation = React.createClass({
 
     return (
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-        <Stepper activeStep={stepIndex}>
+        <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Upload a Photograph of the Item(s)</StepLabel>
+            <StepContent>
+              <PhotoUpload onUpload={this.onUpload}/>
+              {this.genStepButtons(0)}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Add the Location of the Item(s)</StepLabel>
+            <StepContent>
+              <AddLocation/>
+              {this.genStepButtons(1)}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Add Details of the Item(s)</StepLabel>
+            <StepContent>
+              <AddItem/>
+              {this.genStepButtons(2)}
+            </StepContent>
           </Step>
         </Stepper>
         <div style={contentStyle}>
-          {finished ? (
+          {finished ? 
             <p>
               <a
                 href="#"
@@ -142,24 +167,7 @@ const ItemCreation = React.createClass({
                 Click here
               </a> to reset the example.
             </p>
-          ) : (
-            <div>
-              {this.getStepContent(stepIndex)}
-              <div style={{marginTop: 12}}>
-                <FlatButton
-                  label="Back"
-                  disabled={stepIndex === 0}
-                  onTouchTap={this.handlePrev}
-                  style={{marginRight: 12}}
-                />
-                <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Next'}
-                  primary={true}
-                  onTouchTap={this.handleNext}
-                />
-              </div>
-            </div>
-          )}
+          : "" }
         </div>
       </div>
     );

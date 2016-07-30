@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GoogleMap from './GoogleMap.jsx'
+import GoogleMap from './GoogleMap.jsx';
+
 
 const AddLocation = React.createClass({
-        render() {
-    		 return (
-
+  render() {
+    return (
 		 	<div>
-
-			This is where the location will be uploaded
-
-			<ALMapView />
-
+  			<ALMapView />
 			</div>
-
-		 );
-    	}
-      
+		);
+  }     
 });
  export default AddLocation;
 
@@ -28,8 +22,20 @@ const ALMapView = React.createClass({
 
   mixins: [ReactMeteorData],
 
+  getInitialState(){
+    return({
+      latlng: {
+        lat: "",
+        lng: ""
+      }
+    })
+  },
+
   listeners() { 
-  	return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
+    var that = this;
+  	return [{l:'click', f: function(e){
+      that.setState({latlng: {lat: parseFloat(e.latLng.lat()), lng: parseFloat(e.latLng.lng())}})
+    },}]
   },
 
   componentDidMount() {
@@ -50,8 +56,9 @@ const ALMapView = React.createClass({
 
 
   render() {
+    console.log(this.state.latlng)
     if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} />;
+      return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} latlng={this.state.latlng} />;
 
     return <div>Loading map...</div>;
   }

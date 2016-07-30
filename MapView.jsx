@@ -34,7 +34,6 @@ const MapView = React.createClass({
     };
   },
 
-
   render() {
     if (this.data.loaded)
       return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.data.foodItems} listeners={this.listeners()} />;
