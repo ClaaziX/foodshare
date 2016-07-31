@@ -11,6 +11,15 @@ const MapView = React.createClass({
 
   mixins: [ReactMeteorData],
 
+  getInitialState(){
+    return({
+      latlng: {
+        lat: "",
+        lng: ""
+      }
+    })
+  },
+
   listeners() { 
     return [{l:'click', f: function(e){console.log(e.latLng.lat(),e.latLng.lng())},}]
   },
@@ -36,7 +45,7 @@ const MapView = React.createClass({
 
   render() {
     if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.data.foodItems} listeners={this.listeners()} />;
+      return <GoogleMap name="mymap" options={this.data.mapOptions} markers={this.data.foodItems} listeners={this.listeners()} latlng={this.state.latlng} />;
 
     return <div>Loading map...</div>;
   }

@@ -56,7 +56,6 @@ const ALMapView = React.createClass({
 
 
   render() {
-    console.log(this.state.latlng)
     if (this.data.loaded)
       return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} latlng={this.state.latlng} />;
 

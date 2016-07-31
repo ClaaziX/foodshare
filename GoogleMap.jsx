@@ -11,19 +11,7 @@ const GoogleMap = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     options: React.PropTypes.object.isRequired,
-  },
-
-  getInitialState(){
-    return({
-      markerz: {
-        position: {
-          lat: 55.9532,
-          lng: -3.1882,
-        },
-        key: "Taiwan",
-        defaultAnimation: 2,
-      },
-    })
+    map: "",
   },
 
   genMarkers(maps) {
@@ -98,8 +86,11 @@ const GoogleMap = React.createClass({
 
     var listeners = this.props.listeners;
     var that = this;
+    var mapz = "";
 
     GoogleMaps.ready(this.props.name, function(map) {
+
+      mapz = map.instance;
 
       if (listeners){
         listeners.forEach(function(listener,index){
@@ -108,9 +99,50 @@ const GoogleMap = React.createClass({
       }else{var dummyVar}
 
       that.genMarkers(map.instance);
-    });
 
-    var input = ReactDOM.findDOMNode(this.props.search);
+      console.log(mapz)
+      var input =  ReactDOM.findDOMNode(that.refs.pacinput);
+      var searchBox = new google.maps.places.Autocomplete(input);
+      mapz.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+      
+      mapz.addListener('bounds_changed', function() {
+        searchBox.setBounds(mapz.getBounds());
+
+        var places = searchBox.getPlace();
+        console.log(searchBox)
+        console.log(places)
+
+          if (places.length == 0) {
+            return;
+          }
+
+        var bounds = new google.maps.LatLngBounds();
+        var i = 0;
+        var place = places[i];
+        for (i = 0; place = places[i]; i++) {
+         (function(place) {
+           var marker = new google.maps.Marker({
+             position: place.geometry.location
+           });
+           marker.bindTo('mymap', searchBox, 'mymap');
+           google.maps.event.addListener(marker, 'map_changed', function() {
+             if (!this.getMap()) {
+               this.unbindAll();
+             }
+           });
+           bounds.extend(place.geometry.location);
+
+
+         }(place));
+
+        }
+        mapz.fitBounds(bounds);
+        searchBox.set('mymap', mapz);
+        mapz.setZoom(Math.min(mapz.getZoom(),12));
+
+      });
+
+    });
   },
 
   componentWillUnmount() {
@@ -125,7 +157,9 @@ const GoogleMap = React.createClass({
     if (JSON.stringify(this.props.latlng) !== JSON.stringify(latlngTest) ){
       {this.geocodeLatLng()}
     }
-    return <div className="map-container"></div>;
+    return (
+        <div className="map-container"><input id="pacinput" ref="pacinput" class="controls" type="text" placeholder="Search Box" /></div>
+    );
   }
 });
 export default GoogleMap;
