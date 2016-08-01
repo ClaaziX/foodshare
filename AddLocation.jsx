@@ -6,11 +6,19 @@ import GeoComplete from './GeoComplete.jsx'
 import { Meteor } from 'meteor/meteor'
 
 const AddLocation = React.createClass({
+    getInitialState(){
+	return({loaded:false})
+	},
+    loaded(loaded){
+	this.setState({loaded:loaded});
+	console.log(this.state.loaded)
+	},
     render() {
 	return (
 	    <div>
-		<GeoComplete/>
-  		<ALMapView />
+		{this.state.loaded ?
+		<GeoComplete/> : ''}
+  		<ALMapView loaded={this.loaded}/>
 	    </div>
 	);
     }     
@@ -27,9 +35,12 @@ const ALMapView = React.createClass({
     listeners(map) {
 	var getCoords = (function(marker){
 	    this.setState({location:marker.position});
-	    console.log('wut',marker.position);
-	    console.log(this.state.location);
 	}).bind(this);
+
+	this.props.loaded(true);
+	console.log(this.props);
+	this.setState({map:map.instance});
+	
 
 	var Marker;
 
@@ -48,7 +59,7 @@ const ALMapView = React.createClass({
     },
 
     componentDidMount() {
-  	GoogleMaps.load({key:Meteor.settings.public.GMAPSKey});
+  	GoogleMaps.load();
     },
     getMeteorData() {
 	return {
@@ -68,7 +79,11 @@ const ALMapView = React.createClass({
 
 
 	if (this.data.loaded)
-	    return <GoogleMapAdd name="mymap" options={this.data.mapOptions} listeners={this.listeners}/>;
+	    return(
+		<div>
+		    <GoogleMapAdd name="mymap" options={this.data.mapOptions} listeners={this.listeners}/>
+		</div>
+	    )
 
 	return <div>Loading map...</div>;
     }
