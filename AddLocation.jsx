@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import GoogleMapAdd from './GoogleMapAdd.jsx';
+import GeoComplete from './GeoComplete.jsx'
 import { Meteor } from 'meteor/meteor'
 
 const AddLocation = React.createClass({
     render() {
 	return (
 	    <div>
+		<GeoComplete/>
   		<ALMapView />
 	    </div>
 	);
@@ -21,10 +23,6 @@ export default AddLocation;
 const ALMapView = React.createClass({
 
     mixins: [ReactMeteorData],
-
-    /* getInitialState(){
-       return({location:'hello'})
-       }, */
 
     listeners(map) {
 	var getCoords = (function(marker){
