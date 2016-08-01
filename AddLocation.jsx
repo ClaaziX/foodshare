@@ -1,66 +1,76 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GoogleMap from './GoogleMap.jsx';
-
+import GoogleMapAdd from './GoogleMapAdd.jsx';
+import GeoComplete from './GeoComplete.jsx'
+import { Meteor } from 'meteor/meteor'
 
 const AddLocation = React.createClass({
-  render() {
-    return (
-		 	<div>
-  			<ALMapView />
-			</div>
-		);
-  }     
+    render() {
+	return (
+	    <div>
+		<GeoComplete/>
+  		<ALMapView />
+	    </div>
+	);
+    }     
 });
- export default AddLocation;
+export default AddLocation;
 
 
 //Map component - bit of boiler plate here but don't think there's a better way at the mo
 
 const ALMapView = React.createClass({
 
-  mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
 
-  getInitialState(){
-    return({
-      latlng: {
-        lat: "",
-        lng: ""
-      }
-    })
-  },
+    listeners(map) {
+	var getCoords = (function(marker){
+	    this.setState({location:marker.position});
+	    console.log('wut',marker.position);
+	    console.log(this.state.location);
+	}).bind(this);
 
-  listeners() { 
-    var that = this;
-  	return [{l:'click', f: function(e){
-      that.setState({latlng: {lat: parseFloat(e.latLng.lat()), lng: parseFloat(e.latLng.lng())}})
-    },}]
-  },
+	var Marker;
 
-  componentDidMount() {
-  	GoogleMaps.load();
-  },
-  getMeteorData() {
-    return {
-      loaded: GoogleMaps.loaded(),
-      mapOptions: GoogleMaps.loaded() && this._mapOptions()
-    };
-  },
-  _mapOptions() {
-    return {
-      center: new google.maps.LatLng(55.9532, -3.1882),
-      zoom: 8
-    };
-  },
+	map.instance.addListener('click', function(e){
+	    if(Marker != undefined){
+		Marker = Marker.setMap(null);
+		}
+	    Marker = new google.maps.Marker({
+		position:e.latLng,
+		map:map.instance
+	    });
+
+	    getCoords(Marker);
+		
+	})
+    },
+
+    componentDidMount() {
+  	GoogleMaps.load({key:Meteor.settings.public.GMAPSKey});
+    },
+    getMeteorData() {
+	return {
+	    loaded: GoogleMaps.loaded(),
+	    mapOptions: GoogleMaps.loaded() && this._mapOptions()
+	};
+    },
+    _mapOptions() {
+	return {
+	    center: new google.maps.LatLng(55.9532, -3.1882),
+	    zoom: 8
+	};
+    },
 
 
-  render() {
-    console.log(this.state.latlng)
-    if (this.data.loaded)
-      return <GoogleMap name="mymap" options={this.data.mapOptions} listeners={this.listeners()} latlng={this.state.latlng} />;
+    render() {
 
-    return <div>Loading map...</div>;
-  }
+
+	if (this.data.loaded)
+	    return <GoogleMapAdd name="mymap" options={this.data.mapOptions} listeners={this.listeners}/>;
+
+	return <div>Loading map...</div>;
+    }
 
 });
