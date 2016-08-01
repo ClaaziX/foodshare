@@ -1,5 +1,3 @@
-import { default as _ } from "lodash";
-import { triggerEvent } from "react-google-maps/lib/utils";
 import { default as update } from "react-addons-update";
 import React from 'react';
 import ReactDOM from 'react-dom';
