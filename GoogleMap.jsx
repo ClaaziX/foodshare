@@ -40,13 +40,18 @@ const GoogleMap = React.createClass({
           // The anchor for this image is the base of the flagpole at (0, 32).
           anchor: new google.maps.Point(0, 32)
         };
-
-        return (
-          new google.maps.Marker({
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
             position: new google.maps.LatLng(coords[0], coords[1]),
             map: maps,
             icon: image,
           })
+        marker.setVisible(false);
+        var imgURL = foodItem.imgURL;
+        var imgsrc = "<IMG width='80px' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
+        return (
+          infowindow.setContent(foodItem.foodName.toString() + "<br />" + imgsrc), 
+          infowindow.open(maps, marker)
         );   
       });
     }else{console.log("error: props.markers == " + this.props.markers)}
