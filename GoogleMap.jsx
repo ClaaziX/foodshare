@@ -17,6 +17,7 @@ const GoogleMap = React.createClass({
   genMarkers(maps) {
     console.log("genMarkers called")
     if(typeof this.props.markers !== "undefined"){
+      console.log("genMarkers conditional passed")
       return this.props.markers.map((foodItem) => {
 
         var obj = foodItem.location;
@@ -48,7 +49,7 @@ const GoogleMap = React.createClass({
           })
         );   
       });
-    }else{console.log("props.markers == " + this.props.markers)}
+    }else{console.log("error: props.markers == " + this.props.markers)}
   },
 
   geocodeLatLng() {
@@ -107,58 +108,51 @@ const GoogleMap = React.createClass({
       searchBox.bindTo('bounds', mapz);
       mapz.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
       
-      // Bias the SearchBox results towards current map's viewport.
-      mapz.addListener('bounds_changed', function() {
-        searchBox.setBounds(mapz.getBounds());
-      });
-
-      var markers = [];
+      var infowindow = new google.maps.InfoWindow();
+      var marker = new google.maps.Marker({
+          map: mapz,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
       // Listen for the event fired when the user selects a prediction and retrieve
       // more details for that place.
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
+      searchBox.addListener('place_changed', function() {
 
-        if (places.length == 0) {
-          return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function(marker) {
-          marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
+          infowindow.close();
+          marker.setVisible(false);
+          var place = searchBox.getPlace();
           if (!place.geometry) {
-            console.log("Returned place contains no geometry");
+            window.alert("Autocomplete's returned place contains no geometry");
             return;
           }
-          var icon = {
+
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            mapz.fitBounds(place.geometry.viewport);
+          } else {
+            mapz.setCenter(place.geometry.location);
+            mapz.setZoom(17);  // Why 17? Because it looks good.
+          }
+          marker.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
-
-          // Create a marker for each place.
-          markers.push(new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
+            scaledSize: new google.maps.Size(35, 35)
           }));
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
 
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
           }
-        });
-        map.fitBounds(bounds);
+
+          infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+          infowindow.open(mapz, marker);
       });
 
     });
