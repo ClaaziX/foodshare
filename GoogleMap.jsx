@@ -1,3 +1,5 @@
+import { default as _ } from "lodash";
+import { triggerEvent } from "react-google-maps/lib/utils";
 import { default as update } from "react-addons-update";
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,22 +11,11 @@ const GoogleMap = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     options: React.PropTypes.object.isRequired,
-  },
-
-  getInitialState(){
-    return({
-      markerz: {
-        position: {
-          lat: 55.9532,
-          lng: -3.1882,
-        },
-        key: "Taiwan",
-        defaultAnimation: 2,
-      },
-    })
+    map: "",
   },
 
   genMarkers(maps) {
+    console.log("genMarkers called")
     if(typeof this.props.markers !== "undefined"){
       return this.props.markers.map((foodItem) => {
 
@@ -57,7 +48,7 @@ const GoogleMap = React.createClass({
           })
         );   
       });
-    }
+    }else{console.log("props.markers == " + this.props.markers)}
   },
 
   geocodeLatLng() {
@@ -96,8 +87,11 @@ const GoogleMap = React.createClass({
 
     var listeners = this.props.listeners;
     var that = this;
+    var mapz;
 
     GoogleMaps.ready(this.props.name, function(map) {
+
+      mapz = map.instance;
 
       if (listeners){
         listeners.forEach(function(listener,index){
@@ -106,9 +100,68 @@ const GoogleMap = React.createClass({
       }else{var dummyVar}
 
       that.genMarkers(map.instance);
-    });
 
-    var input = ReactDOM.findDOMNode(this.props.search);
+      console.log(mapz)
+      var input =  ReactDOM.findDOMNode(that.refs.pacinput);
+      var searchBox = new google.maps.places.Autocomplete(input);
+      searchBox.bindTo('bounds', mapz);
+      mapz.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      
+      // Bias the SearchBox results towards current map's viewport.
+      mapz.addListener('bounds_changed', function() {
+        searchBox.setBounds(mapz.getBounds());
+      });
+
+      var markers = [];
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+      });
+
+    });
   },
 
   componentWillUnmount() {
@@ -119,11 +172,9 @@ const GoogleMap = React.createClass({
   },
 
   render() {
-    var latlngTest = {lat: "", lng: ""};
-    if (JSON.stringify(this.props.latlng) !== JSON.stringify(latlngTest) ){
-      {this.geocodeLatLng()}
-    }
-    return <div className="map-container"></div>;
+    return (
+        <div className="map-container"><input id="pacinput" ref="pacinput" className="controls" type="text" placeholder="Search Box" /></div>
+    );
   }
 });
 export default GoogleMap;

@@ -16,7 +16,7 @@ const MapView = React.createClass({
   },
 
   componentDidMount() {
-    GoogleMaps.load();
+    GoogleMaps.load({key:'AIzaSyC_muGOORl5WqYTyBMJtEw05AESKYBm3nY',libraries:'places'});
   },
 
   getMeteorData() {
