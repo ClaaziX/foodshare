@@ -36,6 +36,10 @@ import {
 
 import SvgIcons from 'material-ui/svg-icons';
 
+import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+import MapsMap from 'material-ui/svg-icons/maps/map';
+import ActionDashboard from 'material-ui/svg-icons/action/dashboard';
+
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -137,13 +141,10 @@ const AppHeader = React.createClass({
 		];
 
 	    return(
+		<div className="bigBoy">
 		<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
 	
 		<div className="container">
-
-			<div className="contentContain">
-				{this.props.children}
-			</div>
 
 			<div className="headContain">
 				<AppBar
@@ -159,6 +160,7 @@ const AppHeader = React.createClass({
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
 		  	</div>
+
 		  	<div className="toolContain">
 		  		<Toolbar>
 		  			<ToolbarGroup firstChild={true}>
@@ -192,18 +194,26 @@ const AppHeader = React.createClass({
 		  			</ToolbarGroup>
 		  		</Toolbar>
 		  	</div>
+
+			<div className="contentContain">
+				{this.props.children}
+			</div>
+
 		    <div className="tabsContain">
 
 				<Tabs>
 					<Tab
+						icon={<ActionDashboard />} 
 						label="ITEM VIEW"
 						onActive={this.handleActiveTab("/")}
 					/>
 					<Tab
+						icon={<MapsMap />}
 						label="MAP VIEW"
 						onActive={this.handleActiveTab("/MapView")}
 					/>
 					<Tab
+						icon={<MapsPersonPin />}
 						label="YOUR ITEMS"
 						onActive={this.handleActiveTab("/Messages")}
 					/>
@@ -253,6 +263,7 @@ const AppHeader = React.createClass({
 
 		</div>
 		</MuiThemeProvider>
+		</div>
 	    );
 
     }

@@ -21,10 +21,9 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    width: 500,
-    height: 400,
-    overflowY: 'auto',
-    marginBottom: 24,
+    width: 300,
+    height: 200,
+    marginBottom: 12,
   },
 };
 

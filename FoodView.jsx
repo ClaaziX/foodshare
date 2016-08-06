@@ -148,6 +148,7 @@ const FoodView = React.createClass({
 					filter={AutoComplete.caseInsensitiveFilter}
 					dataSource={searchNames}
 					onUpdateInput={this.filterList}
+          fullWidth={true}
 					/>
 				</div>
             <Tabs>

@@ -86,37 +86,26 @@ const PrivateChat = React.createClass({
 		});
     },
 
-    handleOpenChat : function (owner, claimer, ID) {
-	console.log(owner, claimer, ID)
-	    console.log("open chat in new left nav bar")
-    },
+	componentWillUpdate: function() {
+  		
+  	},
 
-	componentWillUpdate(nextProps, nextState) {
-        const node = ReactDOM.findDOMNode(this.refs.scrollbar);
-        const hScrollBarHeight = (node.scrollWidth !== node.clientWidth) ? 20 : 0;
-        this.shouldScrollBottom = (Math.ceil(node.scrollTop) + node.clientHeight + hScrollBarHeight) >= node.scrollHeight;
-    },
-    componentDidUpdate(prevProps, prevState) {
-        const node = ReactDOM.findDOMNode(this.refs.scrollbar);
-        if (this.shouldScrollBottom) {
-            node.scrollTop = node.scrollHeight;
-	    }
+	componentDidUpdate: function() {
+		var node = ReactDOM.findDOMNode(this);
+  		node.scrollTop = node.scrollHeight;
 	},
 
     render : function () {
+		return (
+		    <div className="divPM" id="divPM" ref="divPM">
+				<br/>
+				{this.generateChat()}
+				{this.messagesSeen()}
+				<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
+				<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
+		    </div>
 
-	console.log(this.data.privateMessages);
-	return (
-
-	    <div className="divPM" id="divPM" ref="divPM">
-			<br/>
-			{this.generateChat()}
-			{this.messagesSeen()}
-			<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
-			<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
-	    </div>
-
-	);
+		);
     }
 });
 

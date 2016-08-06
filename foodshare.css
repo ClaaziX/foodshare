@@ -9,6 +9,14 @@ h1{
 font-family: 'Crete Round', serif;
 }
 
+.Center-Container {
+  position: relative;
+}
+
+.Absolute-Center {
+
+}
+
 .controls {
   background-color: #fff;
   border-radius: 2px;
@@ -54,13 +62,18 @@ font-family: 'Crete Round', serif;
   width:100%;
   height:100%;
 }
+.bigBoy{
+  height: 100%;
+  width: 100%;
+}
 
 .container {
-  margin: 0 auto;
-  padding: 2em 2em 4em;
-  max-width: 830px;
-  min-height: 100%;
-  background: white;
+  position:absolute;
+  left:0; right:0;
+  top:0; bottom:0;
+  margin:auto;
+  height: 532px;
+  width: 345px;
 }
 
 .inputStyle {
@@ -80,19 +93,13 @@ font-family: 'Crete Round', serif;
 .searchContain {
   width: 100%;
   text-align: center;
-}
-
-header {
-  background: #d2edf4;
-  background-image: linear-gradient(to bottom, #BEF2D4, #C8F2BE 100%);
-  padding: 20px 15px 15px 15px;
-  position: relative;
+  height: 78px;
+  background-color: black;
 }
 
 #login-buttons {
   display: block;
 }
-
 
 .map-container {
   width: 100%;
@@ -101,37 +108,26 @@ header {
 }
 
 .contentContain{
-  margin-top: 120px;
-  margin-bottom: 100px;
+  overflow-y: scroll;
+  width:100%;
+  height: 350px;
 }
 
 .headContain {
-  position: fixed;
-  max-width: 100%;
-  margin: 0 auto;
-  top: 0;
-  left: 0;
-  right: 0;
+  height: 60px;
+  width: 100%;
   text-align: center;
 }
 
 .toolContain {
-  position: fixed;
-  max-width: 100%;
-  margin: 0 auto;
-  top: 62px;
-  left: 0;
-  right: 0;
+  height: 50px;
+  width: 100%;
   text-align: center;
 }
 
 .tabsContain {
-  position: fixed;
-  max-width: 100%;
-  margin: 0 auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: 72px;
+  width: 100%;
   text-align: center;
 }
 
