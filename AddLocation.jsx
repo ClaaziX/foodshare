@@ -2,96 +2,109 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import GoogleMapAdd from './GoogleMapAdd.jsx';
-import GeoComplete from './GeoComplete.jsx';
-import Geosuggest from 'react-geosuggest';
 import { Meteor } from 'meteor/meteor';
-
-const AddLocation = React.createClass({
-
-    getInitialState(){
-	return({loaded:false});
-	},
-
-    getCoordsMap(coords){
-	this.setState({coords:coords});
-    },
-
-    getCoordsGeosuggest(suggest){
-
-	var coords = suggest.location;
-	this.setState({coords:coords,marker:coords});
-
-
-    },
-
-    loaded(loaded){
-	this.setState({loaded:loaded});
-
-	},
-
-    render() {
-	return (
-	    <div>
-		{this.state.loaded ?
-		<Geosuggest onSuggestSelect={this.getCoordsGeosuggest}/> : ''}
-  		<ALMapView loaded={this.loaded} getCoords={this.getCoordsMap} suggestionMarker={this.state.marker}/>
-	    </div>
-	);
-    }     
-});
-export default AddLocation;
-
 
 //Map component - bit of boiler plate here but don't think there's a better way at the mo
 
-const ALMapView = React.createClass({
+const AddLocation = React.createClass({
 
     mixins: [ReactMeteorData],
     
     listeners(map) {
-
-        //Let other elements know that the map is loaded and ready
-    	this.props.loaded(true);
-	
-	//set the map instance to state
-	this.setState({map:map.instance});	
 
 	//Function to set the coords 
 	var getCoords = (function(marker){
 	    this.setState({location:marker.position});
 	}).bind(this);
 
-	//Function to set the marker 
-	var setMarker = (function(marker){
-	    this.setState({marker:marker});
-	}).bind(this);
-
-	//Function to get the marker
-	var getMarker = (function(){
-	    return this.state.marker;
-	}).bind(this);
+	//Display Elements
+	var marker = new google.maps.Marker({
+            map: map.instance,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+	var infowindow = new google.maps.InfoWindow();
 	
+	//Anchor the search box to the pacinput node and instantiate
+	var input =  ReactDOM.findDOMNode(this.refs.pacinput);
+	var searchBox = new google.maps.places.Autocomplete(input);
+	searchBox.bindTo('bounds', map.instance);
+	map.instance.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	
+	//get a geocoder instance
+        var geocoder = new google.maps.Geocoder;
 
+	
+	//Add the listener for the click
 	map.instance.addListener('click', function(e){
 
-	    //Get marker ref
-	    var Marker = getMarker();
-	    
-	    if(Marker != undefined){
-		Marker = Marker.setMap(null);
+	    geocoder.geocode({'location': e.latLng}, function(results, status) {
+		if (status === 'OK') {
+		    console.log(results)
+		    if (results[0]) {
+			marker.setPosition(e.latLng);
+			var name = '';
+			if (results[0].address_components){
+			    name = [
+				(results[0].address_components[0] && results[0].address_components[0].long_name || ''),
+				(results[1].address_components[0] && results[1].address_components[1].long_name || ''),
+				    ].join(' ');
+			}
+			infowindow.setContent('<div><strong>'+ name +'</strong><br>' + results[0].formatted_address);
+			infowindow.open(map.instance, marker);
+		    } else {
+			window.alert('No results found');
+		    }
+		} else {
+		    window.alert('Geocoder failed due to: ' + status);
 		}
-	    Marker = new google.maps.Marker({
-		position:e.latLng,
-		map:map.instance
-	    });
-	    
-	    //set the marker ref
-	    setMarker(Marker);
-	    
+            });
+
 	    //Set coords in state
-	    getCoords(Marker);
-		
-	})
+	    getCoords(marker);
+	    
+	});
+	//Listener end
+
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener('place_changed', function() {
+
+            infowindow.close();
+            marker.setVisible(false);
+            var place = searchBox.getPlace();
+            if (!place.geometry) {
+		window.alert("Autocomplete's returned place contains no geometry");
+		return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+		map.instance.fitBounds(place.geometry.viewport);
+            } else {
+		map.instance.setCenter(place.geometry.location);
+		map.instance.setZoom(5);
+            }
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            /* var address = '';
+               if (place.address_components) {
+	       address = [
+	       (place.address_components[0] && place.address_components[0].short_name || ''),
+	       (place.address_components[1] && place.address_components[1].short_name || ''),
+	       (place.address_components[2] && place.address_components[2].short_name || ''),
+	       (place.address_components[7] && place.address_components[7].short_name || '')
+	       ].join(' ');
+               } */
+	    console.log('place',place);
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
+            infowindow.open(map.instance, marker);
+	    getCoords(marker);
+	});
+
+
+	//End attempt at adding the map search bar and autocomplete
+	
     },
 
     componentDidMount() {
@@ -112,36 +125,6 @@ const ALMapView = React.createClass({
 	};
     },
 
-    componentWillReceiveProps(nextProps){
-
-    if (nextProps.suggestionMarker!=undefined){
-	this.setMarkerFromProp(nextProps);
-	};
-
-    },
-
-    setMarkerFromProp(nextProps){
-	var map = this.state.map;
-	var Marker = this.state.marker;
-
-
-
-
-	if(Marker != undefined){
-		Marker = Marker.setMap(null);
-		}
-
-	Marker = new google.maps.Marker({
-	    position:new google.maps.LatLng(nextProps.suggestionMarker),
-	    map:map
-	    });
-
-	this.setState({marker:Marker});
-
-	return(Marker)
-	
-	
-    },
 
     render() {
 
@@ -150,11 +133,14 @@ const ALMapView = React.createClass({
 	if (this.data.loaded)
 	    return(
 		<div>
+		    <input id="pacinput" ref="pacinput" className="controls" type="text"
+			   placeholder="Enter a location"/>
 		    <GoogleMapAdd name="mymap" options={this.data.mapOptions} listeners={this.listeners}/>
 		</div>
 	    )
 
-	return <div>Loading map...</div>;
+	    return <div>Loading map...</div>;
     }
 
 });
+export default AddLocation;
