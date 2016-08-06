@@ -3,6 +3,9 @@ body
 {
 
   font-family: 'Roboto', sans-serif;
+  background-image: url("/imgs/bgTile.jpg");
+  background-repeat:repeat;
+  margin: 0px 0px 0px 0px;
 }
 
 h1{
@@ -65,6 +68,16 @@ font-family: 'Crete Round', serif;
 .bigBoy{
   height: 100%;
   width: 100%;
+}
+
+.phone{
+  position:absolute;
+  left:0; right:0;
+  top:0; bottom:0;
+  margin:auto;
+  height: 737px;
+  width: 654px;
+  background-image: url("/imgs/phone.png"); 
 }
 
 .container {

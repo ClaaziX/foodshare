@@ -143,7 +143,7 @@ const AppHeader = React.createClass({
 	    return(
 		<div className="bigBoy">
 		<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-	
+		<div className="phone">
 		<div className="container">
 
 			<div className="headContain">
@@ -261,6 +261,7 @@ const AppHeader = React.createClass({
 				/>
 			</div>
 
+		</div>
 		</div>
 		</MuiThemeProvider>
 		</div>
