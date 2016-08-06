@@ -13,8 +13,8 @@ const AddLocation = React.createClass({
     listeners(map) {
 
 	//Function to set the coords 
-	var getCoords = (function(marker){
-	    this.setState({location:marker.position});
+	var getCoords = (function(location){
+	    this.props.onCoordSelection(location)
 	}).bind(this);
 
 	//Display Elements
@@ -36,33 +36,34 @@ const AddLocation = React.createClass({
 	
 	//Add the listener for the click
 	map.instance.addListener('click', function(e){
-
-	    geocoder.geocode({'location': e.latLng}, function(results, status) {
+	    var address;
+	    
+	    var geocoderCallBack = function(results, status) {
+		address = results[0].formatted_address;
 		if (status === 'OK') {
 		    console.log(results)
-		    if (results[0]) {
-			marker.setPosition(e.latLng);
-			var name = '';
-			if (results[0].address_components){
-			    name = [
-				(results[0].address_components[0] && results[0].address_components[0].long_name || ''),
-				(results[1].address_components[0] && results[1].address_components[1].long_name || ''),
-				    ].join(' ');
+			if (results[0]) {
+			    marker.setPosition(e.latLng);
+			    var name = '';
+			    if (results[0].address_components){
+				name = [
+				    (results[0].address_components[0] && results[0].address_components[0].long_name || ''),
+				    (results[1].address_components[0] && results[1].address_components[1].long_name || ''),
+				].join(' ');
+			    }
+			    infowindow.setContent('<div><strong>'+ name +'</strong><br>' + address);
+			    infowindow.open(map.instance, marker);
+			} else {
+			    window.alert('No results found');
 			}
-			infowindow.setContent('<div><strong>'+ name +'</strong><br>' + results[0].formatted_address);
-			infowindow.open(map.instance, marker);
-		    } else {
-			window.alert('No results found');
-		    }
 		} else {
 		    window.alert('Geocoder failed due to: ' + status);
 		}
-            });
-
-	    //Set coords in state
-	    getCoords(marker);
+            };
 	    
-	});
+	    geocoder.geocode({'location': e.latLng}, geocoderCallBack);
+	    getCoords({latLng:e.latLng,address:address});
+	    });
 	//Listener end
 
 	// Listen for the event fired when the user selects a prediction and retrieve
@@ -87,19 +88,9 @@ const AddLocation = React.createClass({
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
-            /* var address = '';
-               if (place.address_components) {
-	       address = [
-	       (place.address_components[0] && place.address_components[0].short_name || ''),
-	       (place.address_components[1] && place.address_components[1].short_name || ''),
-	       (place.address_components[2] && place.address_components[2].short_name || ''),
-	       (place.address_components[7] && place.address_components[7].short_name || '')
-	       ].join(' ');
-               } */
-	    console.log('place',place);
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
             infowindow.open(map.instance, marker);
-	    getCoords(marker);
+	    getCoords({latLng:place.geometry.location,address:place.formatted_address});
 	});
 
 
