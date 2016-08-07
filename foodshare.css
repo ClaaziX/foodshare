@@ -103,6 +103,7 @@ body
   max-height: 100%
 }
 
+
 .contentContain{
   position: relative;
   width:100%;
@@ -110,6 +111,7 @@ body
   background-image: url("/imgs/bgTrans.png");
   background-repeat:repeat;
   margin: 0px 0px 0px 0px;
+  z-index: -10;
 }
 
 .vertAlign{

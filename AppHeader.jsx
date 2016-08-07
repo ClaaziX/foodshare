@@ -67,11 +67,6 @@ const tabStyle = {
   color: green900,
 };
 
-const autoStyle = {
-  height: '100%',
-  width: '100%',
-};
-
 const AppHeader = React.createClass({
 
 	mixins: [ReactMeteorData],
@@ -226,7 +221,7 @@ const AppHeader = React.createClass({
 		  	</div>
 
 		  	<div className="toolContain">
-		  		<Toolbar>
+		  		<Toolbar style={{height: 95}}>
 		  			<ToolbarGroup firstChild={true}>
 		  				{ Meteor.userId() ?
 							<div>
@@ -257,7 +252,6 @@ const AppHeader = React.createClass({
 								filter={AutoComplete.caseInsensitiveFilter}
 								dataSource={searchNames}
 								onUpdateInput={this.filterList}
-								style={this.autoStyle}
 							/>
 		  			</ToolbarGroup>
 		  			<ToolbarGroup lastChild={true}>
