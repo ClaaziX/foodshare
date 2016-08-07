@@ -32,16 +32,14 @@ const AddLocation = React.createClass({
 	
 	//get a geocoder instance
         var geocoder = new google.maps.Geocoder;
-
 	
 	//Add the listener for the click
 	map.instance.addListener('click', function(e){
-	    var address;
+
 	    
 	    var geocoderCallBack = function(results, status) {
-		address = results[0].formatted_address;
+		var address = results[0].formatted_address;
 		if (status === 'OK') {
-		    console.log(results)
 			if (results[0]) {
 			    marker.setPosition(e.latLng);
 			    var name = '';
@@ -59,10 +57,11 @@ const AddLocation = React.createClass({
 		} else {
 		    window.alert('Geocoder failed due to: ' + status);
 		}
+		getCoords({latLng:e.latLng,address:address});
             };
 	    
 	    geocoder.geocode({'location': e.latLng}, geocoderCallBack);
-	    getCoords({latLng:e.latLng,address:address});
+
 	    });
 	//Listener end
 

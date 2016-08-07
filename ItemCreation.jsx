@@ -101,7 +101,6 @@ const ItemCreation = React.createClass({
     },
 
     onCoordSelection(location){
-	console.log('location',location);
 	this.setState({latLng:location.latLng,
 		       address:location.address,
 		       completedIndex:2
@@ -109,6 +108,9 @@ const ItemCreation = React.createClass({
 
     },
 
+    handleSubmit(){
+    },
+    
     genStepButtons(step) {
 	const {stepIndex} = this.state;
 	return (
@@ -158,7 +160,7 @@ const ItemCreation = React.createClass({
 		    <Step>
 			<StepLabel>Add Details of the Item(s)</StepLabel>
 			<StepContent>
-			    <AddItem/>
+			    <AddItem handleSubmit = {this.handleSubmit}/>
 			    {this.genStepButtons(2)}
 			</StepContent>
 		    </Step>
