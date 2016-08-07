@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 const AddItem = React.createClass({
 
@@ -10,7 +11,9 @@ const AddItem = React.createClass({
 	return{
 	    foodName:'',
 	    foodDesc:'',
+	    prtNo:1,
 	    open:false
+	    
 	    }
     },
 
@@ -34,7 +37,9 @@ const AddItem = React.createClass({
 	if((this.state.foodName == '') || (this.state.foodDesc == '') ){
 	    this.setState({open:true});
 	}else{
-	    this.props.handleSubmit({name: this.state.foodName,description:this.state.foodDesc, portions:this.state.prtNo})
+	    this.props.handleSubmit({name: this.state.foodName,description:this.state.foodDesc, portions:this.state.prtNo});
+	    this.setState({foodName:'',foodDesc:'',prtNo:1})
+		
 	}
     },
     
@@ -61,11 +66,11 @@ const AddItem = React.createClass({
 
 	    <br/>
 
-	    Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+	    Number of Portions: <NumberOptions initial={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
 
 	    <br/>
 
-	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.props.handleSubmit} />
+	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
 	    <Snackbar
 		open={this.state.open}
 		message="Please fill out all fields."

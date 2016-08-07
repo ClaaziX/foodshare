@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
+import { Meteor } from 'meteor/meteor'
+
 import {
     Step,
     Stepper,
@@ -58,6 +60,8 @@ const styles = {
 
 const ItemCreation = React.createClass({
 
+//    mixins: [ReactMeteorData],
+
     getInitialState(){
 	return{
 	    //State for the stepper
@@ -71,8 +75,6 @@ const ItemCreation = React.createClass({
 
 	}
     },
-
-
 
     //Stepper Code 
     handleNext() {
@@ -108,7 +110,21 @@ const ItemCreation = React.createClass({
 
     },
 
-    handleSubmit(){
+    handleSubmit(item){
+
+	FoodItemsC.insert({
+	    foodName: item.name,
+	    foodDesc: item.description,
+	    portionNo: item.portions,
+	    portionsClaimed: 0,
+	    imgURL: this.state.imageUrl,
+	    location:this.state.latLng,
+	    address:this.state.address,
+	    owner: Meteor.userId(),           // _id of logged in user
+	    username: Meteor.user().username,  // username of logged in user
+	    createdAt: new Date() // current time
+	});
+	
     },
     
     genStepButtons(step) {
