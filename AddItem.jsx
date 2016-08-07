@@ -51,6 +51,7 @@ const AddItem = React.createClass({
 		hintText="Please enter name of the item."
 		value={this.state.foodName}
 		onChange={this.handleName}
+		style={{color: 'black'}}
 	    />
 
 	    <br />
@@ -62,6 +63,7 @@ const AddItem = React.createClass({
 		rows={2}
 		value={this.state.foodDesc}
 		onChange={this.handleDesc}
+		style={{color: 'black'}}
 	    />
 
 	    <br/>

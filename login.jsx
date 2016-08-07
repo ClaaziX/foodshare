@@ -1,20 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import Accounts from 'meteor/std:accounts-basic';
 
-const login = React.createClass({ 
+import { Accounts, STATES } from 'meteor/std:accounts-ui';
 
-	handleLogin : function () {
-		this.router.push('/');
-	},
+class login extends Accounts.ui.LoginForm {
+  fields() {
+    const { formState } = this.state;
+    if (formState == STATES.SIGN_UP) {
+      return {
+        firstname: {
+          id: 'firstname',
+          hint: 'Enter firstname',
+          label: 'firstname',
+          onChange: this.handleChange.bind(this, 'firstname')
+        },
+        ...super.fields()
+      };
+    }
+    return super.fields();
+  }
 
-	render : function () {
-	  	return(
-		    <div>
-		    	<Accounts.ui.LoginForm redirect={this.handleLogin} />
-		    </div>
-	  	);
-	  }
-	});
+  signUp(options = {}) {
+    const { firstname = null } = this.state;
+    if (firstname !== null) {
+      options.profile = Object.assign(options.profile || {}, {
+        firstname: firstname
+      });
+    }
+    super.signUp(options);
+  }
+};
 export default login;
