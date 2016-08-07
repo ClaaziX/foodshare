@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 const AddItem = React.createClass({
 
     getInitialState(){
 	return{
 	    foodName:'',
-	    foodDesc:''
+	    foodDesc:'',
+	    prtNo:1,
+	    open:false
+	    
 	    }
     },
 
@@ -25,6 +29,20 @@ const AddItem = React.createClass({
 	this.setState({foodDesc:event.target.value});
     },
 
+    handleRequestClose(){
+	this.setState({open:false});
+    },
+    
+    handleSubmit(){
+	if((this.state.foodName == '') || (this.state.foodDesc == '') ){
+	    this.setState({open:true});
+	}else{
+	    this.props.handleSubmit({name: this.state.foodName,description:this.state.foodDesc, portions:this.state.prtNo});
+	    this.setState({foodName:'',foodDesc:'',prtNo:1})
+		
+	}
+    },
+    
     render() {
     	return (<div>
 	    Please add the details of all of the items in the picture and the number of items that you have.
@@ -48,12 +66,17 @@ const AddItem = React.createClass({
 
 	    <br/>
 
-	    Number of Portions: <NumberOptions options="20" optionChange={this.setPrtNo} />
+	    Number of Portions: <NumberOptions initial={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
 
 	    <br/>
 
-	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.props.handleSubmit} />
-	    
+	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+	    <Snackbar
+		open={this.state.open}
+		message="Please fill out all fields."
+		autoHideDuration={4000}
+		onRequestClose={this.handleRequestClose}
+            />
 	</div>);
     }
     

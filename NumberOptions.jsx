@@ -25,13 +25,11 @@ NumberOptions = React.createClass({
     },
 
     handleChange : function (e, index, value){
-	console.log('handler', e , index, value)
 	this.setState({values: value});
 	this.props.optionChange(value);
     },
 
     render() {
-	console.log('state', this.state.values)
 	return(
 	    <DropDownMenu maxHeight={300} value={this.state.values} onChange={this.handleChange}>
 		{this.genPtNo(this.props.options)}
