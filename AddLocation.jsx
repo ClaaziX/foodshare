@@ -32,11 +32,10 @@ const AddLocation = React.createClass({
 	
 	//get a geocoder instance
         var geocoder = new google.maps.Geocoder;
-	
+
 	//Add the listener for the click
 	map.instance.addListener('click', function(e){
 
-	    
 	    var geocoderCallBack = function(results, status) {
 		var address = results[0].formatted_address;
 		if (status === 'OK') {

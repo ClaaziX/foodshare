@@ -103,7 +103,8 @@ const ItemCreation = React.createClass({
     },
 
     onCoordSelection(location){
-	this.setState({latLng:location.latLng,
+	console.log(location);
+	this.setState({latLng:{lat:location.latLng.lat(),lng:location.latLng.lng()},
 		       address:location.address,
 		       completedIndex:2
 	})
