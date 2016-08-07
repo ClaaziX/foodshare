@@ -21,6 +21,8 @@ const styles = {
   },
 };
 
+import { lightGreen300, lightGreen600, green900, brown300, brown600, brown900 } from 'material-ui/styles/colors';
+
 var actions = [];
 
 const FoodView = React.createClass({
@@ -155,7 +157,7 @@ const FoodView = React.createClass({
                 <Tab 
                   label={ 
                     <IconButton>
-                      <ActionViewModule color='White' />
+                      <ActionViewModule color='green900' />
                     </IconButton>}
                 >
                   <GridView 
@@ -164,7 +166,7 @@ const FoodView = React.createClass({
                   /> 
                 </Tab>
 
-              <Tab label={<ActionList color='White' />}>
+              <Tab label={<ActionList color='green900' />}>
 				          {this.renderList()}
               </Tab>
           </Tabs>

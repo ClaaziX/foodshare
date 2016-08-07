@@ -1,0 +1,87 @@
+{
+  "name": "perfect-scrollbar",
+  "version": "0.6.12",
+  "description": "Minimalistic but perfect custom scrollbar plugin",
+  "author": {
+    "name": "Hyunje Alex Jun",
+    "email": "me@noraesae.net"
+  },
+  "contributors": [
+    {
+      "name": "Hyunje Alex Jun",
+      "email": "me@noraesae.net"
+    }
+  ],
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noraesae/perfect-scrollbar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noraesae/perfect-scrollbar/issues"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "frontend",
+    "scroll",
+    "scrollbar"
+  ],
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "files": [
+    "dist",
+    "src",
+    "index.js",
+    "jquery.js"
+  ],
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "del": "^2.0.2",
+    "event-stream": "^3.3.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-insert": "^0.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.4",
+    "gulp-uglify": "^1.4.1",
+    "gulp-zip": "^3.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "gulp",
+    "before-deploy": "gulp && gulp compress",
+    "release": "rm -rf dist && gulp && npm publish"
+  },
+  "license": "MIT",
+  "gitHead": "985980a89250ca355eb1467d452b717199047944",
+  "homepage": "https://github.com/noraesae/perfect-scrollbar#readme",
+  "_id": "perfect-scrollbar@0.6.12",
+  "_shasum": "a17c76762fe96e16138b15369caff72bc65a04ae",
+  "_from": "perfect-scrollbar@latest",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "6.1.0",
+  "_npmUser": {
+    "name": "noraesae",
+    "email": "me@noraesae.net"
+  },
+  "dist": {
+    "shasum": "a17c76762fe96e16138b15369caff72bc65a04ae",
+    "tarball": "https://registry.npmjs.org/perfect-scrollbar/-/perfect-scrollbar-0.6.12.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "noraesae",
+      "email": "me@noraesae.net"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/perfect-scrollbar-0.6.12.tgz_1468344649708_0.4508954524062574"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/perfect-scrollbar/-/perfect-scrollbar-0.6.12.tgz"
+}

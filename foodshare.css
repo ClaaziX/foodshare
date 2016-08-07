@@ -8,18 +8,6 @@ body
   margin: 0px 0px 0px 0px;
 }
 
-h1{
-font-family: 'Crete Round', serif;
-}
-
-.Center-Container {
-  position: relative;
-}
-
-.Absolute-Center {
-
-}
-
 .controls {
   background-color: #fff;
   border-radius: 2px;
@@ -87,6 +75,9 @@ font-family: 'Crete Round', serif;
   margin:auto;
   height: 532px;
   width: 345px;
+  border:1px solid #000000;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .inputStyle {
@@ -121,9 +112,14 @@ font-family: 'Crete Round', serif;
 }
 
 .contentContain{
+  position: relative;
   overflow-y: scroll;
   width:100%;
   height: 350px;
+}
+
+.vertAlign{
+  text-align: center;
 }
 
 .headContain {
