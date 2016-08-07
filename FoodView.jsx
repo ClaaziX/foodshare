@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import {
-  AutoComplete,
   Tab,
   Tabs,
   FlatButton,
@@ -32,7 +31,6 @@ const FoodView = React.createClass({
  
   getInitialState() {
     return {
-      filter : '',
       openClaim: false,
       alreadyClaimed: false,
       claimPop: false,
@@ -40,37 +38,18 @@ const FoodView = React.createClass({
     }
   },
 
-  // Loads items from the FoodItems collection and puts them on this.data.foodItems
+  // Loads items from the FoodItems collection and puts them on this.props.foodItems
   getMeteorData() {
 
     currentUser = Meteor.user() ? Meteor.user() : '';
-  
-    queryS = '.*'+this.state.filter+'.*';
-
-    if (this.props.location.pathname=='/Messages'){
-       listMessageQuery = {username : currentUser.username};
-    } else {
-       listMessageQuery = {username : {'$ne' : currentUser.username}};
-    }
-
-    filterQuery = {foodName : {'$regex' : queryS}};
-
     return {
-      foodItems: FoodItemsC.find({'$and' : [filterQuery, listMessageQuery]}, {sort: {createdAt: -1}}).fetch(),
       currentUser: currentUser
     };
   },
 
-  filterList(event) {
-    this.setState({
-      filter: event
-    });
-  },
-
-
   renderList() {
-    // Get foodItems from this.data.foodItems
-    return this.data.foodItems.map((foodItem) => {
+    // Get foodItems from this.props.foodItems
+    return this.props.foodItems.map((foodItem) => {
       return (
         <div> 	     
       		<FoodItems 
@@ -138,21 +117,8 @@ const FoodView = React.createClass({
   },
 
 	render: function() {
-		var searchNames = FoodItemsC.find().map(function(foodItem) {
-  			return foodItem.foodName;
-		});
-
 		return (
 			<div>
-				<div className="searchContain">
-					<AutoComplete
-					floatingLabelText="Search..."
-					filter={AutoComplete.caseInsensitiveFilter}
-					dataSource={searchNames}
-					onUpdateInput={this.filterList}
-          fullWidth={true}
-					/>
-				</div>
             <Tabs>
                 <Tab 
                   label={ 
@@ -161,7 +127,7 @@ const FoodView = React.createClass({
                     </IconButton>}
                 >
                   <GridView 
-                    foodItems={this.data.foodItems}
+                    foodItems={this.props.foodItems}
                     handlePop={this.handleOpen}
                   /> 
                 </Tab>
