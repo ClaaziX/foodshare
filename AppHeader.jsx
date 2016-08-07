@@ -266,11 +266,13 @@ const AppHeader = React.createClass({
 						</IconButton>
 		  			</ToolbarGroup>
 		  		</Toolbar>
+
 		  	</div>
+		  	<div className="contentContain">
 			<Scrollbars style={{ height: 350, position: 'relative' }}>
 		  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
 		  	</Scrollbars>
-
+		  	</div>
 		    <div className="tabsContain">
 
 				<Tabs>
