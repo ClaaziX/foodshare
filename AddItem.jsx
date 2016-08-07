@@ -66,7 +66,7 @@ const AddItem = React.createClass({
 
 	    <br/>
 
-	    Number of Portions: <NumberOptions initial={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
+	    Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
 
 	    <br/>
 

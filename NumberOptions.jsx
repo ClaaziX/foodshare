@@ -9,6 +9,7 @@ import {
 
 NumberOptions = React.createClass({
 
+    
     getInitialState(){
 	return{
 	    openClaim: false,

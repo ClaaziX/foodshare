@@ -70,7 +70,6 @@ const ItemCreation = React.createClass({
 	    completedIndex: 0,
 	    
 	    //Sets the image URL from the photo upload component
-	    imageURL: "",			
 	    
 
 	}
@@ -78,6 +77,7 @@ const ItemCreation = React.createClass({
 
     //Stepper Code 
     handleNext() {
+	console.log(this.state.imageURL);
 	stepIndex = this.state.stepIndex;
 	if((stepIndex+1) == this.state.completedIndex){
 	    this.setState({
@@ -97,13 +97,13 @@ const ItemCreation = React.createClass({
     },
 
     onUpload(url){
+	console.log('onupload',url);
 	this.setState({imageURL:url,
 		       completedIndex:1})
-	    
+	console.log('onuploadstate', this.state.imageURL)
     },
 
     onCoordSelection(location){
-	console.log(location);
 	this.setState({latLng:{lat:location.latLng.lat(),lng:location.latLng.lng()},
 		       address:location.address,
 		       completedIndex:2
@@ -112,13 +112,15 @@ const ItemCreation = React.createClass({
     },
 
     handleSubmit(item){
-
+	console.log('url',this.state.imageURL);
+	console.log('state',this.state)
+	    
 	FoodItemsC.insert({
 	    foodName: item.name,
 	    foodDesc: item.description,
 	    portionNo: item.portions,
 	    portionsClaimed: 0,
-	    imgURL: this.state.imageUrl,
+	    imgURL: this.state.imageURL,
 	    location:this.state.latLng,
 	    address:this.state.address,
 	    owner: Meteor.userId(),           // _id of logged in user

@@ -28,8 +28,8 @@ const PhotoUpload = React.createClass({
 		}).bind(this);
 
 		//This function is here just so we can actually push to scope
-		var callBackState = (function(imageUrl){
-
+	    var callBackState = (function(imageUrl){
+		console.log(imageUrl);
 		    this.setState({imageUpload:imageUrl});
 		    this.props.onUpload(imageUrl);
 		    
@@ -46,7 +46,8 @@ const PhotoUpload = React.createClass({
 			var liveQuery = images.find(fileObj._id).observe({
 			changed : function(newImage, OldImage){
 				if (newImage.url() != null){
-				   liveQuery.stop();
+				    liveQuery.stop();
+				    console.log(newImage.url())
 				    callBackState(newImage.url());
 		   		}
 			}
