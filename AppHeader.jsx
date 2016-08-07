@@ -221,7 +221,7 @@ const AppHeader = React.createClass({
 		  	</div>
 
 		  	<div className="toolContain">
-		  		<Toolbar style={{height: 95}}>
+		  		<Toolbar>
 		  			<ToolbarGroup firstChild={true}>
 		  				{ Meteor.userId() ?
 							<div>

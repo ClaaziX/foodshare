@@ -122,8 +122,8 @@ const AddLocation = React.createClass({
 
 	if (this.data.loaded)
 	    return(
-		<div>
-		    <input id="pacinput" ref="pacinput" className="controls" type="text"
+		<div className="smallMap">
+		    <input id="pacinput" ref="pacinput" className="smallControls" type="text"
 			   placeholder="Enter a location"/>
 		    <GoogleMapAdd name="mymap" options={this.data.mapOptions} listeners={this.listeners}/>
 		</div>
