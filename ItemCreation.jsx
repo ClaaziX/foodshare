@@ -34,6 +34,7 @@ import {MapsPlace } from 'material-ui/svg-icons/maps/place';
 import PhotoUpload from './PhotoUpload.jsx';
 import AddLocation from './AddLocation.jsx';
 import AddItem from './AddItem.jsx';
+import AddItemView from './AddItemView.jsx';
 
 const errContentStyle = {
     width: '100%',
@@ -77,7 +78,7 @@ const ItemCreation = React.createClass({
 
     //Stepper Code 
     handleNext() {
-	console.log(this.state.imageURL);
+
 	stepIndex = this.state.stepIndex;
 	if((stepIndex+1) == this.state.completedIndex){
 	    this.setState({
@@ -97,10 +98,10 @@ const ItemCreation = React.createClass({
     },
 
     onUpload(url){
-	console.log('onupload',url);
+
 	this.setState({imageURL:url,
 		       completedIndex:1})
-	console.log('onuploadstate', this.state.imageURL)
+
     },
 
     onCoordSelection(location){
@@ -112,8 +113,6 @@ const ItemCreation = React.createClass({
     },
 
     handleSubmit(item){
-	console.log('url',this.state.imageURL);
-	console.log('state',this.state)
 	    
 	FoodItemsC.insert({
 	    foodName: item.name,
@@ -180,6 +179,7 @@ const ItemCreation = React.createClass({
 			<StepLabel>Add Details of the Item(s)</StepLabel>
 			<StepContent>
 			    <AddItem handleSubmit = {this.handleSubmit}/>
+			    <AddItemView/>
 			    {this.genStepButtons(2)}
 			</StepContent>
 		    </Step>
