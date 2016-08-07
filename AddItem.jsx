@@ -9,7 +9,8 @@ const AddItem = React.createClass({
     getInitialState(){
 	return{
 	    foodName:'',
-	    foodDesc:''
+	    foodDesc:'',
+	    open:false
 	    }
     },
 
@@ -25,6 +26,18 @@ const AddItem = React.createClass({
 	this.setState({foodDesc:event.target.value});
     },
 
+    handleRequestClose(){
+	this.setState({open:false});
+    },
+    
+    handleSubmit(){
+	if((this.state.foodName == '') || (this.state.foodDesc == '') ){
+	    this.setState({open:true});
+	}else{
+	    this.props.handleSubmit({name: this.state.foodName,description:this.state.foodDesc, portions:this.state.prtNo})
+	}
+    },
+    
     render() {
     	return (<div>
 	    Please add the details of all of the items in the picture and the number of items that you have.
@@ -53,7 +66,12 @@ const AddItem = React.createClass({
 	    <br/>
 
 	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.props.handleSubmit} />
-	    
+	    <Snackbar
+		open={this.state.open}
+		message="Please fill out all fields."
+		autoHideDuration={4000}
+		onRequestClose={this.handleRequestClose}
+            />
 	</div>);
     }
     
