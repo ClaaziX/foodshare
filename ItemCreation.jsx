@@ -155,13 +155,19 @@ const ItemCreation = React.createClass({
 	);
     },
 
+    handlePassChange : function () {
+		browserHistory.push('/login');
+    },
+
     render() {
 	const {finished, stepIndex} = this.state;
 	const contentStyle = {margin: '0 16px'};
 
 	return (
 	    <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-		<Stepper activeStep={stepIndex} orientation="vertical">
+	    { Meteor.user() ?
+	    	<div>
+	    	<Stepper activeStep={stepIndex} orientation="vertical">
 		    <Step>
 			<StepLabel>Upload a Photograph of the Item(s)</StepLabel>
 			<StepContent>
@@ -199,6 +205,13 @@ const ItemCreation = React.createClass({
 		     </p>
 		     : "" }
 		</div>
+		</div>
+		:
+			<div>
+				Please Log In to continue! <br />
+				<RaisedButton label="Login" primary={true} onTouchTap={this.handlePassChange} />
+			</div>
+		}
 	    </div>
 	);
 	

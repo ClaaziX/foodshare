@@ -19,17 +19,22 @@ const GoogleMap = React.createClass({
     if(typeof this.props.markers !== "undefined"){
       console.log("genMarkers conditional passed")
       return this.props.markers.map((foodItem) => {
+        console.log("markers being mapped...")
 
         var obj = foodItem.location;
         var keys = Object.keys(obj);
         var coords = [];
+        console.log("obj == "+obj)
+        console.log("keys == "+keys)
+        console.log("map == "+maps)
 
         for (var i = 0; i < keys.length; i++) {
 
           coords.push(obj[keys[i]])
+          console.log(obj[keys[i]])
 
         }
-        console.log(coords)
+        console.log("coords == "+coords)
 
         var image = {
           url: "http://www.airsoftmap.net/images/pin_map.png",

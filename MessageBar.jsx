@@ -85,6 +85,9 @@ const MessageBar = React.createClass({
     	this.setState({openNav: false});
     },
 
+    compoentWillUpdate(){
+    	this.forceUpdate();
+    },
 
     render : function(){
     	var winWidth = window.innerWidth*0.83;

@@ -48,7 +48,7 @@ const logoutContentStyle = {
 								maxWidth: 'none',
 							};
 
-import { lightGreenA200, lightGreen600, green900, brown900, brown300, blueGrey600 } from 'material-ui/styles/colors';
+import { lightGreenA200, lightGreen600, green900, blueGrey300, blueGrey900, blueGrey600 } from 'material-ui/styles/colors';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -57,9 +57,9 @@ const muiTheme = getMuiTheme({
     primary1Color: lightGreenA200,
     primary2Color: lightGreen600,
     primary3Color: green900,
-    accent1Color: brown300,
+    accent1Color: blueGrey300,
     accent2Color: blueGrey600,
-    accent3Color: brown900,
+    accent3Color: blueGrey900,
   },
 });
 
@@ -83,6 +83,7 @@ const AppHeader = React.createClass({
 			filter : '',
 	    }
 	},
+
 
 	getMeteorData: function(){
 		   
@@ -267,6 +268,7 @@ const AppHeader = React.createClass({
 		  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
 		  	</Scrollbars>
 		  	</div>
+		  	{ Meteor.user() ?
 		    <div className="tabsContain">
 
 				<Tabs>
@@ -291,6 +293,31 @@ const AppHeader = React.createClass({
 				</Tabs>
 
 			</div>
+
+			:
+
+				<Tabs>
+					<Tab
+						icon={<ActionDashboard color={green900} />} 
+						label="ITEM VIEW"
+						onActive={this.handleActiveTab("/login")}
+						style={tabStyle}
+					/>
+					<Tab
+						icon={<MapsMap color={green900} />}
+						label="MAP VIEW"
+						onActive={this.handleActiveTab("/login")}
+						style={tabStyle}
+					/>
+					<Tab
+						icon={<MapsPersonPin color={green900} />}
+						label="YOUR ITEMS"
+						onActive={this.handleActiveTab("/login")}
+						style={tabStyle}
+					/>
+				</Tabs>
+
+			}
 			<div>
 				<Drawer
 					width={winWidth}
