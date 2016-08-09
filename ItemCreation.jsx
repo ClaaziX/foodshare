@@ -179,6 +179,7 @@ const ItemCreation = React.createClass({
 			<StepLabel>Add Details of the Item(s)</StepLabel>
 			<StepContent>
 			    <AddItem handleSubmit = {this.handleSubmit}/>
+			    <br/>
 			    <AddItemView/>
 			    {this.genStepButtons(2)}
 			</StepContent>

@@ -42,7 +42,6 @@ GridView = React.createClass({
 	},
 
 	render: function () {
-		var foodS = this.props.foodItems;
 		return(
 			<div style={styles.root}>
 				<GridList
