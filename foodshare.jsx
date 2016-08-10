@@ -91,6 +91,7 @@ if (Meteor.isClient) {
     import MapView from './MapView.jsx';
     import PrivateChat from './PrivateChat.jsx';
     import login from './login.jsx';
+    import GridListTab from './GridListTab.jsx';
 
     Meteor.startup(function () {
 
@@ -107,8 +108,8 @@ if (Meteor.isClient) {
 	    <Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
 		    <Route path='/ItemView/:itemID' component={ItemView} />
-		    <IndexRoute component={FoodView} />
-		    <Route path='/Messages' component={FoodView}/>
+		    <IndexRoute component={GridListTab} />
+		    <Route path='/Messages' component={GridListTab}/>
 		    <Route path='/UserSettings' component={UserSettings} />
 		    <Route path='/ItemCreation' component={ItemCreation} />
 		    <Route path='/MapView' component={MapView} />

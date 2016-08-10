@@ -1,28 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
+
+import FoodItems from './FoodItems.jsx'
+
+import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+
+
 import {
     FlatButton,
     IconButton,
     Dialog,
-    Snackbar
+    Snackbar,
+    GridList,
+    GridTile,
+    Styles
 } from 'material-ui';
 
 
-import ActionViewModule from 'material-ui/svg-icons/action/view-module.js';
-import ActionList from 'material-ui/svg-icons/action/list.js';
 const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 300,
+    height: 200,
+    marginBottom: 12,
+  },
     claim: {
 	width: '100%',
 	maxWidth: 'none',
     },
+
 };
 
-import { lightGreen300, lightGreen600, green900, brown300, brown600, brown900 } from 'material-ui/styles/colors';
 
 var actions = [];
 
 const FoodView = React.createClass({
+      
+        mixins: [ReactMeteorData],
+
+getMeteorData() {
+
+    currentUser = Meteor.user() ? Meteor.user() : '';
+    return {
+      currentUser: currentUser
+    };
+  },      
 
     getInitialState() {
 	return {
@@ -92,73 +120,74 @@ const FoodView = React.createClass({
     
     renderItems(){
 
-	if(this.props.renderer=='grid'){
-	    return(
-		<div style={styles.root}>
-		    <GridList
-			cellHeight={200}
-			style={styles.gridList}
-		    >
-		{this.props.foodItems.map((foodItem) => (
-			     <GridTile
-				 key={foodItem._id}
-				 title={foodItem.foodName}
-				 subtitle={<span>by <b>{foodItem.username}</b></span>}
-				 actionIcon={
-				     <div>
-					 <IconButton onTouchTap={this.handleOpen(foodItem)}>
-					     <ActionShoppingCart color='White' />
-					 </IconButton>                        
-					 <IconButton containerElement={ <Link to={'/ItemView/'+foodItem._id}/> }>
-					     <CommunicationChatBubble color='White' />
-					 </IconButton>
-				     </div>
-					    }
-			     >
-				     <img src={foodItem.imgURL} />
-			     </GridTile>
-			 ))}
-		    </GridList>
-		</div>
-	    );
-	}
+	  if(this.props.renderer=='grid'){
+	      return(
+	  	<div style={styles.root}>
+	  	    <GridList
+	  		cellHeight={200}
+	  		style={styles.gridList}
+	  	    >
+	  	{this.props.foodItems.map((foodItem) => (
+	  		     <GridTile
+	  			 key={foodItem._id}
+	  			 title={foodItem.foodName}
+	  			 subtitle={<span>by <b>{foodItem.username}</b></span>}
+	  			 actionIcon={
+	  			     <div>
+	  				 <IconButton onTouchTap={ (function(event){this.handleOpen(foodItem)}).bind(this) }>
+	  				     <ActionShoppingCart color='White' />
+	  				 </IconButton>                        
+	  				 <IconButton containerElement={ <Link to={'/ItemView/'+foodItem._id}/> }>
+	  				     <CommunicationChatBubble color='White' />
+	  				 </IconButton>
+	  			     </div>
+	  				    }
+	  		     >
+	  			     <img src={foodItem.imgURL} />
+	  		     </GridTile>
+	  		 ))}
+	  	    </GridList>
+	  	</div>
+	      );
+	  }
 
 	return this.props.foodItems.map((foodItem) => {
 	    return (
+	    <div>
 		<FoodItems 
 		foodItem={foodItem}
-		pathName='blahblah'
+		pathName={foodItem}
 		calculatePortionsLeft={this.calculatePortionsLeft}
 		handlePop={this.handleOpen}
 		/>
+		</div>
 	    );   
 	});
 
     },
     
     render(){
-	return(
-	    {renderItems();}
-	    <Snackbar
-		open={this.state.claimPop}
-		message={this.genClaimMess()}
-		autoHideDuration={3600}
-		action="Close"
-		onTouchTap={this.handleRequestClose}
-		onRequestClose={this.handleRequestClose}
-	    />
-	    <Dialog
-		title="Claim!"
-		actions={actions}
-		modal={true}
-		contentStyle={styles.claim}
-		open={this.state.openClaim}
-	    >
-		How many portions do you wish to claim?
-	    </Dialog>
+	return(<div>
+			     {this.renderItems()}
+	     <Snackbar
+	     	open={this.state.claimPop}
+	     	message={this.genClaimMess()}
+	     	autoHideDuration={3600}
+	     	action="Close"
+	     	onTouchTap={this.handleRequestClose}
+	     	onRequestClose={this.handleRequestClose}
+	     />
+	     <Dialog
+	      	title="Claim!"
+	      	actions={actions}
+	      	modal={true}
+	      	contentStyle={styles.claim}
+	      	open={this.state.openClaim}
+	      >
+	      	How many portions do you wish to claim?
+	     </Dialog>
 
-
-	)
+	    </div>)
     }
 
 });

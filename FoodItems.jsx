@@ -141,3 +141,4 @@ FoodItems = React.createClass({
 	);
     }
 });
+export default FoodItems;
