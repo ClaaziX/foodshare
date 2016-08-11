@@ -98,7 +98,7 @@ const AppHeader = React.createClass({
 	} else {
 	    listMessageQuery = {username : {'$ne' : currentUser}};
 	}
-	console.log('messageQuery',listMessageQuery);
+
 
 	filterQuery = {foodName : {'$regex' : queryS}};
 
