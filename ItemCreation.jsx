@@ -35,6 +35,7 @@ import PhotoUpload from './PhotoUpload.jsx';
 import AddLocation from './AddLocation.jsx';
 import AddItem from './AddItem.jsx';
 import AddItemView from './AddItemView.jsx';
+import FoodView from './FoodView.jsx';
 
 const errContentStyle = {
     width: '100%',
@@ -61,7 +62,15 @@ const styles = {
 
 const ItemCreation = React.createClass({
 
-//    mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
+
+    getMeteorData(){
+    console.log(this.data.addedItems)
+	return{	
+		
+    		addedItems : FoodItemsC.find({'imgURL':this.state.imageURL}).fetch()
+	}
+    },
 
     getInitialState(){
 	return{
@@ -70,9 +79,8 @@ const ItemCreation = React.createClass({
 	    stepIndex: 0,
 	    completedIndex: 0,
 	    
-	    //Sets the image URL from the photo upload component
-	    
-
+	    //Once the image is uploaded this gets set with the query for the items
+	    imageURL:'{not:/*/}'
 	}
     },
 
@@ -180,7 +188,9 @@ const ItemCreation = React.createClass({
 			<StepContent>
 			    <AddItem handleSubmit = {this.handleSubmit}/>
 			    <br/>
-			    <AddItemView/>
+			    <FoodView renderer="list" foodItems={this.data.addedItems}/>
+			    {console.log('db',this.data.addedItems)}
+			    {console.log(this.state.imgURL)}
 			    {this.genStepButtons(2)}
 			</StepContent>
 		    </Step>
