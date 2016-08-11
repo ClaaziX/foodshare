@@ -101,7 +101,7 @@ if (Meteor.isClient) {
 		onSignedInHook : () => browserHistory.push('/')
 	});
 
-	var requireAuth = function(nextState, replace){if(Meteor.userId() == null){replace({pathname: '/login', state: { nextPathname: nextState.location.pathname }})}}.bind(this);
+	var requireAuth = function(nextState, replace){if(Meteor.userId() == null){console.log("auth called");browserHistory.push('/login')}}.bind(this);
 
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
