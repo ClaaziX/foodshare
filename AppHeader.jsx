@@ -94,10 +94,11 @@ const AppHeader = React.createClass({
 	queryS = '.*'+this.state.filter+'.*';
 
     	if (this.props.location.pathname=='/Messages'){
-	    listMessageQuery = {username : currentUser.username};
+	    listMessageQuery = {username : currentUser};
 	} else {
-	    listMessageQuery = {username : {'$ne' : currentUser.username}};
+	    listMessageQuery = {username : {'$ne' : currentUser}};
 	}
+	console.log('messageQuery',listMessageQuery);
 
 	filterQuery = {foodName : {'$regex' : queryS}};
 

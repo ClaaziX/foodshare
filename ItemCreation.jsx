@@ -66,7 +66,7 @@ const ItemCreation = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData(){
-	console.log(this.data.addedItems)
+
 	    return{	
 		
     		addedItems : FoodItemsC.find({'imgURL':this.state.imageURL}).fetch()
@@ -159,7 +159,7 @@ const ItemCreation = React.createClass({
     genStepButtons(step) {
 
 	const {stepIndex} = this.state;
-	console.log('step',stepIndex)
+
 	    return (
 		<div style={{margin: '12px 0'}}>
 		    <RaisedButton
@@ -210,8 +210,7 @@ const ItemCreation = React.createClass({
 			    <AddItem handleSubmit = {this.handleSubmit}/>
 			    <br/>
 			    <FoodView renderer="list" foodItems={this.data.addedItems}/>
-			    {console.log('db',this.data.addedItems)}
-			    {console.log(this.state.imgURL)}
+
 			    {this.genStepButtons(2)}
 			</StepContent>
 		    </Step>
