@@ -43,6 +43,8 @@ import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 import MapsMap from 'material-ui/svg-icons/maps/map';
 import ActionDashboard from 'material-ui/svg-icons/action/dashboard';
 
+import login from './login.jsx';
+
 const logoutContentStyle = {
     width: '100%',
     maxWidth: 'none',
@@ -116,7 +118,6 @@ const AppHeader = React.createClass({
     componentDidMount() {
 	var el = ReactDOM.findDOMNode(this);
 	var childs = el.getElementsByTagName("h1");
-	console.log(childs)
 	    var h1 = childs[0];
 	h1.style["background-image"] = 'url("/imgs/LogoNameMedium.png")';
 	h1.style["background-size"] = "auto 85%";
@@ -151,10 +152,9 @@ const AppHeader = React.createClass({
     },
 
     handlePassChange : function () {
-	browserHistory.push('/login');
-	this.setState({openLogout: false});
+		browserHistory.push('/login');
+		this.setState({openLogout: false});
     },
-
     
     handleActiveTab : function(path) {
 	activeTab = function (event) {
@@ -178,7 +178,7 @@ const AppHeader = React.createClass({
     render : function(){
 
     	var winWidth = window.innerWidth;
-	const actions = [
+		const actions = [
 	    <FlatButton
 		label="Logout"
 		primary={true}
@@ -262,11 +262,13 @@ const AppHeader = React.createClass({
 		  		</Toolbar>
 
 		  	    </div>
+
 		  	    <div className="contentContain">
-				<Scrollbars style={{ height: 350, position: 'relative' }}>
-		  		    {React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
-		  		</Scrollbars>
+					<Scrollbars style={{ height: 350, position: 'relative' }}>
+		  		    	{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
+		  			</Scrollbars>
 		  	    </div>
+
 			    <div className="tabsContain">
 
 				<Tabs>

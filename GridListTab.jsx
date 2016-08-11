@@ -22,7 +22,7 @@ const GridListTab = React.createClass({
 	return (
 	    <div>
 		<Tabs>
-                    <Tab 
+            <Tab 
 			label={ 
 			    <IconButton>
 				<ActionViewModule color='green900' />

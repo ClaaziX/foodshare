@@ -101,20 +101,21 @@ if (Meteor.isClient) {
 		onSignedInHook : () => browserHistory.push('/')
 	});
 
+	var requireAuth = function(nextState, replace){if(!Meteor.userId){replace({pathname: '/login', state: { nextPathname: nextState.location.pathname }})}}.bind(this);
 
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
 
 	    <Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
-		    <Route path='/ItemView/:itemID' component={ItemView} />
+		    <Route path='/ItemView/:itemID' component={ItemView} onEnter={requireAuth} />
 		    <IndexRoute component={GridListTab} />
-		    <Route path='/Messages' component={GridListTab}/>
-		    <Route path='/UserSettings' component={UserSettings} />
-		    <Route path='/ItemCreation' component={ItemCreation} />
-		    <Route path='/MapView' component={MapView} />
-		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} />
-		    <Route path='/login' component={Accounts.ui.LoginForm} formState={STATES.SIGN_IN} />
+		    <Route path='/Messages' component={GridListTab} onEnter={requireAuth} />
+		    <Route path='/UserSettings' component={UserSettings} onEnter={requireAuth} />
+		    <Route path='/ItemCreation' component={ItemCreation} onEnter={requireAuth} />
+		    <Route path='/MapView' component={MapView} onEnter={requireAuth} />
+		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} onEnter={requireAuth} />
+		    <Route path='/login' component={login} formState={STATES.SIGN_IN} />
 		</Route>
 	    </Router>
 	, document.getElementById('render-target'));
