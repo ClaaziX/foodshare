@@ -13,6 +13,7 @@ import {
 
 
 import {
+    Snackbar,
     TextField,
     RaisedButton,
     FlatButton,
@@ -80,9 +81,26 @@ const ItemCreation = React.createClass({
 	    completedIndex: 0,
 	    
 	    //Once the image is uploaded this gets set with the query for the items
-	    imageURL:'{not:/*/}'
+	    imageURL:'{not:/*/}',
+
+	    //For the snackbar
+	    open:false,
 	}
     },
+
+    //Snackbar code
+
+    handleError() {
+    this.setState({
+      open: true,
+    });
+  },
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  },
 
     //Stepper Code 
     handleNext() {
@@ -94,7 +112,7 @@ const ItemCreation = React.createClass({
 		finished: stepIndex >= 2,
 	    });
 	} else {
-	    console.log('error')
+	    this.handleError()
 	}
     },
 
@@ -146,7 +164,7 @@ const ItemCreation = React.createClass({
 		    disableTouchRipple={true}
 		    disableFocusRipple={true}
 		    primary={true}
-		    onTouchTap={this.handleNext}
+		    onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
 		    style={{marginRight: 12}}
 		/>
 		{step > 0 && (
@@ -210,6 +228,12 @@ const ItemCreation = React.createClass({
 		     </p>
 		     : "" }
 		</div>
+		<Snackbar
+          open={this.state.open}
+          message="Please complete this section before moving on."
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
 	    </div>
 	);
 	
