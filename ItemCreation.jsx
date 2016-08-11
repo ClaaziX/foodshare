@@ -66,11 +66,11 @@ const ItemCreation = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData(){
-    console.log(this.data.addedItems)
-	return{	
+	console.log(this.data.addedItems)
+	    return{	
 		
     		addedItems : FoodItemsC.find({'imgURL':this.state.imageURL}).fetch()
-	}
+	    }
     },
 
     getInitialState(){
@@ -91,16 +91,16 @@ const ItemCreation = React.createClass({
     //Snackbar code
 
     handleError() {
-    this.setState({
-      open: true,
-    });
-  },
+	this.setState({
+	    open: true,
+	});
+    },
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  },
+    handleRequestClose() {
+	this.setState({
+	    open: false,
+	});
+    },
 
     //Stepper Code 
     handleNext() {
@@ -139,7 +139,7 @@ const ItemCreation = React.createClass({
     },
 
     handleSubmit(item){
-	    
+	
 	FoodItemsC.insert({
 	    foodName: item.name,
 	    foodDesc: item.description,
@@ -152,32 +152,35 @@ const ItemCreation = React.createClass({
 	    username: Meteor.user().username,  // username of logged in user
 	    createdAt: new Date() // current time
 	});
-	
+	this.setState({completedIndex:3})
+	    
     },
     
     genStepButtons(step) {
+
 	const {stepIndex} = this.state;
-	return (
-	    <div style={{margin: '12px 0'}}>
-		<RaisedButton
-		    label={stepIndex === 2 ? 'Finish' : 'Next'}
-		    disableTouchRipple={true}
-		    disableFocusRipple={true}
-		    primary={true}
-		    onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
-		    style={{marginRight: 12}}
-		/>
-		{step > 0 && (
-		     <FlatButton
-			 label="Back"
-			 disabled={stepIndex === 0}
-			 disableTouchRipple={true}
-			 disableFocusRipple={true}
-			 onTouchTap={this.handlePrev}
-		     />
-		 )}
-	    </div>
-	);
+	console.log('step',stepIndex)
+	    return (
+		<div style={{margin: '12px 0'}}>
+		    <RaisedButton
+			label={stepIndex === 2 ? 'Finish' : 'Next'}
+			disableTouchRipple={true}
+			disableFocusRipple={true}
+			primary={true}
+			onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
+			style={{marginRight: 12}}
+		    />
+		    {step > 0 && (
+			 <FlatButton
+			     label="Back"
+			     disabled={stepIndex === 0}
+			     disableTouchRipple={true}
+			     disableFocusRipple={true}
+			     onTouchTap={this.handlePrev}
+			 />
+		     )}
+		</div>
+	    );
     },
 
     render() {
@@ -213,27 +216,13 @@ const ItemCreation = React.createClass({
 			</StepContent>
 		    </Step>
 		</Stepper>
-		<div style={contentStyle}>
-		    {finished ? 
-		     <p>
-			 <a
-			     href="#"
-			     onClick={(event) => {
-				     event.preventDefault();
-				     this.setState({stepIndex: 0, finished: false});
-				 }}
-			 >
-			     Click here
-			 </a> to reset the example.
-		     </p>
-		     : "" }
-		</div>
+
 		<Snackbar
-          open={this.state.open}
-          message="Please complete this section before moving on."
-          autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
-        />
+		    open={this.state.open}
+		    message="Please complete this section before moving on."
+		    autoHideDuration={4000}
+		    onRequestClose={this.handleRequestClose}
+		/>
 	    </div>
 	);
 	
