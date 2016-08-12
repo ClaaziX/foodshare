@@ -88,15 +88,15 @@ const AppHeader = React.createClass({
 
     getMeteorData: function(){
 	
-	currentUser = Meteor.user() ? Meteor.user().username : '';
-	Meteor.subscribe("sidebar", currentUser);
+	currentUser = Meteor.user() ? Meteor.user() : '';
+	Meteor.subscribe("sidebar", currentUser.username);
 
 	queryS = '.*'+this.state.filter+'.*';
 
     	if (this.props.location.pathname=='/Messages'){
-	    listMessageQuery = {username : currentUser};
+	    listMessageQuery = {username : currentUser.username};
 	} else {
-	    listMessageQuery = {username : {'$ne' : currentUser}};
+	    listMessageQuery = {username : {'$ne' : currentUser.username}};
 	}
 
 
@@ -257,8 +257,9 @@ const AppHeader = React.createClass({
 					    onUpdateInput={this.filterList}
 					/>
 		  		    </ToolbarGroup>
+				    {console.log(this.data.currentUser)}
 		  		    <ToolbarGroup lastChild={true}>
-  					<IconButton onTouchTap={this.handleOpenNav} tooltip="Messages" tooltipPosition="bottom-left"> 
+  					<IconButton onTouchTap={this.handleOpenNav} tooltip="Messages" tooltipPosition="bottom-left" disabled={this.data.currentUser ? false : true  }> 
 					    <SvgIcons.CommunicationForum color='White'/>
 					</IconButton>
 		  		    </ToolbarGroup>
