@@ -13,7 +13,6 @@ const login = React.createClass({
 	  	return(
 		    <div>
 		    	<Accounts.ui.LoginForm redirect={this.handleLogin} />
-		    	<p>Hello?</p>
 		    </div>
 	  	);
 	  }
