@@ -9,7 +9,8 @@ import {
     List,
     ListItem,
     Avatar,
-    Divider
+    Divider,
+    AppBar
 } from 'material-ui';
 
 import TimeSince from './TimeSince.jsx';
@@ -98,12 +99,20 @@ const PrivateChat = React.createClass({
 
     render : function () {
 		return (
+			<div>
+			<div className="headContain">
+				<AppBar
+				    title={this.props.messagedUsername}
+			  	/>
+			</div>
 		    <div className="divPM" id="divPM" ref="divPM">
+		    	<br/>
 				<br/>
 				{this.generateChat()}
 				{this.messagesSeen()}
 				<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
 				<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
+		    </div>
 		    </div>
 
 		);

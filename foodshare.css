@@ -29,9 +29,9 @@ body
     -webkit-align-content: stretch;
     -ms-flex-line-pack: stretch;
     align-content: stretch;
-    -webkit-align-items: baseline;
-    -ms-flex-align: baseline;
-    align-items: baseline;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     }
 
 .commentFlexOther-container {
@@ -50,9 +50,9 @@ body
     -webkit-align-content: stretch;
     -ms-flex-line-pack: stretch;
     align-content: stretch;
-    -webkit-align-items: baseline;
-    -ms-flex-align: baseline;
-    align-items: baseline;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     }
 
 .commentFlex-item:nth-child(1) {

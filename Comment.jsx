@@ -23,12 +23,13 @@ render(){
 		<div className={container}>
 			<div className="commentFlex-item">
 				<img className="avatar" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />
+				<br/>
+				{this.props.date}
 			</div>
 			<div className="commentFlex-item">
 				{this.props.comment}
 			</div>
 		</div>
-		//this.props.date
 	);
 }
 
