@@ -193,7 +193,6 @@ const ItemCreation = React.createClass({
 
 	return (
 	    <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-	    { Meteor.user() ?
 	    	<div>
 	    	<Stepper activeStep={stepIndex} orientation="vertical">
 		    <Step>
@@ -221,7 +220,6 @@ const ItemCreation = React.createClass({
 			</StepContent>
 		    </Step>
 		</Stepper>
-<<<<<<< HEAD
 		<div style={contentStyle}>
 		    {finished ? 
 		     <p>
@@ -238,13 +236,7 @@ const ItemCreation = React.createClass({
 		     : "" }
 		</div>
 		</div>
-		:
-			<div>
-				Please Log In to continue! <br />
-				<RaisedButton label="Login" primary={true} onTouchTap={this.handlePassChange} />
-			</div>
-		}
-=======
+
 
 		<Snackbar
 		    open={this.state.open}
@@ -252,7 +244,6 @@ const ItemCreation = React.createClass({
 		    autoHideDuration={4000}
 		    onRequestClose={this.handleRequestClose}
 		/>
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 	    </div>
 	);
 	

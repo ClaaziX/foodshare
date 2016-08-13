@@ -14,40 +14,25 @@ import {
 
 Comment = React.createClass({
 
-	render(){
+
+render(){
+	var container = "commentFlexOther-container";
+	if (this.props.username == Meteor.user().username){
+		container = "commentFlexUser-container"
+	}
 	return(
-           this.props.username == Meteor.user().username ?
-	   
-	   <Card
-	    >
-		<CardHeader
-		title={this.props.username}
-		subtitle={this.props.date}
-		avatar="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"
-			   		style={{
-			float:'right'
-
-			
-		}}
-
-		/>
-		<CardText>
-			{this.props.comment}
-		</CardText>
-	    </Card>		
-	   
-
-	   :
-	   <Card>
-		<CardHeader
-		title={this.props.username}
-		subtitle={this.props.date}
-		avatar="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"
-		/>
-		<CardText>
-			{this.props.comment}
-		</CardText>
-	    </Card>		
-	);}
+		<div className={container}>
+			<div className="commentFlex-item">
+				<div>
+					<img className="avatar" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />
+				</div>
+				<div>
+					{this.props.comment}
+				</div>
+			</div>
+		</div>
+		//this.props.date
+	);
+}
 
 });

@@ -34,11 +34,6 @@ const GoogleMap = React.createClass({
           console.log(obj[keys[i]])
 
         }
-<<<<<<< HEAD
-        console.log("coords == "+coords)
-=======
-
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 
         var image = {
           url: "http://www.airsoftmap.net/images/pin_map.png",

@@ -55,7 +55,6 @@ import { lightGreenA200, lightGreen600, green900, blueGrey300, blueGrey900, blue
 import { Scrollbars } from 'react-custom-scrollbars';
 
 const muiTheme = getMuiTheme({
-<<<<<<< HEAD
   palette: {
     primary1Color: lightGreenA200,
     primary2Color: lightGreen600,
@@ -64,16 +63,6 @@ const muiTheme = getMuiTheme({
     accent2Color: blueGrey600,
     accent3Color: blueGrey900,
   },
-=======
-    palette: {
-	primary1Color: lightGreenA200,
-	primary2Color: lightGreen600,
-	primary3Color: green900,
-	accent1Color: brown300,
-	accent2Color: blueGrey600,
-	accent3Color: brown900,
-    },
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 });
 
 const tabStyle = {
@@ -97,18 +86,10 @@ const AppHeader = React.createClass({
 	}
     },
 
-<<<<<<< HEAD
-
-	getMeteorData: function(){
-		   
-		currentUser = Meteor.user() ? Meteor.user().username : '';
-		Meteor.subscribe("sidebar", currentUser);
-=======
     getMeteorData: function(){
 	
 	currentUser = Meteor.user() ? Meteor.user() : '';
 	Meteor.subscribe("sidebar", currentUser.username);
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 
 	queryS = '.*'+this.state.filter+'.*';
 
@@ -283,39 +264,15 @@ const AppHeader = React.createClass({
 		  		    </ToolbarGroup>
 		  		</Toolbar>
 
-<<<<<<< HEAD
+
 		  	</div>
 		  	<div className="contentContain">
-			<Scrollbars style={{ height: 350, position: 'relative' }}>
-		  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
-		  	</Scrollbars>
+				<Scrollbars style={{ height: 350, position: 'relative' }}>
+			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
+			  	</Scrollbars>
 		  	</div>
 		  	{ Meteor.user() ?
 		    <div className="tabsContain">
-=======
-		  	    </div>
-
-		  	    <div className="contentContain">
-		  	    	{ this.data.currentUser == "" ?
-		  	    		<div className="loginTran">
-		  	    			Please Log In to Conitune...
-		  	    			<br />
-		  	    			<FlatButton
-								label="Login"
-								primary={true}
-								onTouchTap={this.handlePassChange}
-						    />
-		  	    		</div>
-		  	    	:
-		  	    		""
-		  	   		}
-					<Scrollbars style={{ height: 350, position: 'relative' }}>
-		  		    	{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
-		  			</Scrollbars>
-		  	    </div>
-
-			    <div className="tabsContain">
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 
 				<Tabs>
 				    <Tab
@@ -338,11 +295,10 @@ const AppHeader = React.createClass({
 				    />
 				</Tabs>
 
-<<<<<<< HEAD
 			</div>
 
 			:
-
+			<div className="tabsContain">
 				<Tabs>
 					<Tab
 						icon={<ActionDashboard color={green900} />} 
@@ -363,13 +319,10 @@ const AppHeader = React.createClass({
 						style={tabStyle}
 					/>
 				</Tabs>
-
+			</div>
 			}
-			<div>
-=======
-			    </div>
 			    <div>
->>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
+
 				<Drawer
 				    width={winWidth}
 				    openSecondary={true}
