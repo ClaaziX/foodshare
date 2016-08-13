@@ -17,13 +17,12 @@ images = new FS.Collection("images", {
 Meteor.methods({
 
     addPrivateMessage(users, username, message){
-	PrivateChatC.insert({between: users.sort(),
-	 		     username: username,
-	 		     message: message,
-	 		     createdAt: new Date(),
-			     seen: false
-	}
-	);
+		PrivateChatC.insert({between: users.sort(),
+			username: username,
+			message: message,
+			createdAt: new Date(),
+			seen: false
+		});
     },
 
     markPMSeen(user, messaged){
@@ -201,13 +200,33 @@ if (Meteor.isServer) {
           Meteor.call('addPrivateMessage',[firstUser,secondUser],firstUser,faker.lorem.sentences());
      }    
     
-    Meteor.publish(   "sidebar", 
-		      function (username){
-		     	  ReactiveAggregate(	this, 
-					    PrivateChatC,
-					    [{$match:{between:{$in:[username]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}},{$sort:{createdAt:-1}}],					{clientCollection: "clientSidebar"}
-			  );
-		      });
+	Meteor.publish("sidebar", function(username){
+		ReactiveAggregate(this, PrivateChatC,
+			[
+				{$match:
+					{between:
+						{$in:[username]}}},
+				{$sort:{createdAt:-1}},
+				{$group:
+					{originalId:
+						{$first:'$_id'},
+						_id:'$between',
+						message:{$first:'$message'},
+						createdAt:{$first:'$createdAt'},
+						seen:{$first:'$seen'},
+						username:{$first:'$username'}}},
+				{$project:
+					{_id:'$originalId',
+					between:'$_id',
+					message:'$message',
+					createdAt:'$createdAt',
+					seen:'$seen',
+					username:'$username'}},
+				{$sort:{createdAt:-1}}
+			],
+			{clientCollection: "clientSidebar"}
+		);
+	});
 
 
 }

@@ -257,7 +257,6 @@ const AppHeader = React.createClass({
 					    onUpdateInput={this.filterList}
 					/>
 		  		    </ToolbarGroup>
-				    {console.log(this.data.currentUser)}
 		  		    <ToolbarGroup lastChild={true}>
   					<IconButton onTouchTap={this.handleOpenNav} tooltip="Messages" tooltipPosition="bottom-left" disabled={this.data.currentUser ? false : true  }> 
 					    <SvgIcons.CommunicationForum color='White'/>
@@ -268,6 +267,19 @@ const AppHeader = React.createClass({
 		  	    </div>
 
 		  	    <div className="contentContain">
+		  	    	{ this.data.currentUser == "" ?
+		  	    		<div className="loginTran">
+		  	    			Please Log In to Conitune...
+		  	    			<br />
+		  	    			<FlatButton
+								label="Login"
+								primary={true}
+								onTouchTap={this.handlePassChange}
+						    />
+		  	    		</div>
+		  	    	:
+		  	    		""
+		  	   		}
 					<Scrollbars style={{ height: 350, position: 'relative' }}>
 		  		    	{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
 		  			</Scrollbars>
