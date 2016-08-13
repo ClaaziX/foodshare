@@ -141,6 +141,16 @@ body
   text-align: center;
 }
 
+.loginTran{
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-image: url("/imgs/bgTileTrans.jpg");
+  background-repeat:repeat;
+  margin: 0px 0px 0px 0px;
+}
+
 .headContain {
   height: 60px;
   width: 100%;

@@ -53,10 +53,10 @@ const MessageBar = React.createClass({
 						}
 						primaryText={message.username}
 						secondaryText={
-						    <p>
+						    <div>
 							<span style={{color: Colors.darkBlack}}>{this.calcTime(message.createdAt)}</span><br/>
 							{message.message}
-						    </p>
+						    </div>
 						}
 						secondaryTextLines={2}
 

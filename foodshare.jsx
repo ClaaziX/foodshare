@@ -17,13 +17,12 @@ images = new FS.Collection("images", {
 Meteor.methods({
 
     addPrivateMessage(users, username, message){
-	PrivateChatC.insert({between: users.sort(),
-	 		     username: username,
-	 		     message: message,
-	 		     createdAt: new Date(),
-			     seen: false
-	}
-	);
+		PrivateChatC.insert({between: users.sort(),
+			username: username,
+			message: message,
+			createdAt: new Date(),
+			seen: false
+		});
     },
 
     markPMSeen(user, messaged){
@@ -91,6 +90,7 @@ if (Meteor.isClient) {
     import MapView from './MapView.jsx';
     import PrivateChat from './PrivateChat.jsx';
     import login from './login.jsx';
+    import GridListTab from './GridListTab.jsx';
 
     Meteor.startup(function () {
 
@@ -100,20 +100,25 @@ if (Meteor.isClient) {
 		onSignedInHook : () => browserHistory.push('/')
 	});
 
+	const requireAuth = function(nextState, replace){
+	      if(Meteor.userId() == null){
+				 replace('/login');
+				 }
+	      }
 
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
 
 	    <Router history={browserHistory}>
 		<Route path='/' component={AppHeader}>
-		    <Route path='/ItemView/:itemID' component={ItemView} />
-		    <IndexRoute component={FoodView} />
-		    <Route path='/Messages' component={FoodView}/>
-		    <Route path='/UserSettings' component={UserSettings} />
-		    <Route path='/ItemCreation' component={ItemCreation} />
-		    <Route path='/MapView' component={MapView} />
-		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} />
-		    <Route path='/login' component={Accounts.ui.LoginForm} formState={STATES.SIGN_IN} />
+		    <Route path='/ItemView/:itemID' component={ItemView} onEnter={requireAuth} />
+		    <IndexRoute component={GridListTab} />
+		    <Route path='/Messages' component={GridListTab} onEnter={requireAuth} />
+		    <Route path='/UserSettings' component={UserSettings} onEnter={requireAuth} />
+		    <Route path='/ItemCreation' component={ItemCreation} onEnter={requireAuth} />
+		    <Route path='/MapView' component={MapView} onEnter={requireAuth} />
+		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} onEnter={requireAuth} />
+		    <Route path='/login' component={login} formState={STATES.SIGN_IN} />
 		</Route>
 	    </Router>
 	, document.getElementById('render-target'));
@@ -195,13 +200,33 @@ if (Meteor.isServer) {
           Meteor.call('addPrivateMessage',[firstUser,secondUser],firstUser,faker.lorem.sentences());
      }    
     
-    Meteor.publish(   "sidebar", 
-		      function (username){
-		     	  ReactiveAggregate(	this, 
-					    PrivateChatC,
-					    [{$match:{between:{$in:[username]}}},{$sort:{createdAt:-1}}, {$group:{originalId:{$first:'$_id'},_id:'$between', message:{$first:'$message'}, createdAt:{$first:'$createdAt'}, seen:{$first:'$seen'}, username:{$first:'$username'}}},{$project:{_id:'$originalId',between:'$_id',message:'$message',createdAt:'$createdAt',seen:'$seen',username:'$username'}},{$sort:{createdAt:-1}}],					{clientCollection: "clientSidebar"}
-			  );
-		      });
+	Meteor.publish("sidebar", function(username){
+		ReactiveAggregate(this, PrivateChatC,
+			[
+				{$match:
+					{between:
+						{$in:[username]}}},
+				{$sort:{createdAt:-1}},
+				{$group:
+					{originalId:
+						{$first:'$_id'},
+						_id:'$between',
+						message:{$first:'$message'},
+						createdAt:{$first:'$createdAt'},
+						seen:{$first:'$seen'},
+						username:{$first:'$username'}}},
+				{$project:
+					{_id:'$originalId',
+					between:'$_id',
+					message:'$message',
+					createdAt:'$createdAt',
+					seen:'$seen',
+					username:'$username'}},
+				{$sort:{createdAt:-1}}
+			],
+			{clientCollection: "clientSidebar"}
+		);
+	});
 
 
 }

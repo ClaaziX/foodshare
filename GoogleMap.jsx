@@ -15,9 +15,9 @@ const GoogleMap = React.createClass({
   },
 
   genMarkers(maps) {
-    console.log("genMarkers called")
+
     if(typeof this.props.markers !== "undefined"){
-      console.log("genMarkers conditional passed")
+
       return this.props.markers.map((foodItem) => {
         console.log("markers being mapped...")
 
@@ -34,7 +34,11 @@ const GoogleMap = React.createClass({
           console.log(obj[keys[i]])
 
         }
+<<<<<<< HEAD
         console.log("coords == "+coords)
+=======
+
+>>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 
         var image = {
           url: "http://www.airsoftmap.net/images/pin_map.png",
@@ -63,7 +67,7 @@ const GoogleMap = React.createClass({
   },
 
   geocodeLatLng() {
-    console.log("gecode function called")
+
 
     var geocoder = new google.maps.Geocoder;
     var infoWindow = new google.maps.InfoWindow;
@@ -112,7 +116,7 @@ const GoogleMap = React.createClass({
 
       that.genMarkers(map.instance);
 
-      console.log(mapz)
+
       var input =  ReactDOM.findDOMNode(that.refs.pacinput);
       var searchBox = new google.maps.places.Autocomplete(input);
       searchBox.bindTo('bounds', mapz);

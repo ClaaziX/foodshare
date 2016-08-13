@@ -13,6 +13,7 @@ import {
 
 
 import {
+    Snackbar,
     TextField,
     RaisedButton,
     FlatButton,
@@ -34,6 +35,8 @@ import {MapsPlace } from 'material-ui/svg-icons/maps/place';
 import PhotoUpload from './PhotoUpload.jsx';
 import AddLocation from './AddLocation.jsx';
 import AddItem from './AddItem.jsx';
+import AddItemView from './AddItemView.jsx';
+import FoodView from './FoodView.jsx';
 
 const errContentStyle = {
     width: '100%',
@@ -60,7 +63,15 @@ const styles = {
 
 const ItemCreation = React.createClass({
 
-//    mixins: [ReactMeteorData],
+    mixins: [ReactMeteorData],
+
+    getMeteorData(){
+
+	    return{	
+		
+    		addedItems : FoodItemsC.find({'imgURL':this.state.imageURL}).fetch()
+	    }
+    },
 
     getInitialState(){
 	return{
@@ -69,15 +80,31 @@ const ItemCreation = React.createClass({
 	    stepIndex: 0,
 	    completedIndex: 0,
 	    
-	    //Sets the image URL from the photo upload component
-	    
+	    //Once the image is uploaded this gets set with the query for the items
+	    imageURL:'{not:/*/}',
 
+	    //For the snackbar
+	    open:false,
 	}
+    },
+
+    //Snackbar code
+
+    handleError() {
+	this.setState({
+	    open: true,
+	});
+    },
+
+    handleRequestClose() {
+	this.setState({
+	    open: false,
+	});
     },
 
     //Stepper Code 
     handleNext() {
-	console.log(this.state.imageURL);
+
 	stepIndex = this.state.stepIndex;
 	if((stepIndex+1) == this.state.completedIndex){
 	    this.setState({
@@ -85,7 +112,7 @@ const ItemCreation = React.createClass({
 		finished: stepIndex >= 2,
 	    });
 	} else {
-	    console.log('error')
+	    this.handleError()
 	}
     },
 
@@ -97,10 +124,10 @@ const ItemCreation = React.createClass({
     },
 
     onUpload(url){
-	console.log('onupload',url);
+
 	this.setState({imageURL:url,
 		       completedIndex:1})
-	console.log('onuploadstate', this.state.imageURL)
+
     },
 
     onCoordSelection(location){
@@ -112,9 +139,7 @@ const ItemCreation = React.createClass({
     },
 
     handleSubmit(item){
-	console.log('url',this.state.imageURL);
-	console.log('state',this.state)
-	    
+	
 	FoodItemsC.insert({
 	    foodName: item.name,
 	    foodDesc: item.description,
@@ -127,32 +152,35 @@ const ItemCreation = React.createClass({
 	    username: Meteor.user().username,  // username of logged in user
 	    createdAt: new Date() // current time
 	});
-	
+	this.setState({completedIndex:3})
+	    
     },
     
     genStepButtons(step) {
+
 	const {stepIndex} = this.state;
-	return (
-	    <div style={{margin: '12px 0'}}>
-		<RaisedButton
-		    label={stepIndex === 2 ? 'Finish' : 'Next'}
-		    disableTouchRipple={true}
-		    disableFocusRipple={true}
-		    primary={true}
-		    onTouchTap={this.handleNext}
-		    style={{marginRight: 12}}
-		/>
-		{step > 0 && (
-		     <FlatButton
-			 label="Back"
-			 disabled={stepIndex === 0}
-			 disableTouchRipple={true}
-			 disableFocusRipple={true}
-			 onTouchTap={this.handlePrev}
-		     />
-		 )}
-	    </div>
-	);
+
+	    return (
+		<div style={{margin: '12px 0'}}>
+		    <RaisedButton
+			label={stepIndex === 2 ? 'Finish' : 'Next'}
+			disableTouchRipple={true}
+			disableFocusRipple={true}
+			primary={true}
+			onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
+			style={{marginRight: 12}}
+		    />
+		    {step > 0 && (
+			 <FlatButton
+			     label="Back"
+			     disabled={stepIndex === 0}
+			     disableTouchRipple={true}
+			     disableFocusRipple={true}
+			     onTouchTap={this.handlePrev}
+			 />
+		     )}
+		</div>
+	    );
     },
 
     handlePassChange : function () {
@@ -186,10 +214,14 @@ const ItemCreation = React.createClass({
 			<StepLabel>Add Details of the Item(s)</StepLabel>
 			<StepContent>
 			    <AddItem handleSubmit = {this.handleSubmit}/>
+			    <br/>
+			    <FoodView renderer="list" foodItems={this.data.addedItems}/>
+
 			    {this.genStepButtons(2)}
 			</StepContent>
 		    </Step>
 		</Stepper>
+<<<<<<< HEAD
 		<div style={contentStyle}>
 		    {finished ? 
 		     <p>
@@ -212,6 +244,15 @@ const ItemCreation = React.createClass({
 				<RaisedButton label="Login" primary={true} onTouchTap={this.handlePassChange} />
 			</div>
 		}
+=======
+
+		<Snackbar
+		    open={this.state.open}
+		    message="Please complete this section before moving on."
+		    autoHideDuration={4000}
+		    onRequestClose={this.handleRequestClose}
+		/>
+>>>>>>> 2c2b0897780a05c4a48f0417f146be6f394e5921
 	    </div>
 	);
 	

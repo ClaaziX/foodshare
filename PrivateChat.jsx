@@ -77,7 +77,7 @@ const PrivateChat = React.createClass({
 
 		Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.messagedUsername], this.data.currentUser, message);
 
-		this.setState({messageText:null});
+		this.setState({messageText: ""});
     },
 
     handleComment(event){
