@@ -247,9 +247,7 @@ const AppHeader = React.createClass({
 					  </div>
 					}
 		  		    </ToolbarGroup>
-		  		    <ToolbarGroup style={{
-				    		 bottom:'35%'
-				    }}>
+		  		    <ToolbarGroup style={{bottom:'35%'}}>
 					<AutoComplete
 					    floatingLabelText="Search..."
 					    filter={AutoComplete.caseInsensitiveFilter}

@@ -73,9 +73,9 @@ body
     -webkit-order: 0;
     -ms-flex-order: 0;
     order: 0;
-    -webkit-flex: 0 1 70%;
-    -ms-flex: 0 1 70%;
-    flex: 0 1 70%;
+    -webkit-flex: 0 1 82%;
+    -ms-flex: 0 1 82%;
+    flex: 0 1 82%;
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
@@ -104,19 +104,71 @@ body
     -webkit-order: 0;
     -ms-flex-order: 0;
     order: 0;
+    -webkit-flex: 0 1 82%;
+    -ms-flex: 0 1 82%;
+    flex: 0 1 82%;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    padding: 12px;
+    background: #CFD8DC;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    }
+
+.textSubmit-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    background: #CFD8DC;
+    padding: 10px;
+    }
+
+.textSubmit-item:nth-child(1) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    padding: 10px;
+    }
+
+.textSubmit-item:nth-child(2) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
     -webkit-flex: 0 1 70%;
     -ms-flex: 0 1 70%;
     flex: 0 1 70%;
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
-    padding: 12px;
-    background: #A7FFEB;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+    background: #B2FF59;
+    padding: 16px;
     }
-
 
 
 .controls {

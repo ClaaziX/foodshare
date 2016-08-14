@@ -110,8 +110,27 @@ const PrivateChat = React.createClass({
 				<br/>
 				{this.generateChat()}
 				{this.messagesSeen()}
-				<TextField hintText="You can leave a comment here" onChange={this.handleComment} value={this.state.messageText}/><br />
-				<RaisedButton label="Submit" primary={true} onTouchTap={this.addMessage} /><br /><br />
+				<div className="textSubmit-container">
+					<div className="textSubmit-item">
+						<RaisedButton
+							label="Submit"
+							primary={true}
+							onTouchTap={this.addMessage}
+						/>
+					</div>
+					<div className="textSubmit-item">
+						<TextField
+							fullWidth={true}
+							hintText="You can leave a comment here"
+							onChange={this.handleComment}
+							value={this.state.messageText}
+							multiLine={true}
+							rows={2}
+							rowsMax={4}
+						/>
+					</div>
+
+				</div>
 		    </div>
 		    </div>
 
