@@ -16,17 +16,19 @@ Comment = React.createClass({
 
 render(){
 	var container = "commentFlexOther-container";
+	var item = "commentFlex-item";
 	if (this.props.username == Meteor.user().username){
-		container = "commentFlexUser-container"
+		container = "commentFlexUser-container";
+		item = "commentFlexUser-item";
 	}
 	return(
 		<div className={container}>
-			<div className="commentFlex-item">
+			<div className={item}>
 				<img className="avatar" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />
 				<br/>
 				{this.props.date}
 			</div>
-			<div className="commentFlex-item">
+			<div className={item}>
 				{this.props.comment}
 			</div>
 		</div>
