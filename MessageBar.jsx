@@ -41,7 +41,9 @@ const MessageBar = React.createClass({
     renderMessagesList: function(){
 		if(this.data.privateMessages){
 		    return this.data.privateMessages.map((message) => {
-				item = 
+		  	       otherUser = message.between.slice();
+		               otherUser.splice(otherUser.indexOf(this.data.currentUser),1)
+			       item = 
 					<ListItem	
 				        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png"/>}
 						
@@ -49,9 +51,9 @@ const MessageBar = React.createClass({
 							!message.seen && message.username != this.data.currentUser ? <SvgIcons.CommunicationChatBubble /> : ''
 						}
 						onTouchTap={
-							this.openPmess(message.username)
+							this.openPmess(otherUser[0])
 						}
-						primaryText={message.username}
+						primaryText={message.between[0] + ', ' + message.between[1]}
 						secondaryText={
 						    <div>
 							<span style={{color: Colors.darkBlack}}>{this.calcTime(message.createdAt)}</span><br/>
@@ -99,8 +101,9 @@ const MessageBar = React.createClass({
 		    <List>
 			{this.renderMessagesList()}
 		    </List>
-		    <div>
+		    <div id='drawerContainerDIv'>
 				<Drawer
+					containerClassName='containerRoot'
 					width={winWidth}
 					openSecondary={true}
 					open={this.state.openNav}

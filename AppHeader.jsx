@@ -89,7 +89,6 @@ const AppHeader = React.createClass({
     getMeteorData: function(){
 	
 	currentUser = Meteor.user() ? Meteor.user() : '';
-	Meteor.subscribe("sidebar", currentUser.username);
 
 	queryS = '.*'+this.state.filter+'.*';
 

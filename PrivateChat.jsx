@@ -88,18 +88,30 @@ const PrivateChat = React.createClass({
     },
 
 	componentWillUpdate: function() {
+			     
   		var node = ReactDOM.findDOMNode(this);
   		node.scrollTop = node.scrollHeight;
   	},
 
 	componentDidUpdate: function() {
-		var node = ReactDOM.findDOMNode(this);
-  		node.scrollTop = node.scrollHeight;
+		console.log('element by class name',document.getElementsByClassName('containerRoot')[0].scrollTop)
+ 	        console.log('refs.messagecontainer',this.refs.messageContainer)
+		console.log('refsdom',ReactDOM.findDOMNode(this.refs.divPM))
+		console.log('window',window)
+		console.log('document',document)
+		var node = ReactDOM.findDOMNode(this.refs.divPM);
+		var container = document.getElementsByClassName('containerRoot')[0]
+		console.log('conatainer scroll',container.scrollTop)
+		console.log('node',node)
+		console.log('node.scrolltop',node.scrollTop)
+		console.log('scrollheight',node.scrollHeight)
+  		container.scrollTop = node.scrollHeight;
+
 	},
 
     render : function () {
 		return (
-			<div>
+			<div id='containerDiv'>
 			<div className="headContain">
 				<AppBar
 				    title={this.props.messagedUsername}
