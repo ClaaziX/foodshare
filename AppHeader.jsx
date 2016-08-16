@@ -62,6 +62,10 @@ const muiTheme = getMuiTheme({
     accent1Color: blueGrey300,
     accent2Color: blueGrey600,
     accent3Color: blueGrey900,
+    alternateTextColor: green900,
+  },
+  textField: {
+  	textColor: green900,
   },
 });
 

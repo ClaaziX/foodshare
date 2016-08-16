@@ -24,6 +24,9 @@ import {
     Tab,
     Tabs,
     IconButton,
+    Card,
+    CardMedia,
+    CardTitle
 } from 'material-ui';
 
 
@@ -41,6 +44,7 @@ import FoodView from './FoodView.jsx';
 const errContentStyle = {
     width: '100%',
     maxWidth: 'none',
+
 };
 
 const paperStyle = {
@@ -59,6 +63,10 @@ const styles = {
     slide: {
 	padding: 10,
     },
+};
+
+const diaStyle = {
+    width: 345,
 };
 
 const ItemCreation = React.createClass({
@@ -85,6 +93,8 @@ const ItemCreation = React.createClass({
 
 	    //For the snackbar
 	    open:false,
+
+	    openDia:false,
 	}
     },
 
@@ -139,21 +149,34 @@ const ItemCreation = React.createClass({
     },
 
     handleSubmit(item){
-	
-	FoodItemsC.insert({
-	    foodName: item.name,
-	    foodDesc: item.description,
-	    portionNo: item.portions,
-	    portionsClaimed: 0,
-	    imgURL: this.state.imageURL,
-	    location:this.state.latLng,
-	    address:this.state.address,
-	    owner: Meteor.userId(),           // _id of logged in user
-	    username: Meteor.user().username,  // username of logged in user
-	    createdAt: new Date() // current time
-	});
-	this.setState({completedIndex:3})
-	    
+    	this.setState({
+    		foodName: item.name,
+    		foodDesc: item.description,
+    		portionNo: item.portions,
+    		openDia: true,
+    		completedIndex: 3,
+    	})
+    },
+
+    handleIt(){
+		FoodItemsC.insert({
+		    foodName: this.state.foodName,
+		    foodDesc: this.state.foodDesc,
+		    portionNo: this.state.portionNo,
+		    portionsClaimed: 0,
+		    imgURL: this.state.imageURL,
+		    location:this.state.latLng,
+		    address:this.state.address,
+		    owner: Meteor.userId(),           // _id of logged in user
+		    username: Meteor.user().username,  // username of logged in user
+		    createdAt: new Date() // current time
+		});
+
+		browserHistory.push('/Messages');
+    },
+
+    handleCancel() {
+    	this.setState({openDia:false})
     },
     
     genStepButtons(step) {
@@ -162,22 +185,27 @@ const ItemCreation = React.createClass({
 
 	    return (
 		<div style={{margin: '12px 0'}}>
-		    <RaisedButton
-			label={stepIndex === 2 ? 'Finish' : 'Next'}
-			disableTouchRipple={true}
-			disableFocusRipple={true}
-			primary={true}
-			onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
-			style={{marginRight: 12}}
-		    />
+			
+			{stepIndex === 2 ?
+				""
+			:	
+			    <RaisedButton
+					label={'Next'}
+					disableTouchRipple={true}
+					disableFocusRipple={true}
+					primary={true}
+					onTouchTap={this.handleNext}
+					style={{marginRight: 12}}
+			    />
+			}
 		    {step > 0 && (
-			 <FlatButton
-			     label="Back"
-			     disabled={stepIndex === 0}
-			     disableTouchRipple={true}
-			     disableFocusRipple={true}
-			     onTouchTap={this.handlePrev}
-			 />
+				 <FlatButton
+				     label="Back"
+				     disabled={stepIndex === 0}
+				     disableTouchRipple={true}
+				     disableFocusRipple={true}
+				     onTouchTap={this.handlePrev}
+				 />
 		     )}
 		</div>
 	    );
@@ -190,6 +218,19 @@ const ItemCreation = React.createClass({
     render() {
 	const {finished, stepIndex} = this.state;
 	const contentStyle = {margin: '0 16px'};
+
+	const actions = [
+	    <RaisedButton
+		label="submit"
+		primary={true}
+		onTouchTap={this.handleIt}
+	    />,
+	    <RaisedButton
+		label="Cancel"
+		secondary={true}
+		onTouchTap={this.handleCancel}
+	    />,
+	];
 
 	return (
 	    <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
@@ -237,6 +278,21 @@ const ItemCreation = React.createClass({
 		</div>
 		</div>
 
+		 <Dialog
+          title="Do you wish to submit item(s)?"
+          actions={actions}
+          modal={true}
+          contentStyle={diaStyle}
+          open={this.state.openDia}
+        >
+            <Card>
+			    <CardMedia
+			      overlay={<CardTitle title={this.state.foodName} subtitle={this.state.foodDesc} />}
+			    >
+			      <img width='100%' src={this.state.imageURL} />
+			    </CardMedia>
+			  </Card>
+        </Dialog>
 
 		<Snackbar
 		    open={this.state.open}

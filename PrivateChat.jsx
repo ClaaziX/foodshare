@@ -13,6 +13,8 @@ import {
     AppBar
 } from 'material-ui';
 
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import TimeSince from './TimeSince.jsx';
 
 const PrivateChat = React.createClass({
@@ -76,6 +78,10 @@ const PrivateChat = React.createClass({
 		
 		var message = this.state.messageText;
 
+		if (message == ""){
+			return;
+		}
+
 		Meteor.call('addPrivateMessage', [this.data.currentUser, this.props.messagedUsername], this.data.currentUser, message);
 
 		this.setState({messageText: ""});
@@ -87,8 +93,7 @@ const PrivateChat = React.createClass({
 		});
     },
 
-	componentWillUpdate: function() {
-			     
+	componentWillUpdate: function() {     
   		var node = ReactDOM.findDOMNode(this);
   		node.scrollTop = node.scrollHeight;
   	},
@@ -99,7 +104,12 @@ const PrivateChat = React.createClass({
   		container.scrollTop = node.scrollHeight;
 	},
 
+	componentDidMount () {
+		this.refs.scrollbars.scrollToBottom();
+	},
+
     render : function () {
+    	var winHeight = window.innerHeight - 64;
 		return (
 			<div id='containerDiv'>
 			<div className="headContain">
@@ -107,6 +117,13 @@ const PrivateChat = React.createClass({
 				    title={this.props.messagedUsername}
 			  	/>
 			</div>
+			<Scrollbars
+				style={{ position: 'relative' }}
+				ref="scrollbars"
+				autoHeight={true}
+				autoHeightMax={winHeight}
+				hideTracksWhenNotNeeded={true}
+			>
 		    <div className="divPM" id="divPM" ref="divPM">
 		    	<br/>
 				<br/>
@@ -134,6 +151,7 @@ const PrivateChat = React.createClass({
 
 				</div>
 		    </div>
+		    </Scrollbars>
 		    </div>
 
 		);

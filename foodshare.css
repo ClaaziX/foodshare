@@ -168,7 +168,18 @@ body
     border-radius: 10px;
     background: #B2FF59;
     padding: 16px;
-    }
+}
+
+.textBox {
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #CCFF90;
+  padding: 6px;
+}
 
 
 .controls {

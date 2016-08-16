@@ -65,8 +65,11 @@ const PhotoUpload = React.createClass({
 
 		 	</div>
 		     <Dropzone onDrop={this.onDrop} multiple={false}>
-		         {this.state.imageUpload == '' ? <div>Drop files here for upload</div> : <img width="350" src={this.state.imageUpload} />}
-	             </Dropzone>
+		         {this.state.imageUpload == '' ?
+		         	<div>Drop files here for upload</div>
+		         :
+		         <img width="100%" src={this.state.imageUpload} />}
+		     </Dropzone>
 		     <Snackbar
 			open={this.state.open}
 			message="Sadly an error has occured please try to upload your image again."

@@ -28,20 +28,29 @@ ItemView = React.createClass({
 
     renderComments(){
 	if (this.data.foodItem.comments){
-	    return this.data.foodItem.comments.map((comment) => {
+	    return this.data.foodItem.comments.map((message) => {
 		return(
-		    <div>
-		       	<Comment
-		       	    comment={comment.comment}
-		       	    date={comment.createdAt.toString()}
-		       	    username={comment.username}
-		       	/>
-		       	<br />
-		    </div>)
-	    });
-	}
-	
+				    <div>
+				       	<Comment
+				       	    comment={message.message}
+				       	    date={this.calcTime(message.createdAt)}
+				       	    username={message.username}
+				       	/>
+				       	<br />
+				    </div>
+
+			)
+		    });
+		}
+		
     },
+
+	calcTime: function(date){
+		return(
+			<TimeSince time={date} />
+			);
+	},
+
     handleComment(event){
 	this.setState({
 	    commentText : event.target.value,

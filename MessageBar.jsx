@@ -53,7 +53,7 @@ const MessageBar = React.createClass({
 						onTouchTap={
 							this.openPmess(otherUser[0])
 						}
-						primaryText={message.between[0] + ', ' + message.between[1]}
+						primaryText={message.between[1]}
 						secondaryText={
 						    <div>
 							<span style={{color: Colors.darkBlack}}>{this.calcTime(message.createdAt)}</span><br/>
@@ -95,9 +95,7 @@ const MessageBar = React.createClass({
     	var winWidth = window.innerWidth*0.83;
 	return(
 		<div>
-		<br />
-		<br />
-		<br />
+		<div style={{height: '64px'}}></div>
 		    <List>
 			{this.renderMessagesList()}
 		    </List>

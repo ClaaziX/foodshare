@@ -45,16 +45,15 @@ const AddItem = React.createClass({
     
     render() {
     	return (<div>
-	    Please add the details of all of the items in the picture and the number of items that you have.
-
+	    <div className="textBox">
 	    <TextField
 		hintText="Please enter name of the item."
 		value={this.state.foodName}
 		onChange={this.handleName}
 	    />
-
+	    </div>
 	    <br />
-	    
+	    <div className="textBox">
 	    <TextField
 		hintText="Please enter a description of the item."
 		floatingLabelText="Describe your item."
@@ -63,14 +62,14 @@ const AddItem = React.createClass({
 		value={this.state.foodDesc}
 		onChange={this.handleDesc}
 	    />
-
+	    </div>
 	    <br/>
-
+	    <div className="textBox">
 	    Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
-
+	    </div>
 	    <br/>
 
-	    <RaisedButton label="Submit" secondary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+	    <RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
 	    <Snackbar
 		open={this.state.open}
 		message="Please fill out all fields."
