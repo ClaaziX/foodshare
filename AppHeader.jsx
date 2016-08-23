@@ -269,7 +269,7 @@ const AppHeader = React.createClass({
 		  	</div>
 		  	<div className="contentContain">
 				<Scrollbars style={{ height: 350, position: 'relative' }}>
-			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
+			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, pathName : this.props.routeParams })}
 			  	</Scrollbars>
 		  	</div>
 		  	{ Meteor.user() ?

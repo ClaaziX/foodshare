@@ -95,7 +95,6 @@ const MessageBar = React.createClass({
     	var winWidth = window.innerWidth*0.83;
 	return(
 		<div>
-		<div style={{height: '64px'}}></div>
 		    <List>
 			{this.renderMessagesList()}
 		    </List>

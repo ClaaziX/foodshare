@@ -130,6 +130,7 @@ const PrivateChat = React.createClass({
 				{this.generateChat()}
 				{this.messagesSeen()}
 				<div className="textSubmit-container">
+
 					<div className="textSubmit-item">
 						<RaisedButton
 							label="Submit"
@@ -147,6 +148,30 @@ const PrivateChat = React.createClass({
 							rows={2}
 							rowsMax={4}
 						/>
+					</div>
+
+					<div className="textSubmit-item">
+
+						<RaisedButton
+							label="Share Location"
+							primary={true}
+							onTouchTap={this.addMessage}
+							fullWidth={true}
+						/>
+						<br />
+						<RaisedButton
+							label="Completed"
+							secondary={true}
+							onTouchTap={this.addMessage}
+							fullWidth={true}
+						/>
+						<br />
+						<RaisedButton
+							label="Report User"
+							onTouchTap={this.addMessage}
+							fullWidth={true}
+						/>
+
 					</div>
 
 				</div>
