@@ -7,6 +7,7 @@ import {
     RaisedButton
 } from 'material-ui';
 
+import TimeSince from './TimeSince.jsx';
 
 ItemView = React.createClass({
     
