@@ -5,10 +5,6 @@ import Accounts from 'meteor/std:accounts-basic';
 
 const login = React.createClass({ 
 
-      shouldComponentUpdate(nextProps, nextState){
-      				       return false;
-      },
-
 	handleLogin : function () {
 		this.router.push('/');
 	},

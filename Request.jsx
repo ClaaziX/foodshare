@@ -21,10 +21,9 @@ import {
     Colors
     } from 'material-ui';
 
-
-import { 
-      SvgIcons
-      } from 'material-ui/svg-icons';
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
+import ContentBlock from 'material-ui/svg-icons/content/block';
+import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 const claimContentStyle = {
                 width: '100%',
@@ -45,13 +44,11 @@ Request = React.createClass({
 	},
 
 	generateRequests(){
-
 		if(this.props.claims){
 			return this.props.claims.map((claim) => {
 				console.log(claim.username)
 				return (
 					<div>
-
 						{ claim.rejected ?
 							""
 						:
@@ -67,13 +64,13 @@ Request = React.createClass({
 				             				 <ListItem
 				             				 	key={1}
 				             				 	primaryText="Accept"
-				             				 	leftIcon={<SvgIcons.ActionCheckCircle color='Green'/>}
+				             				 	leftIcon={<ActionCheckCircle color='Green'/>}
 				             				 	onTouchTap={this.getAcceptHandler(claim)}
 				             				 />,
 				             				 <ListItem
 				             				 	key={2}
 				             				 	primaryText="Reject"
-				             				 	leftIcon={<SvgIcons.ContentBlock color='Red'/>}
+				             				 	leftIcon={<ContentBlock color='Red'/>}
 				             				 	onTouchTap={this.getRejectHandler(claim)}
 				             				 />,
 				            			]}
@@ -86,7 +83,7 @@ Request = React.createClass({
 										primaryText={claim.username}
 										secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + " requested portions"}
 										leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
-										rightIcon={<SvgIcons.CommunicationChatBubble color='Grey' />}
+										rightIcon={<CommunicationChatBubble color='Grey' />}
 										onTouchTap={this.getChatHandler(claim)}
 									/>
 									<Divider />

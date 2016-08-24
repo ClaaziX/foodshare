@@ -27,7 +27,10 @@ import {
 const YourItems = React.createClass({
 
 	deleteThisItem(item) {
-		FoodItemsC.remove(item._id);
+		handleDelete = function(event) {
+			FoodItemsC.remove(item._id);
+		}
+		return handleDelete
     },
 
     calculatePortionsLeft: function (item) {
@@ -52,13 +55,14 @@ const YourItems = React.createClass({
 		for (n = 0; n < pCla; n++){
 		    z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
 		}
-		return <div>{x}{z}({pNum})</div>;
+    	return <div>{x}{z}({pNum})</div>;
     },
 
     generateItems: function () {
     	console.log("generateItems called...")
 		if(this.props.foodItems){
 			return this.props.foodItems.map((item) => {
+				console.log(item)
 				return (
 			 		<div>
 						<Card>
@@ -102,18 +106,19 @@ const YourItems = React.createClass({
 								/>
 							</CardActions>
 						</Card>
+						<div style={{height: "16px"}}></div>
 					</div>
 				);
 			});
 		}else{console.log("no items!")}
 	},
 
-    render : function(){
+    render(){
 		return(
 			<div>
 		       {this.generateItems()}
 		    </div>
-		);
+		)
     }
 });
 export default YourItems;
