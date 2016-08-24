@@ -59,7 +59,6 @@ const YourItems = React.createClass({
     	console.log("generateItems called...")
 		if(this.props.foodItems){
 			return this.props.foodItems.map((item) => {
-				console.log("foodItems detected...")
 				return (
 			 		<div>
 						<Card>
@@ -82,13 +81,15 @@ const YourItems = React.createClass({
 								<img src={item.imgURL} />
 							</CardMedia>
 
-							<CardText>
-								{ item.claims ?
+							{ item.claims ?
+								<CardText>
 									<Request claims={item.claims} />
-								:			
+								</CardText>
+							:			
+								<CardText>
 									<p>No one has claimed this item yet</p>
-								}
-							</CardText>
+								</CardText>
+							}
 
 							<CardActions expandable={true}>
 								<Link to={'/ItemView/'+item._id}>
