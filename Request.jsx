@@ -21,6 +21,10 @@ import {
     Colors
     } from 'material-ui';
 
+import { 
+	green900
+} from 'material-ui/styles/colors';
+
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
 import ContentBlock from 'material-ui/svg-icons/content/block';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';

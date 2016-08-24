@@ -6,10 +6,16 @@ import {
     List,
     ListItem,
     Avatar,
-    Drawer
+    Drawer,
+    IconButton,
+    AppBar
 } from 'material-ui';
 
 import Colors from 'material-ui/styles';
+
+import { 
+	green900
+} from 'material-ui/styles/colors';
 
 import SvgIcons from 'material-ui/svg-icons';
 
@@ -53,7 +59,7 @@ const MessageBar = React.createClass({
 						onTouchTap={
 							this.openPmess(otherUser[0])
 						}
-						primaryText={message.between[1]}
+						primaryText={otherUser[0]}
 						secondaryText={
 						    <div>
 							<span style={{color: Colors.darkBlack}}>{this.calcTime(message.createdAt)}</span><br/>
@@ -80,11 +86,11 @@ const MessageBar = React.createClass({
   		handleOpen = function(event) {
   			that.setState({openNav: true, userCurr: currUs});
 			}
-	  return handleOpen
+		return handleOpen
 	},
 
     handleCloseNav: function () {
-    	this.setState({openNav: false});
+    		this.setState({openNav: false});
     },
 
     compoentWillUpdate(){
@@ -107,7 +113,16 @@ const MessageBar = React.createClass({
 					docked={false}
 					onRequestChange={this.handleCloseNav}
 				>
-					<PrivateChat messagedUsername={this.state.userCurr} />
+					<div className="headContain">
+						<AppBar
+						    title={this.state.userCurr}
+					  		iconElementLeft={
+								<IconButton onTouchTap={this.handleCloseNav}>
+								    <SvgIcons.ContentBackspace color={green900} />
+								</IconButton>}
+					  	/>
+					</div>
+					<PrivateChat close={this.handleCloseNav} messagedUsername={this.state.userCurr} />
 				</Drawer>
 			</div>
 		</div>

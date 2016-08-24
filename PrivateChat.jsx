@@ -10,8 +10,16 @@ import {
     ListItem,
     Avatar,
     Divider,
-    AppBar
+    AppBar,
+    Dialog,
+    IconButton
 } from 'material-ui';
+
+import SvgIcons from 'material-ui/svg-icons';
+
+import { 
+	green900
+} from 'material-ui/styles/colors';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -37,9 +45,10 @@ const PrivateChat = React.createClass({
     },
     
     getInitialState(){
-	return{
-	    messageText:""
-	}
+		return{
+			messageText:"",
+			openDia: false
+		}
     },
 
 
@@ -87,6 +96,10 @@ const PrivateChat = React.createClass({
 		this.setState({messageText: ""});
     },
 
+    deleteMessage(){
+
+    },
+
     handleComment(event){
 		this.setState({
 		    messageText : event.target.value,
@@ -108,15 +121,40 @@ const PrivateChat = React.createClass({
 		this.refs.scrollbars.scrollToBottom();
 	},
 
-    render : function () {
+	openCompDia () {
+		this.setState({openDia: true})
+	},
+
+	handleCancel () {
+		this.setState({openDia: false})
+	},
+
+	deleteChat(){
+		this.deleteMessage()
+		this.setState({openDia: false})
+		Meteor.call('deletePrivateMessage', [this.data.currentUser, this.props.messagedUsername]);
+
+	},
+
+    render() {
     	var winHeight = window.innerHeight - 64;
+		const actions = [
+			<RaisedButton
+			label="Completed"
+			primary={true}
+			onTouchTap={this.deleteChat}
+			style={{marginRight: "12px"}}
+			/>,
+			<RaisedButton
+			label="Cancel"
+			secondary={true}
+			onTouchTap={this.handleCancel}
+			/>,
+		];
+		const diaTxt = "CAUTION: This will delete the chat permanently!";
 		return (
 			<div id='containerDiv'>
-			<div className="headContain">
-				<AppBar
-				    title={this.props.messagedUsername}
-			  	/>
-			</div>
+
 			<Scrollbars
 				style={{ position: 'relative' }}
 				ref="scrollbars"
@@ -153,22 +191,9 @@ const PrivateChat = React.createClass({
 					<div className="textSubmit-item">
 
 						<RaisedButton
-							label="Share Location"
-							primary={true}
-							onTouchTap={this.addMessage}
-							fullWidth={true}
-						/>
-						<br />
-						<RaisedButton
 							label="Completed"
-							secondary={true}
-							onTouchTap={this.addMessage}
-							fullWidth={true}
-						/>
-						<br />
-						<RaisedButton
-							label="Report User"
-							onTouchTap={this.addMessage}
+							primary={true}
+							onTouchTap={this.openCompDia}
 							fullWidth={true}
 						/>
 
@@ -177,6 +202,15 @@ const PrivateChat = React.createClass({
 				</div>
 		    </div>
 		    </Scrollbars>
+			<Dialog
+				title="Mark Exchange As Completed?"
+				actions={actions}
+				modal={true}
+				open={this.state.openDia}
+			>
+			<h3>{diaTxt}</h3>
+			</Dialog>
+
 		    </div>
 
 		);

@@ -59,6 +59,7 @@ const YourItems = React.createClass({
     },
 
     generateItems: function () {
+    	const noItemTxt = "You haven't posted any items yet... Get sharing!";
     	console.log("generateItems called...")
 		if(this.props.foodItems){
 			return this.props.foodItems.map((item) => {
@@ -110,12 +111,21 @@ const YourItems = React.createClass({
 					</div>
 				);
 			});
-		}else{console.log("no items!")}
+		}else{console.log("no items!")
+			return(
+				<div>
+				<h3>{noItemTxt}</h3>
+				<Link to={'/ItemCreation'}>
+					<FlatButton fullWidth={true} label="Share Food!" />
+				</Link>
+				</div>
+			);
+		}
 	},
 
     render(){
 		return(
-			<div>
+			<div style={{width: "345px"}}>
 		       {this.generateItems()}
 		    </div>
 		)

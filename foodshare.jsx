@@ -25,6 +25,10 @@ Meteor.methods({
 		});
     },
 
+    deletePrivateMessage(users){
+    	PrivateChatC.remove({between: users.sort()})
+    },
+
     markPMSeen(user, messaged){
 	PrivateChatC.update({between:{$all : [user, messaged]}, username:messaged, seen:false}, {$set:{seen:true}}, {multi:true} );
 	},
