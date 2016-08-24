@@ -30,8 +30,18 @@ const YourItems = React.createClass({
 		FoodItemsC.remove(item._id);
     },
 
+    calculatePortionsLeft: function (item) {
+		var x = 0;
+		var claims = item.claims;
+		if (claims){
+		    for(claim in claims){
+			x = x + claims[claim].accepted;
+		    }
+		} return x
+    },
+
     genPrtnImg: function (item) {
-		var pCla = this.props.calculatePortionsLeft(item);
+		var pCla = this.calculatePortionsLeft(item);
 		var pNum = item.portionNo - pCla;
 		var x = [];
 		for (i = 0; i < pNum; i++){
@@ -63,11 +73,11 @@ const YourItems = React.createClass({
 							<CardMedia 
 							    expandable={true}
 							    overlay={
-								<CardTitle
-								    title={item.foodDesc}
-								    subtitle={"Offered By: " + item.username}
-								/>
-								    }
+									<CardTitle
+									    title={item.foodDesc}
+									    subtitle={"Offered By: " + item.username}
+									/>
+								}
 							>
 								<img src={item.imgURL} />
 							</CardMedia>
@@ -76,7 +86,7 @@ const YourItems = React.createClass({
 								{ item.claims ?
 									<Request claims={item.claims} />
 								:			
-									<p>No one has claimed this item yet! :)</p>
+									<p>No one has claimed this item yet</p>
 								}
 							</CardText>
 
@@ -98,13 +108,11 @@ const YourItems = React.createClass({
 	},
 
     render : function(){
-	return(
-		<div>
-	       {this.generateItems}
-	    </div>
-	);
-
+		return(
+			<div>
+		       {this.generateItems()}
+		    </div>
+		);
     }
-
 });
 export default YourItems;
