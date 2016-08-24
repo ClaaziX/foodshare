@@ -96,7 +96,7 @@ const AppHeader = React.createClass({
 
 	queryS = '.*'+this.state.filter+'.*';
 
-    	if (this.props.location.pathname=='/Messages'){
+    	if (this.props.location.pathname=='/YourItems'){
 	    listMessageQuery = {username : currentUser.username};
 	} else {
 	    listMessageQuery = {username : {'$ne' : currentUser.username}};
@@ -269,7 +269,7 @@ const AppHeader = React.createClass({
 		  	</div>
 		  	<div className="contentContain">
 				<Scrollbars style={{ height: 350, position: 'relative' }}>
-			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, pathName : this.props.routeParams })}
+			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
 			  	</Scrollbars>
 		  	</div>
 		  	{ Meteor.user() ?
@@ -291,7 +291,7 @@ const AppHeader = React.createClass({
 				    <Tab
 					icon={<MapsPersonPin color={green900} />}
 					label="YOUR ITEMS"
-					onActive={this.handleActiveTab("/Messages")}
+					onActive={this.handleActiveTab("/YourItems")}
 					style={tabStyle}
 				    />
 				</Tabs>

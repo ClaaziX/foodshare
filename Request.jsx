@@ -46,48 +46,48 @@ Request = React.createClass({
 
 	generateRequests(){
 
-		if(this.props.claim){
-			return this.props.claim.map((item) => {
+		if(this.props.claims){
+			return this.props.claims.map((claim) => {
+				console.log(claim.username)
 				return (
 					<div>
 
-						{ item.claim.rejected ?
+						{ claim.rejected ?
 							""
 						:
 							<div>
-								{ item.claim.accepted == 0 ?
+								{ claim.accepted == 0 ?
 									<div>
 									<ListItem
-										primaryText={item.foodName}
-										secondaryText={item.claim.username + "has requested " + item.claim.portions + " portions"}
-										leftAvatar={<Avatar src={item.imgURL} />}
+										primaryText={claim.username}
+										secondaryText={"Has requested " + claim.portions + " portions"}
+										leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
 										primaryTogglesNestedList={true}
 										nestedItems={[
 				             				 <ListItem
 				             				 	key={1}
 				             				 	primaryText="Accept"
 				             				 	leftIcon={<SvgIcons.ActionCheckCircle color='Green'/>}
-				             				 	onTouchTap={this.getAcceptHandler(item.claim)}
+				             				 	onTouchTap={this.getAcceptHandler(claim)}
 				             				 />,
 				             				 <ListItem
 				             				 	key={2}
 				             				 	primaryText="Reject"
 				             				 	leftIcon={<SvgIcons.ContentBlock color='Red'/>}
-				             				 	onTouchTap={this.getRejectHandler(item.claim)}
+				             				 	onTouchTap={this.getRejectHandler(claim)}
 				             				 />,
 				            			]}
-
 									/>
 									<Divider />
 									</div>
 								:
 									<div>
 									<ListItem
-										primaryText={item.foodName}
-										secondaryText={"You have accepted " + item.claim.accepted + " out of " + item.claim.portions + " requested portions"}
-										leftAvatar={<Avatar src={item.imgURL} />}
+										primaryText={claim.username}
+										secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + " requested portions"}
+										leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
 										rightIcon={<SvgIcons.CommunicationChatBubble color='Grey' />}
-										onTouchTap={this.getChatHandler(item.claim)}
+										onTouchTap={this.getChatHandler(claim)}
 									/>
 									<Divider />
 									</div>
@@ -180,7 +180,7 @@ Request = React.createClass({
 				onTouchTap={this.getCloseHandler("reject", false)}
 			/>,
 			];
-console.log("Request called...")
+
 
 		return(
 			<div>
