@@ -76,6 +76,10 @@ FoodItems = React.createClass({
     render : function (){
 	return(
 	    <div>
+	    	{ window.location.pathname == '/Messages' ?
+			   <Request claims={this.props.foodItem} />  
+			:
+
 	        <div>
 		    <Card>
 			<CardHeader
@@ -88,23 +92,16 @@ FoodItems = React.createClass({
 			<CardMedia 
 			    expandable={true}
 			    overlay={
-				<CardTitle
-				    title={this.props.foodItem.foodDesc}
-				    subtitle={"Offered By: " + this.props.foodItem.username}
-				/>
-				    }
+					<CardTitle
+					    title={this.props.foodItem.foodDesc}
+					    subtitle={"Offered By: " + this.props.foodItem.username}
+					/>
+				}
 			>
 				<img src={this.props.foodItem.imgURL} />
 			</CardMedia>
 
-			{ this.props.pathName == '/Messages' && this.props.foodItem.claims ?
 
-			  <CardText expandable={true}>
-			      <Request claims={this.props.foodItem.claims} />
-			  </CardText>
-			  :			
-			  ""
-			}
 
 			  { this.data.currentUser == this.props.foodItem.username ?
 
@@ -137,6 +134,7 @@ FoodItems = React.createClass({
 			  }
 		    </Card>
 		</div>
+		}
 	    </div>
 	);
     }

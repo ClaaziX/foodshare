@@ -50,23 +50,37 @@ const logoutContentStyle = {
     maxWidth: 'none',
 };
 
-import { lightGreenA200, lightGreen600, green900, blueGrey300, blueGrey900, blueGrey600 } from 'material-ui/styles/colors';
+import { 
+	lightGreenA200,
+	lightGreen600,
+	green900,
+	blueGrey300,
+	blueGrey900,
+	blueGrey600,
+	grey50
+} from 'material-ui/styles/colors';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
 const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: lightGreenA200,
-    primary2Color: lightGreen600,
-    primary3Color: green900,
-    accent1Color: blueGrey300,
-    accent2Color: blueGrey600,
-    accent3Color: blueGrey900,
-    alternateTextColor: green900,
-  },
-  textField: {
-  	textColor: green900,
-  },
+	palette: {
+		primary1Color: lightGreenA200,
+		primary2Color: lightGreen600,
+		primary3Color: green900,
+		accent1Color: blueGrey300,
+		accent2Color: blueGrey600,
+		accent3Color: blueGrey900,
+		alternateTextColor: green900,
+	},
+	textField: {
+		textColor: green900,
+	},
+	card: {
+		titleColor: green900,
+	},
+	snackbar: {
+		textColor: grey50,
+	},
 });
 
 const tabStyle = {
@@ -96,7 +110,7 @@ const AppHeader = React.createClass({
 
 	queryS = '.*'+this.state.filter+'.*';
 
-    	if (this.props.location.pathname=='/Messages'){
+    	if (this.props.location.pathname=='/YourItems'){
 	    listMessageQuery = {username : currentUser.username};
 	} else {
 	    listMessageQuery = {username : {'$ne' : currentUser.username}};
@@ -291,7 +305,7 @@ const AppHeader = React.createClass({
 				    <Tab
 					icon={<MapsPersonPin color={green900} />}
 					label="YOUR ITEMS"
-					onActive={this.handleActiveTab("/Messages")}
+					onActive={this.handleActiveTab("/YourItems")}
 					style={tabStyle}
 				    />
 				</Tabs>

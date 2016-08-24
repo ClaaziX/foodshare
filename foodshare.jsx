@@ -91,6 +91,7 @@ if (Meteor.isClient) {
     import PrivateChat from './PrivateChat.jsx';
     import login from './login.jsx';
     import GridListTab from './GridListTab.jsx';
+    import YourItems from './YourItems.jsx';
 
     Meteor.startup(function () {
 
@@ -113,7 +114,7 @@ if (Meteor.isClient) {
 		<Route path='/' component={AppHeader}>
 		    <Route path='/ItemView/:itemID' component={ItemView} onEnter={requireAuth} />
 		    <IndexRoute component={GridListTab} />
-		    <Route path='/Messages' component={GridListTab} onEnter={requireAuth} />
+		    <Route path='/YourItems' component={YourItems} onEnter={requireAuth} />
 		    <Route path='/UserSettings' component={UserSettings} onEnter={requireAuth} />
 		    <Route path='/ItemCreation' component={ItemCreation} onEnter={requireAuth} />
 		    <Route path='/MapView' component={MapView} onEnter={requireAuth} />
