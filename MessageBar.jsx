@@ -67,6 +67,7 @@ const MessageBar = React.createClass({
 						    </div>
 						}
 						secondaryTextLines={2}
+						key={this.data.currentUser + otherUser[0]}
 
 					/>
 				
@@ -97,8 +98,15 @@ const MessageBar = React.createClass({
     	this.forceUpdate();
     },
 
+    componentDidMount(){
+    	if (this.props.messLink !== ""){
+    		this.openPmess(this.props.messLink)
+    	}
+    },
+
     render : function(){
     	var winWidth = window.innerWidth*0.83;
+
 	return(
 		<div>
 		    <List>

@@ -101,6 +101,7 @@ const AppHeader = React.createClass({
 	    openLogMess: false,
 	    openNav: false,
 	    filter : '',
+	    messLink: ''
 	}
     },
 
@@ -193,6 +194,15 @@ const AppHeader = React.createClass({
 	this.context.router.goBack();
     },
 
+    openIChat : function (otherUse) {
+    	console.log(otherUse)
+    	if (otherUse !== undefined){
+	    	this.setState({messLink: otherUse, openNav: true}, function () {
+			    console.log(this.state.messLink);
+			});
+    	}
+    },
+
     render : function(){
 
     	var winWidth = window.innerWidth;
@@ -283,7 +293,7 @@ const AppHeader = React.createClass({
 		  	</div>
 		  	<div className="contentContain">
 				<Scrollbars style={{ height: 350, position: 'relative' }}>
-			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
+			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, openChat: this.openIChat() })}
 			  	</Scrollbars>
 		  	</div>
 		  	{ Meteor.user() ?
@@ -344,6 +354,7 @@ const AppHeader = React.createClass({
 				    open={this.state.openNav}
 				    docked={false}
 				    onRequestChange={this.handleCloseNav}
+
 				>
 				    <div className="headContain">
 					<AppBar
@@ -365,7 +376,7 @@ const AppHeader = React.createClass({
 					 You have no messages, go share some food! :)
 	    			     </div>
 				     : 
-				     <MessageBar/>}
+				     <MessageBar messLink={this.state.messLink} />}
 				</Drawer>
         		    </div>
 			    <div>

@@ -102,8 +102,9 @@ Request = React.createClass({
 	},
 
 	getChatHandler: function(claim) {
+		var that = this;
   		handleChat = function(event) {
-  			console.log("Open chat with " + claim.username)
+  			that.props.openIt(claim.username)
 			}
 	  return handleChat
 	},

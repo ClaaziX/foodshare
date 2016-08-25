@@ -88,7 +88,7 @@ const YourItems = React.createClass({
 
 							{ item.claims ?
 								<CardText>
-									<Request claims={item.claims} />
+									<Request claims={item.claims} openIt={this.openLeChat()} />
 								</CardText>
 							:			
 								<CardText>
@@ -123,7 +123,12 @@ const YourItems = React.createClass({
 		}
 	},
 
+	openLeChat: function (user) {
+		this.props.openChat(user)
+	},
+
     render(){
+    	console.log(this.props.foodItems)
 		return(
 			<div style={{width: "345px"}}>
 		       {this.generateItems()}
