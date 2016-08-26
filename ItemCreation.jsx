@@ -172,7 +172,7 @@ const ItemCreation = React.createClass({
 		    createdAt: new Date() // current time
 		});
 
-		browserHistory.push('/Messages');
+		browserHistory.push('/YourItems');
     },
 
     handleCancel() {
