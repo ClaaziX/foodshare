@@ -4,6 +4,10 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 import Accounts from 'meteor/std:accounts-basic';
 
 const login = React.createClass({ 
+      
+      shouldComponentUpdate(nextProps, nextState){
+      				       return false
+      },
 
       shouldComponentUpdate(nextProps, nextState){
 							       return false;
