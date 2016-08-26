@@ -55,6 +55,7 @@ const PrivateChat = React.createClass({
     generateChat : function (){
 		if(this.data.privateMessages){
 		    return this.data.privateMessages.map((message) => {
+		    	console.log(message.message)
 				return(
 
 				    <div>
