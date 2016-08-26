@@ -10,7 +10,6 @@ const AddItem = React.createClass({
     getInitialState(){
 	return{
 	    foodName:'',
-	    foodDesc:'',
 	    prtNo:1,
 	    open:false
 	    
@@ -25,20 +24,16 @@ const AddItem = React.createClass({
 	this.setState({foodName:event.target.value});
     },
 
-    handleDesc(event){
-	this.setState({foodDesc:event.target.value});
-    },
-
     handleRequestClose(){
 	this.setState({open:false});
     },
     
     handleSubmit(){
-	if((this.state.foodName == '') || (this.state.foodDesc == '') ){
+	if((this.state.foodName == '')){
 	    this.setState({open:true});
 	}else{
-	    this.props.handleSubmit({name: this.state.foodName,description:this.state.foodDesc, portions:this.state.prtNo});
-	    this.setState({foodName:'',foodDesc:'',prtNo:1})
+	    this.props.handleSubmit({name: this.state.foodName,portions:this.state.prtNo});
+	    this.setState({foodName:'',prtNo:1})
 		
 	}
     },
@@ -54,22 +49,12 @@ const AddItem = React.createClass({
 	    </div>
 	    <br />
 	    <div className="textBox">
-	    <TextField
-		hintText="Please enter a description of the item."
-		floatingLabelText="Describe your item."
-		multiLine={true}
-		rows={2}
-		value={this.state.foodDesc}
-		onChange={this.handleDesc}
-	    />
-	    </div>
-	    <br/>
-	    <div className="textBox">
 	    Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
 	    </div>
 	    <br/>
 
 	    <RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+
 	    <Snackbar
 		open={this.state.open}
 		message="Please fill out all fields."
