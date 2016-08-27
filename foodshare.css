@@ -32,6 +32,7 @@ body
     -webkit-align-items: flex-end;
     -ms-flex-align: end;
     align-items: flex-end;
+    margin: 1px;
 }
 
 .commentSubmit-item:nth-child(1) {
@@ -175,6 +176,9 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
     -webkit-flex-direction: row-reverse;
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
@@ -192,6 +196,7 @@ body
     align-items: flex-end;
     background: #CFD8DC;
     padding: 10px;
+    margin: 10px 0px 0px;
     }
 
 .textSubmit-item:nth-child(1) {
