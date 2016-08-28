@@ -36,80 +36,71 @@ var actions = [];
 const GridPicView = React.createClass({
 
 
-    checkCalled(){
-        check = function(){
-            distinct=[];
-            return(
-                function(item){
-                    if(distinct.filter((url)=>(url == item.imageURL).length<1)){
-                        distinct.push(item);
-                        return true 
-                    }
-                    return false
-                }
-            )
-        }()
-        
-        return check
-    },
 
     getMeteorData() {
 
-        currentUser = Meteor.user() ? Meteor.user() : '';
-        return {
-            currentUser: currentUser
-        };
+	currentUser = Meteor.user() ? Meteor.user() : '';
+	return {
+	    currentUser: currentUser
+	};
     },      
 
-    generatorFunction(){
+    generatorFunction(foodItem){
 
-        var callback = this.checkCalled
+	return(
+	    <GridTile
+		key={foodItem._id}
+		
+		title={<span>Offered by: <b>{foodItem.username}</b></span>}
+		actionIcon={
+		    <div>
+			<IconButton containerElement={ <Link to={'/ItemView/'+foodItem._id}/> }>
+			    <ActionList color='White' />
+			</IconButton>
+		    </div>
+			   }   
+	    >
+		    <img src={foodItem.imgURL} />
+	    </GridTile>
+	)
 
 
-        return(
-            function(foodItem){
-                {console.log(callback(foodItem))}
-                
-	        <GridTile
-                key={foodItem._id}
-	        
-                title={<span>Offered by: <b>{foodItem.username}</b></span>}
-                actionIcon={
-                    <div>
-	                <IconButton containerElement={ <Link to={'/ItemView/'+foodItem._id}/> }>
-	                    <ActionList color='White' />
-	                </IconButton>
-                    </div>
-	        }   
-	        >
-	        <img src={foodItem.imgURL} />
-	</GridTile>}
-        )
-
-        
     },
 
 
     renderItems(){
-        var callBack = this.generatorFunction()
-        return this.props.foodItems.map(callBack)
+	distinct= []
+	//Filter the items for duplicates
+	var filter = (function(){
+	    return (function(item){
+		if(distinct.filter((url)=>(url == item.imageURL)).length<1){
+		    distinct.push(item.imageURL);
+		    return true
+		    
+		}
+		return false
+	    }
+	    )
+	})();
+
+	return this.props.foodItems.filter(filter).map(this.generatorFunction)
     },
 
     render(){
 
-        return(
+	return(
 	    <div style={styles.root}>
 		<GridList
-                    cellHeight={200}
-                    style={styles.gridList}
+		    cellHeight={200}
+		    style={styles.gridList}
 		>
-                  
-                    {this.renderItems()}
-		  
+		    
+		    {this.renderItems()}
+		    
 		</GridList>
 	    </div>
 
-                        
+	    
 	);
     }
 });
