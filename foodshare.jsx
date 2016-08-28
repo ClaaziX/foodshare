@@ -162,6 +162,7 @@ if (Meteor.isServer) {
     }
 
     //Create food items by random users
+    images = ["http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg","http://ichef.bbci.co.uk/news/660/cpsprodpb/1325A/production/_88762487_junk_food.jpg","http://www.foodmanufacture.co.uk/var/plain_site/storage/images/publications/food-beverage-nutrition/foodmanufacture.co.uk/npd/top-10-functional-food-trends/11097085-1-eng-GB/Top-10-functional-food-trends_strict_xxl.jpg"]
     var numFoodItems = 20;
     var numPortions = 10;
     for(i = 0; i < numFoodItems; i++){
@@ -171,7 +172,7 @@ if (Meteor.isServer) {
       		foodDesc: faker.lorem.sentence(),
       		portionNo: Math.floor(Math.random()*numPortions),
       		portionsClaimed: 0,
-      		imgURL: "http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg",
+      		imgURL: images[i % 3],
       		owner: currUser._id,
       		username: currUser.username,
       		createdAt: new Date(),
