@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import FoodView from './FoodView.jsx';
+import GridPicView from './GridPicView.jsx';
 
 import ActionViewModule from 'material-ui/svg-icons/action/view-module.js';
 import ActionList from 'material-ui/svg-icons/action/list.js';
@@ -19,6 +20,7 @@ const GridListTab = React.createClass({
 
 
     render: function() {
+    console.log(this.props.foodItems);
 	return (
 	    <div>
 		<Tabs>
@@ -28,7 +30,8 @@ const GridListTab = React.createClass({
 				<ActionViewModule color='green900' />
 			    </IconButton>}
                     >
-			    <FoodView renderer="grid" foodItems={this.props.foodItems}/>
+                    
+			    <GridPicView foodItems={this.props.foodItems}/>
 		    </Tab>
 
 		    <Tab label={<ActionList color='green900' />}>
