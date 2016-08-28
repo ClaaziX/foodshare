@@ -50,16 +50,8 @@ const GridPicView = React.createClass({
 	return(
 	    <GridTile
 		key={foodItem._id}
-		
-		title={<span>Offered by: <b>{foodItem.username}</b></span>}
-		actionIcon={
-		    <div>
-			<IconButton containerElement={ <Link to={'/ItemView/'+foodItem._id}/> }>
-			    <ActionList color='White' />
-			</IconButton>
-		    </div>
-			   }   
-	    >
+		onTouchTap = {this.props.handleChange(foodItem.imgURL)}
+		title={<span>Offered by: <b>{foodItem.username}</b></span>}>
 		    <img src={foodItem.imgURL} />
 	    </GridTile>
 	)
@@ -73,8 +65,8 @@ const GridPicView = React.createClass({
 	//Filter the items for duplicates
 	var filter = (function(){
 	    return (function(item){
-		if(distinct.filter((url)=>(url == item.imageURL)).length<1){
-		    distinct.push(item.imageURL);
+		if(distinct.filter((url)=>(url == item.imgURL)).length<1){
+		    distinct.push(item.imgURL);
 		    return true
 		    
 		}

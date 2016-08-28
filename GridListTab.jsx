@@ -18,24 +18,42 @@ import { lightGreen300, lightGreen600, green900, brown300, brown600, brown900 } 
 
 const GridListTab = React.createClass({
 
+    getInitialState(){
+	return{value:'grid',imageURL:''}
+    },
+
+    handleTileChange(valu){
+	var val = valu
+	return (function(){
+	    this.setState({imageURL:val,value:'list'});
+	}).bind(this)
+    },
+    
+    handleChange(value){
+	this.setState({
+	    value: value,
+	    imageURL:''
+	});
+    },
 
     render: function() {
-    console.log(this.props.foodItems);
 	return (
 	    <div>
-		<Tabs>
-            <Tab 
+		<Tabs value={this.state.value} onChange={this.handleChange}>
+		    <Tab 
 			label={ 
 			    <IconButton>
 				<ActionViewModule color='green900' />
 			    </IconButton>}
+			
+			value="grid"
                     >
-                    
-			    <GridPicView foodItems={this.props.foodItems}/>
+			    
+			    <GridPicView foodItems={this.props.foodItems} handleChange={this.handleTileChange}/>
 		    </Tab>
 
-		    <Tab label={<ActionList color='green900' />}>
-			<FoodView renderer="list" foodItems={this.props.foodItems}/>
+		    <Tab label={<ActionList color='green900' />} value="list">
+			<FoodView renderer="list" foodItems={this.props.foodItems} imageURL={this.state.imageURL}/>
 		    </Tab>
 		</Tabs>
 	    </div>
