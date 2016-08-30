@@ -29,7 +29,7 @@ const MessageBar = React.createClass({
     getInitialState(){
 	    return{
 			openNav: false,
-			userCurr: "noone",
+			userCurr: '',
 	    }
 	},
 
@@ -41,6 +41,15 @@ const MessageBar = React.createClass({
 			    currentUser: currentUser,
 			    privateMessages: clientSidebar.find().fetch()
 			};
+
+    },
+
+    componentWillReceiveProps(props){
+
+        
+        if(props.user != ''){
+            this.setState({userCurr:props.user, openNav:true});
+        }
 
     },
 
@@ -90,7 +99,9 @@ const MessageBar = React.createClass({
 	},
 
     handleCloseNav: function () {
-    		this.setState({openNav: false});
+
+    	this.setState({openNav: false, userCurr:''});
+        this.props.reset();
     },
 
     compoentWillUpdate(){
@@ -98,6 +109,7 @@ const MessageBar = React.createClass({
     },
 
     render : function(){
+
     	var winWidth = window.innerWidth*0.83;
 	return(
 		<div>
