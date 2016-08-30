@@ -181,11 +181,16 @@ if (Meteor.isServer) {
     	  
     }
 
+    //Create some claims
+    var numClaims = 30;
+    
+
     //Create comments by random users
     var numComments = 35;
     for(i = 0; i < numComments; i++){
           currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)];
     	  currItem = FoodItemsC.find().fetch()[Math.floor(Math.random()*numFoodItems)];
+              Meteor.call('createClaims', currUser.username,Math.floor(Math.random()*currItem.portionNo),currItem._id )
 	      FoodItemsC.update({_id: currItem._id},{$push : {
 	      	comments:{
 			username: currUser.username,

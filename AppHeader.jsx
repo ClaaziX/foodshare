@@ -97,6 +97,7 @@ const AppHeader = React.createClass({
 
     getInitialState(){
 	return{
+            messageUser:'',
 	    openLogout: false,
 	    openLogMess: false,
 	    openNav: false,
@@ -179,6 +180,14 @@ const AppHeader = React.createClass({
     	    browserHistory.push(path);
     	}
     	return activeTab
+    },
+    resetState: function(){
+        this.setState({messageUser:''});
+    },
+
+    handleOpenMessage: function(user){
+
+        this.setState({openNav:true,messageUser:user});
     },
 
     handleOpenNav: function () {
@@ -283,7 +292,7 @@ const AppHeader = React.createClass({
 		  	</div>
 		  	<div className="contentContain">
 				<Scrollbars style={{ height: 350, position: 'relative' }}>
-			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems })}
+			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, openMessages: this.handleOpenMessage })}
 			  	</Scrollbars>
 		  	</div>
 		  	{ Meteor.user() ?
@@ -365,7 +374,8 @@ const AppHeader = React.createClass({
 					 You have no messages, go share some food! :)
 	    			     </div>
 				     : 
-				     <MessageBar/>}
+
+				     <MessageBar user={this.state.messageUser} reset={this.resetState}/>}
 				</Drawer>
         		    </div>
 			    <div>
