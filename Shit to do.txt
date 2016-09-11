@@ -1,0 +1,45 @@
+GENERAL
+default value of claim/portion selecter
+notifications for everything! (messages
+increase portions size
+Add Item text under icon and info dropdown
+about thingy
+user ratings?
+general intro
+
+ITEM ADD
+multiple item add more obvious
+default times for collection
+descriptions?
+deafult pictures - ability to add item without picture
+
+ITEM VIEW
+enter does not add location
+description
+subititle as name not user
+
+
+ITEM DISCUSSION
+username as well as profile picture
+
+
+MAP VIEW
+search box size
+link to items
+smaller pics/grouping
+
+YOUR ITEMS
+overview of what you've claimed
+can accept more claims than i there are portions
+
+LOGIN/REGISTER
+everything
+just...all the things
+make it all fit on one page
+error messages in snackbar
+
+MESSAGES
+enter on text input to submit
+email type split view for messages
+deafult message when accepting claim (pic, info of what you have claimed)
+subtitle = last messages
