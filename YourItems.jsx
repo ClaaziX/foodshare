@@ -26,7 +26,7 @@ import {
 
 const YourItems = React.createClass({
 
-	deleteThisItem(item) {
+    deleteThisItem(item) {
 		handleDelete = function(event) {
 			FoodItemsC.remove(item._id);
 		}
@@ -60,10 +60,10 @@ const YourItems = React.createClass({
 
     generateItems: function () {
     	const noItemTxt = "You haven't posted any items yet... Get sharing!";
-    	console.log("generateItems called...")
+
 		if(this.props.foodItems){
 			return this.props.foodItems.map((item) => {
-				console.log(item)
+
 				return (
 			 		<div>
 						<Card>
@@ -88,7 +88,7 @@ const YourItems = React.createClass({
 
 							{ item.claims ?
 								<CardText>
-									<Request claims={item.claims} />
+									<Request openMessages={this.props.openMessages} claims={item.claims} />
 								</CardText>
 							:			
 								<CardText>

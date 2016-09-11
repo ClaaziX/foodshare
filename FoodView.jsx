@@ -151,7 +151,14 @@ getMeteorData() {
 	      );
 	  }
 
-	return this.props.foodItems.map((foodItem) => {
+	if(this.props.imageURL===''){
+	    var foodItemsFiltered=this.props.foodItems;
+	}else{
+	    filter = (function(x){return x.imgURL==this.props.imageURL}).bind(this);
+	    var foodItemsFiltered=this.props.foodItems.filter(filter)
+	}
+
+	return foodItemsFiltered.map((foodItem) => {
 	    return (
 	    <div>
 		<FoodItems 

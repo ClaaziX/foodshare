@@ -53,23 +53,27 @@ const PrivateChat = React.createClass({
 
 
     generateChat : function (){
+    	var prvUsr;
 		if(this.data.privateMessages){
 		    return this.data.privateMessages.map((message) => {
+		    	var same = false
+		    	var currUsr = message.username;
+		    	if (prvUsr){
+		    		if (prvUsr == currUsr){
+		    			same = true;
+		    		}
+		    	}
+		    	prvUsr = currUsr;
 				return(
-
-				    <div>
 				       	<Comment
 				       	    comment={message.message}
 				       	    date={this.calcTime(message.createdAt)}
 				       	    username={message.username}
+				       	    same={same}
 				       	/>
-				       	<br />
-				    </div>
-
-			)
+				)
 		    });
 		}
-		
     },
 
 	calcTime: function(date){
@@ -167,6 +171,7 @@ const PrivateChat = React.createClass({
 				<br/>
 				{this.generateChat()}
 				{this.messagesSeen()}
+				<div style={{height: "135px"}}></div>
 				<div className="textSubmit-container">
 
 					<div className="textSubmit-item">

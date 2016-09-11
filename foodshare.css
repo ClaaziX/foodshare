@@ -13,7 +13,7 @@ body
   max-height:40px;
 }
 
-.commentFlexUser-container {
+.commentSubmit-container {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -32,6 +32,59 @@ body
     -webkit-align-items: flex-end;
     -ms-flex-align: end;
     align-items: flex-end;
+    margin: 1px;
+}
+
+.commentSubmit-item:nth-child(1) {
+    padding: 0px 8px;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    font-size: 8pt;
+    }
+
+.commentSubmit-item:nth-child(2) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 82%;
+    -ms-flex: 0 1 82%;
+    flex: 0 1 70%;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    padding: 12px;
+    background: #B2FF59;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    }
+
+.commentFlexUser-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
 }
 
 .commentFlexOther-container {
@@ -50,9 +103,9 @@ body
     -webkit-align-content: stretch;
     -ms-flex-line-pack: stretch;
     align-content: stretch;
-    -webkit-align-items: flex-end;
-    -ms-flex-align: end;
-    align-items: flex-end;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
     }
 
 .commentFlex-item:nth-child(1) {
@@ -79,7 +132,8 @@ body
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
-    padding: 12px;
+    padding: 10px;
+    margin: 1px;
     background: #B2FF59;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -110,7 +164,8 @@ body
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
-    padding: 12px;
+    padding: 10px;
+    margin: 1px;
     background: #CFD8DC;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -121,6 +176,9 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
     -webkit-flex-direction: row-reverse;
     -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
@@ -138,6 +196,7 @@ body
     align-items: flex-end;
     background: #CFD8DC;
     padding: 10px;
+    margin: 10px 0px 0px;
     }
 
 .textSubmit-item:nth-child(1) {
