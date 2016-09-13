@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import AddLocation from './AddLocation.jsx';
+import TimeSince from './TimeSince.jsx';
 
 const GoogleMap = React.createClass({
   propTypes: {
@@ -14,48 +15,82 @@ const GoogleMap = React.createClass({
     map: "",
   },
 
+  calcTime: function(date){
+    return(
+      <TimeSince time={date} />
+      );
+  },
+
   genMarkers(maps) {
 
     if(typeof this.props.markers !== "undefined"){
 
       return this.props.markers.map((foodItem) => {
-        console.log("markers being mapped...")
 
         var obj = foodItem.location;
         var keys = Object.keys(obj);
         var coords = [];
-        console.log("obj == "+obj)
-        console.log("keys == "+keys)
-        console.log("map == "+maps)
 
         for (var i = 0; i < keys.length; i++) {
-
           coords.push(obj[keys[i]])
-          console.log(obj[keys[i]])
-
         }
 
         var image = {
-          url: "http://www.airsoftmap.net/images/pin_map.png",
+          url: foodItem.imgURL,
           // This marker is 20 pixels wide by 32 pixels high.
-          size: new google.maps.Size(32, 32),
+          scaledSize: new google.maps.Size(60, 60),
           // The origin for this image is (0, 0).
           origin: new google.maps.Point(0, 0),
           // The anchor for this image is the base of the flagpole at (0, 32).
-          anchor: new google.maps.Point(0, 32)
+          anchor: new google.maps.Point(0, 32),
+
+          optimized:false
         };
-        var infowindow = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow({maxWidth: 350});
+
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(coords[0], coords[1]),
             map: maps,
             icon: image,
+            title: foodItem.foodName.toString(),
           })
-        marker.setVisible(false);
+        marker.addListener('click', function() {
+          infowindow.open(maps, marker);
+        });
+
         var imgURL = foodItem.imgURL;
-        var imgsrc = "<IMG width='80px' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
+        var imgsrc = "<IMG width='100%' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
+        var tSince = this.calcTime(foodItem.createdAt);
+        var foodDesc = foodItem.foodDesc;
+        if (foodDesc == undefined){
+          foodDesc = "No food description provided... Ask a question!"
+        }
+        var content = '<div id="iw-container">' +
+                  '<div class="iw-title">' + foodItem.foodName.toString() + '</div>' +
+                  '<div class="iw-content">' +
+                    '<div class="iw-subTitle">' + tSince + '</div>' +
+                    imgsrc +
+                    '<p>' + foodDesc + '</p>' +
+                  '<div class="iw-bottom-gradient"></div>' +
+                '</div>';
+
+        google.maps.event.addListener(marker, 'click', function() {
+            if(!marker.open){
+                infowindow.open(maps,marker);
+                marker.open = true;
+            }
+            else{
+                infowindow.close();
+                marker.open = false;
+            }
+            google.maps.event.addListener(maps, 'click', function() {
+                infowindow.close();
+                marker.open = false;
+            });
+        });
+
         return (
-          infowindow.setContent(foodItem.foodName.toString() + "<br />" + imgsrc), 
-          infowindow.open(maps, marker)
+          infowindow.setContent(content), 
         );   
       });
     }else{console.log("error: props.markers == " + this.props.markers)}
@@ -111,7 +146,6 @@ const GoogleMap = React.createClass({
 
       that.genMarkers(map.instance);
 
-
       var input =  ReactDOM.findDOMNode(that.refs.pacinput);
       var searchBox = new google.maps.places.Autocomplete(input);
       searchBox.bindTo('bounds', mapz);
@@ -157,6 +191,31 @@ const GoogleMap = React.createClass({
           infowindow.open(mapz, marker);
       });
 
+    });
+    var el = ReactDOM.findDOMNode(this);
+    console.log(el.getElementsByClassName("gm-style-iw"))
+    var iwBackground = el.getElementsByClassName("gm-style-iw").previousElementSibling;
+    var iwCloseBtn = el.getElementsByClassName("gm-style-iw").nextElementSibling;
+    console.log(iwBackground)
+    // Removes background shadow DIV
+    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+    // Removes white background DIV
+    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+    // Moves the infowindow 115px to the right.
+    iwOuter.parent().parent().css({left: '115px'});
+    // Moves the shadow of the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+    // Moves the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+    // Changes the desired tail shadow color.
+    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+    // Reference to the div that groups the close button elements.
+   
+    // Apply the desired effect to the close button
+    iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', border: '7px solid #99ff66', 'border-radius': '13px', 'box-shadow': '0 0 5px #99ff66'});
+    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+    iwCloseBtn.mouseout(function(){
+      $(this).css({opacity: '1'});
     });
   },
 
