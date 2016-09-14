@@ -484,8 +484,6 @@ body
   height: 170px;
 }
 
-.gm-style-iw + div {display: none;}
-
 .contentContain{
   position: relative;
   width:100%;
