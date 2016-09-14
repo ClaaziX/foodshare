@@ -15,6 +15,11 @@ const GoogleMap = React.createClass({
     map: "",
   },
 
+  getInitialState(){
+    return{
+    }
+  },
+
   calcTime: function(date){
     return(
       <TimeSince time={date} />
@@ -88,7 +93,7 @@ const GoogleMap = React.createClass({
                 marker.open = false;
             });
         });
-
+        console.log("placing a marker...")
         return (
           infowindow.setContent(content), 
         );   
@@ -96,9 +101,47 @@ const GoogleMap = React.createClass({
     }else{console.log("error: props.markers == " + this.props.markers)}
   },
 
+  configureDOM(){
+    console.log("configDOM called...")
+    var el = ReactDOM.findDOMNode(this);
+    var iwBackground = el.getElementsByClassName("gm-style-iw").previousElementSibling;
+    var iwCloseBtn = el.getElementsByClassName("gm-style-iw").nextElementSibling;
+    console.log(iwBackground)
+    // Removes background shadow DIV
+    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+    // Removes white background DIV
+    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+    // Moves the infowindow 115px to the right.
+    iwOuter.parent().parent().css({left: '115px'});
+    // Moves the shadow of the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(1)').attr('style', function(i,s){
+      return s + 'left: 76px !important;'
+    });
+    // Moves the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(3)').attr('style', function(i,s){
+      return s + 'left: 76px !important;'
+    });
+    // Changes the desired tail shadow color.
+    iwBackground.children(':nth-child(3)').find('div').children().css({
+      'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',
+      'z-index' : '1'
+      });
+    // Apply the desired effect to the close button
+    iwCloseBtn.css({
+      opacity: '1',
+      right: '38px',
+      top: '3px',
+      border: '7px solid #99ff66',
+      'border-radius': '13px',
+      'box-shadow': '0 0 5px #99ff66'
+    });
+    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+    iwCloseBtn.mouseout(function(){
+      this.css({opacity: '1'});
+    });
+  },
+
   geocodeLatLng() {
-
-
     var geocoder = new google.maps.Geocoder;
     var infoWindow = new google.maps.InfoWindow;
     var map = "mymap";
@@ -144,6 +187,7 @@ const GoogleMap = React.createClass({
         })  
       }else{var dummyVar}
 
+      console.log("just before gen markers")
       that.genMarkers(map.instance);
 
       var input =  ReactDOM.findDOMNode(that.refs.pacinput);
@@ -190,33 +234,8 @@ const GoogleMap = React.createClass({
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
           infowindow.open(mapz, marker);
       });
-
     });
-    var el = ReactDOM.findDOMNode(this);
-    console.log(el.getElementsByClassName("gm-style-iw"))
-    var iwBackground = el.getElementsByClassName("gm-style-iw").previousElementSibling;
-    var iwCloseBtn = el.getElementsByClassName("gm-style-iw").nextElementSibling;
-    console.log(iwBackground)
-    // Removes background shadow DIV
-    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-    // Removes white background DIV
-    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-    // Moves the infowindow 115px to the right.
-    iwOuter.parent().parent().css({left: '115px'});
-    // Moves the shadow of the arrow 76px to the left margin.
-    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-    // Moves the arrow 76px to the left margin.
-    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-    // Changes the desired tail shadow color.
-    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
-    // Reference to the div that groups the close button elements.
-   
-    // Apply the desired effect to the close button
-    iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', border: '7px solid #99ff66', 'border-radius': '13px', 'box-shadow': '0 0 5px #99ff66'});
-    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-    iwCloseBtn.mouseout(function(){
-      $(this).css({opacity: '1'});
-    });
+    this.configureDOM();
   },
 
   componentWillUnmount() {
