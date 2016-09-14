@@ -160,26 +160,26 @@ const ItemCreation = React.createClass({
         const {stepIndex} = this.state;
 
         return (
-	    <div style={{margin: '12px 0'}}>
-	       	<RaisedButton
-label={stepIndex === 2 ? 'Finish' : 'Next'}
-		    disableTouchRipple={true}
-disableFocusRipple={true}
-primary={true}
-onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
-		    style={{marginRight: 12}}
-		/>
-		{step > 0 && (
-		     <FlatButton
-			 label="Back"
-			 disabled={stepIndex === 0}
-			 disableTouchRipple={true}
-			 disableFocusRipple={true}
-			 onTouchTap={this.handlePrev}
-		     />
-		 )}
-	    </div>
-	);
+			<div style={{margin: '12px 0'}}>
+				<RaisedButton
+					label={stepIndex === 2 ? 'Share Food!' : 'Next'}
+					disableTouchRipple={true}
+					disableFocusRipple={true}
+					primary={true}
+					onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
+					style={{marginRight: 12}}
+				/>
+				{step > 0 && (
+					<FlatButton
+						label="Back"
+						disabled={stepIndex === 0}
+						disableTouchRipple={true}
+						disableFocusRipple={true}
+						onTouchTap={this.handlePrev}
+					/>
+				)}
+			</div>
+			);
     },
 
     render() {
@@ -204,17 +204,15 @@ onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
 			</StepContent>
 		    </Step>
 		    <Step>
-			<StepLabel>Please list all of your items pressing submit after each one until you have added everything in your picture.</StepLabel>
-			<StepContent>
-                            <br/>
-			    <AddItem handleSubmit = {this.handleSubmit}/>
-			    <br/>
-
-			    <FoodView renderer="list" foodItems={this.data.addedItems} imageURL=''/>
-
-			    {this.genStepButtons(2)}
-			</StepContent>
-		    </Step>
+				<StepLabel>If you have multiple items, please add them seperatly!</StepLabel>
+				<StepContent>
+					<FoodView renderer="list" foodItems={this.data.addedItems} imageURL=''/>
+					<br/>
+					<AddItem handleSubmit = {this.handleSubmit}/>
+					<br/>
+		 		    {this.genStepButtons(2)}
+				</StepContent>
+			    </Step>
 		</Stepper>
 
 		<Snackbar

@@ -27,11 +27,9 @@ const GoogleMap = React.createClass({
   },
 
   genMarkers(maps) {
-
     if(typeof this.props.markers !== "undefined"){
-
       return this.props.markers.map((foodItem) => {
-
+        console.log("generating markers....")
         var obj = foodItem.location;
         var keys = Object.keys(obj);
         var coords = [];
@@ -58,14 +56,12 @@ const GoogleMap = React.createClass({
             map: maps,
             icon: image,
             title: foodItem.foodName.toString(),
-          })
-        marker.addListener('click', function() {
-          infowindow.open(maps, marker);
-        });
+          });
 
         var imgURL = foodItem.imgURL;
         var imgsrc = "<IMG width='100%' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
         var tSince = this.calcTime(foodItem.createdAt);
+        console.log(tSince)
         var foodDesc = foodItem.foodDesc;
         if (foodDesc == undefined){
           foodDesc = "No food description provided... Ask a question!"
@@ -78,7 +74,7 @@ const GoogleMap = React.createClass({
                     '<p>' + foodDesc + '</p>' +
                   '<div class="iw-bottom-gradient"></div>' +
                 '</div>';
-
+                
         google.maps.event.addListener(marker, 'click', function() {
             if(!marker.open){
                 infowindow.open(maps,marker);
@@ -93,52 +89,52 @@ const GoogleMap = React.createClass({
                 marker.open = false;
             });
         });
-        console.log("placing a marker...")
+
+        google.maps.event.addListener(infowindow, 'domready', function() {
+          console.log("genDOMmanip has been called...")
+          var el = ReactDOM.findDOMNode(this);
+          var iwBackground = el.getElementsByClassName("gm-style-iw").previousElementSibling;
+          var iwCloseBtn = el.getElementsByClassName("gm-style-iw").nextElementSibling;
+          console.log(iwBackground)
+          // Removes background shadow DIV
+          iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+          // Removes white background DIV
+          iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+          // Moves the infowindow 115px to the right.
+          iwOuter.parent().parent().css({left: '115px'});
+          // Moves the shadow of the arrow 76px to the left margin.
+          iwBackground.children(':nth-child(1)').attr('style', function(i,s){
+            return s + 'left: 76px !important;'
+          });
+          // Moves the arrow 76px to the left margin.
+          iwBackground.children(':nth-child(3)').attr('style', function(i,s){
+            return s + 'left: 76px !important;'
+          });
+          // Changes the desired tail shadow color.
+          iwBackground.children(':nth-child(3)').find('div').children().css({
+            'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',
+            'z-index' : '1'
+            });
+          // Apply the desired effect to the close button
+          iwCloseBtn.css({
+            opacity: '1',
+            right: '38px',
+            top: '3px',
+            border: '7px solid #99ff66',
+            'border-radius': '13px',
+            'box-shadow': '0 0 5px #99ff66'
+          });
+          // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+          iwCloseBtn.mouseout(function(){
+            this.css({opacity: '1'});
+          });
+        });
+
         return (
           infowindow.setContent(content), 
         );   
       });
     }else{console.log("error: props.markers == " + this.props.markers)}
-  },
-
-  configureDOM(){
-    console.log("configDOM called...")
-    var el = ReactDOM.findDOMNode(this);
-    var iwBackground = el.getElementsByClassName("gm-style-iw").previousElementSibling;
-    var iwCloseBtn = el.getElementsByClassName("gm-style-iw").nextElementSibling;
-    console.log(iwBackground)
-    // Removes background shadow DIV
-    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-    // Removes white background DIV
-    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-    // Moves the infowindow 115px to the right.
-    iwOuter.parent().parent().css({left: '115px'});
-    // Moves the shadow of the arrow 76px to the left margin.
-    iwBackground.children(':nth-child(1)').attr('style', function(i,s){
-      return s + 'left: 76px !important;'
-    });
-    // Moves the arrow 76px to the left margin.
-    iwBackground.children(':nth-child(3)').attr('style', function(i,s){
-      return s + 'left: 76px !important;'
-    });
-    // Changes the desired tail shadow color.
-    iwBackground.children(':nth-child(3)').find('div').children().css({
-      'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',
-      'z-index' : '1'
-      });
-    // Apply the desired effect to the close button
-    iwCloseBtn.css({
-      opacity: '1',
-      right: '38px',
-      top: '3px',
-      border: '7px solid #99ff66',
-      'border-radius': '13px',
-      'box-shadow': '0 0 5px #99ff66'
-    });
-    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
-    iwCloseBtn.mouseout(function(){
-      this.css({opacity: '1'});
-    });
   },
 
   geocodeLatLng() {
@@ -167,6 +163,7 @@ const GoogleMap = React.createClass({
     },
 
   componentDidMount() {
+
     GoogleMaps.create({
       name: this.props.name,
       element: ReactDOM.findDOMNode(this),
@@ -217,7 +214,7 @@ const GoogleMap = React.createClass({
             mapz.fitBounds(place.geometry.viewport);
           } else {
             mapz.setCenter(place.geometry.location);
-            mapz.setZoom(17);  // Why 17? Because it looks good.
+            mapz.setZoom(20);
           }
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
@@ -233,9 +230,9 @@ const GoogleMap = React.createClass({
 
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
           infowindow.open(mapz, marker);
+
       });
     });
-    this.configureDOM();
   },
 
   componentWillUnmount() {
