@@ -57,7 +57,6 @@ getMeteorData() {
 	    openClaim: false,
 	    alreadyClaimed: false,
 	    claimPop: false,
-	    actions: [],
 	}
     },
 

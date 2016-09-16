@@ -31,6 +31,8 @@ tabs always on top
 distance away
 claim does not work on individual item view
 needs formating as going off page
+url direct to sinle item view does not load, need redirect!
+make comment submit a bit smaller
  
 ITEM DISCUSSION
 username as well as profile picture
