@@ -51,9 +51,12 @@ const AddItem = React.createClass({
 	    <div className="textBox">
 	    Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
 	    </div>
-	    <br/>
+	    
+	    <p>
+	    Fill this in for each item in your picture!
+	    </p>
 
-	    <RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+	    <RaisedButton label="Add Item" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
 
 	    <Snackbar
 		open={this.state.open}

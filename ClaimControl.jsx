@@ -54,11 +54,15 @@ ClaimControl = React.createClass({
     },
 
 	render(){
+		var claimTxt = "Claim"
+		if (window.location.pathname == '/YourItems/'){
+			claimTxt = "Accept";
+    	}
 		return(
 			<div>
 				<NumberOptions options={this.props.portionsLeft} optionChange={this.makeClaim} />
 				<FlatButton
-				    label="Claim"
+				    label={claimTxt}
 				    primary={true}
 				    onTouchTap={this.submitIt}
 				/>

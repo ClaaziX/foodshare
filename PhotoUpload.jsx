@@ -14,9 +14,10 @@ const PhotoUpload = React.createClass({
     getInitialState(){
 		return({
 			imageUpload:'',
-			open: false
+			open: false,
 		})
     },
+
 
         onDrop(file){
 
@@ -36,19 +37,21 @@ const PhotoUpload = React.createClass({
 		}).bind(this);
 
 		//Initiate insert and get fileObj handle
-     	        images.insert(file[0], function(err,fileObj){
-						if(err){
-						     //do something to handle errors that get thrown
-						     callBackError()
-						     console.log(err)
-							} else {
+	        images.insert(file[0], function(err,fileObj){
+				if(err){
+				     //do something to handle errors that get thrown
+				     callBackError()
+				     console.log(err)
+					} else {
 				//Check the database and find out when all data is uploaded then call the call back
 			var liveQuery = images.find(fileObj._id).observe({
 			changed : function(newImage, OldImage){
 				if (newImage.url() != null){
 				    liveQuery.stop();
 				    console.log(newImage.url())
-				    callBackState(newImage.url());
+
+					callBackState(newImage.url());
+
 		   		}
 			}
 		});

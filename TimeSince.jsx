@@ -6,7 +6,6 @@ const TimeSince = React.createClass({
 
     calcTime(date) {
 	    var seconds = Math.floor((new Date() - date) / 1000);
-
 	    var interval = Math.floor(seconds / 31536000);
 
 	    if (interval > 1) {
@@ -14,7 +13,7 @@ const TimeSince = React.createClass({
 	    }
 	    interval = Math.floor(seconds / 2592000);
 	    if (interval > 1) {
-	        return interval + " mnths";
+	        return interval + " mths";
 	    }
 	    interval = Math.floor(seconds / 86400);
 	    if (interval > 1) {

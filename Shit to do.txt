@@ -16,19 +16,30 @@ multiple item add more obvious
 default times for collection
 descriptions?
 deafult pictures - ability to add item without picture
+<<<<<<< HEAD
 expiry date on item
 warning if upload9ing item outside of edinburgh
+=======
+if navigate away before submiting item is still there, needs pop up to confirm navigation and delete item if user wishes to quit
+>>>>>>> infoWindow
 
 ITEM VIEW
 enter does not add location
 description
 subititle as name not user
+<<<<<<< HEAD
 link to map & center on item
 search no worky
 when was item added
 tabs always on top
 distance away
 
+=======
+claim does not work on individual item view
+needs formating as going
+ off page
+ 
+>>>>>>> infoWindow
 ITEM DISCUSSION
 username as well as profile picture
 better links to it

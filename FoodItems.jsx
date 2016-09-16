@@ -23,10 +23,17 @@ import {
     IconButton
 } from 'material-ui';
 
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import CommunicationChat from 'material-ui/svg-icons/communication/chat';
+import ImagePhoto from 'material-ui/svg-icons/image/photo';
+
 
 
 import { ThemeManager, LightRawTheme } from 'material-ui';
 
+import TimeSince from './TimeSince.jsx';
 
 FoodItems = React.createClass({
 
@@ -37,10 +44,21 @@ FoodItems = React.createClass({
     },
     
     getMeteorData(){
-	return{
-	    currentUser: Meteor.user() ? Meteor.user().username : ''
-	};
+		return{
+		    currentUser: Meteor.user() ? Meteor.user().username : ''
+		};
     },
+
+	getInitialState(){
+		return{
+			imgPop: false,
+		}
+	},
+    calcTime: function(date){
+    	return(
+      		<TimeSince time={date} />
+    	);
+  	},
 
     deleteThisItem() {
 	FoodItemsC.remove(this.props.foodItem._id);
@@ -73,7 +91,26 @@ FoodItems = React.createClass({
 	return openPop
     },
 
+	openImg(){
+		this.setState({imgPop: true})
+	},
+
+	closeImg(){
+		this.setState({imgPop: false})
+	},
+
     render : function (){
+    	const imgAction = [
+    		<FlatButton
+    		onTouchTap={this.closeImg}
+    		label="CLOSE"
+    		/>
+    	];
+    	var foodTit = this.props.foodItem.foodName.toString()
+    	var expander = true;
+    	if (window.location.pathname == '/ItemView/'+this.props.foodItem._id){
+			expander = false;
+    	}
 	return(
 	    <div>
 	    	{ window.location.pathname == '/Messages' ?
@@ -89,52 +126,63 @@ FoodItems = React.createClass({
 			    actAsExpander={true}
 			    showExpandableButton={true}
 			/>
-			<CardMedia 
-			    expandable={true}
-			    overlay={
-					<CardTitle
-					    title={this.props.foodItem.foodDesc}
-					    subtitle={"Offered By: " + this.props.foodItem.username}
-					/>
-				}
-			>
-				<img src={this.props.foodItem.imgURL} />
-			</CardMedia>
-
-
 
 			  { this.data.currentUser == this.props.foodItem.username ?
 
 			    <CardActions expandable={true}>
-				<Link to={'/ItemView/'+this.props.foodItem._id}>
-				    <FlatButton label="Discuss" />
-				</Link>
-
-				<FlatButton
-				    label="Delete"
-				    primary={true}
-				    onTouchTap={this.deleteThisItem}
-				/>
+			    <div className="buttons-container">
+			    	<div className="buttons-item">
+			    		<ActionSchedule /> {this.calcTime(this.props.foodItem.createdAt)}
+			    	</div>
+			    	<div className="buttons-item">
+						<Link to={'/ItemView/'+this.props.foodItem._id}>
+						     <CommunicationChat />
+						</Link>
+					</div>
+					<div className="buttons-item">
+						<ActionDelete onTouchTap={this.deleteThisItem} />
+					</div>
+				</div>
 			    </CardActions>
 
 			    :
 
-			    <CardActions expandable={true}>
-				<FlatButton
-				    label="Claim"
-				    primary={true}
-				    onTouchTap={this.getOpenPop(this.props.foodItem)}
-				/>
-
-				<Link to={'/ItemView/'+this.props.foodItem._id}>
-				    <FlatButton label="Discuss" />
-				</Link>
+			    <CardActions expandable={expander}>
+			    	<div className="buttons-container">
+			    		<div className="buttons-item">
+			    			<ActionSchedule style="smallButton" /> {this.calcTime(this.props.foodItem.createdAt)}
+			    		</div>
+			    		<div className="buttons-item">
+							<ActionShoppingCart onTouchTap={this.getOpenPop(this.props.foodItem)}/>
+						</div>
+						<div className="buttons-item">
+							<ImagePhoto onTouchTap={this.openImg} />
+						</div>
+					{ window.location.pathname == '/ItemView/'+this.props.foodItem._id ?
+						""
+					:
+			    		<div className="buttons-item">
+							<Link to={'/ItemView/'+this.props.foodItem._id}>
+								<CommunicationChat />
+							</Link>
+						</div>
+					}
+					</div>
 			    </CardActions>
 
 			  }
 		    </Card>
 		</div>
 		}
+		<Dialog
+			title={foodTit}
+			modal={false}
+			actions={imgAction}
+			className="imgDia"
+			open={this.state.imgPop}
+		>
+			<img className="fillDiv" src={this.props.foodItem.imgURL} />
+		</Dialog>
 	    </div>
 	);
     }

@@ -95,15 +95,15 @@ const AppHeader = React.createClass({
    	router: React.PropTypes.object
     },
 
-    getInitialState(){
-	return{
-            messageUser:'',
-	    openLogout: false,
-	    openLogMess: false,
-	    openNav: false,
-	    filter : '',
-	}
-    },
+	getInitialState(){
+		return{
+			messageUser:'',
+			openLogout: false,
+			openLogMess: false,
+			openNav: false,
+			filter : '',
+		}
+	},
 
     getMeteorData: function(){
 	

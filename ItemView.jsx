@@ -8,6 +8,7 @@ import {
 } from 'material-ui';
 
 import TimeSince from './TimeSince.jsx';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 var prvUsr;
 
@@ -97,13 +98,18 @@ ItemView = React.createClass({
 
     render : function () {
 	return (
-	    <div>
+	    <div className="fillDiv">
+	    	<div className="itemVimg">
+	    		<img className="fillDiv" src={this.data.foodItem.imgURL} />
+	    	</div>
 	    	<div className="bottomPad">
 		 		<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem} calculatePortionsLeft={this.calculatePortionsLeft} />
 		 	</div>
+		 	<Scrollbars style={{ height: 350, position: 'relative' }}>
 		 	<div>
 				{this.renderComments()}
 			</div>
+			</Scrollbars>
 		 	<div style={{padding: "20px"}}>
 				<div>
 					<TextField hintText="You can leave a comment here" onKeyDown={this.keyDown} onChange={this.handleComment} value={this.state.commentText}/>
