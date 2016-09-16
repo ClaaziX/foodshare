@@ -82,7 +82,6 @@ const ItemCreation = React.createClass({
 	    
 	    //Once the image is uploaded this gets set with the query for the items
 	    imageURL:'{not:/*/}',
-
 	    //For the snackbar
 	    open:false,
 	}
@@ -123,10 +122,12 @@ const ItemCreation = React.createClass({
 	}
     },
 
-    onUpload(url){
+    onUpload(url, tinyURL){
 
-        this.setState({imageURL:url,
-	               completedIndex:1})
+        this.setState({
+        	imageURL:url,
+	        completedIndex:1
+	    })
 
     },
 

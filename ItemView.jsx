@@ -98,6 +98,9 @@ ItemView = React.createClass({
     render : function () {
 	return (
 	    <div>
+	    	<div className="itemVimg">
+	    		<img className="fillDiv" src={this.data.foodItem.imgURL} />
+	    	</div>
 	    	<div className="bottomPad">
 		 		<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem} calculatePortionsLeft={this.calculatePortionsLeft} />
 		 	</div>

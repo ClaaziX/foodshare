@@ -5,9 +5,7 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 const TimeSince = React.createClass({
 
     calcTime(date) {
-    	console.log(date)
 	    var seconds = Math.floor((new Date() - date) / 1000);
-	    console.log(seconds)
 	    var interval = Math.floor(seconds / 31536000);
 
 	    if (interval > 1) {
@@ -33,7 +31,6 @@ const TimeSince = React.createClass({
 	},
 
 		render: function () {
-			console.log(this.calcTime(this.props.time))
 			return(
 				<div>
 					{this.calcTime(this.props.time)}

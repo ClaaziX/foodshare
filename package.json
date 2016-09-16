@@ -4,7 +4,9 @@
   "description": "Foodsharing app",
   "main": "foodshare.jsx",
   "dependencies": {
+    "croppie": "^2.3.0",
     "formsy-material-ui": "^0.5.0",
+    "imagemagick": "^0.1.3",
     "lodash": "^4.15.0",
     "material-ui": "^0.15.1",
     "react": "^15.2.1",

@@ -12,13 +12,16 @@ multiple item add more obvious
 default times for collection
 descriptions?
 deafult pictures - ability to add item without picture
+if navigate away before submiting item is still there, needs pop up to confirm navigation and delete item if user wishes to quit
 
 ITEM VIEW
 enter does not add location
 description
 subititle as name not user
-
-
+claim does not work on individual item view
+needs formating as going
+ off page
+ 
 ITEM DISCUSSION
 username as well as profile picture
 
