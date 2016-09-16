@@ -6,22 +6,32 @@ Add Item text under icon and info dropdown
 about thingy
 user ratings?
 general intro
+info page/donate button
+report item
+complete prosess - messages your items blah blah
 
 ITEM ADD
+weight
 multiple item add more obvious
 default times for collection
 descriptions?
 deafult pictures - ability to add item without picture
+expiry date on item
+warning if upload9ing item outside of edinburgh
 
 ITEM VIEW
 enter does not add location
 description
 subititle as name not user
-
+link to map & center on item
+search no worky
+when was item added
+tabs always on top
+distance away
 
 ITEM DISCUSSION
 username as well as profile picture
-
+better links to it
 
 MAP VIEW
 search box size
@@ -43,3 +53,6 @@ enter on text input to submit
 email type split view for messages
 deafult message when accepting claim (pic, info of what you have claimed)
 subtitle = last messages
+close window when message deleted
+buttons
+only owner of items can complete?
