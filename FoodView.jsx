@@ -85,6 +85,25 @@ getMeteorData() {
 	this.setState({claimPop: true});
     },
 
+    genActions : function (item) {
+		actions = [     
+		    <ClaimControl 
+			id={item._id}
+			claims={item.claims}
+			portions={item.portionNo}
+			username={this.data.currentUser.username}
+			portionsLeft={item.portionNo - this.calculatePortionsLeft(item)}
+			accept={false}
+			finishIt={this.handleClose}
+		    />,
+		    <FlatButton
+			label="Cancel"
+			secondary={true}
+			onTouchTap={this.handleClose}
+		    />
+		];
+    },
+
     calculatePortionsLeft(item){
 	var x = 0;
 	var claims = item.claims;
@@ -95,29 +114,6 @@ getMeteorData() {
 	} return x
     },
 
-    genActions : function (item) {
-	actions = [     
-	    <ClaimControl 
-		id={item._id}
-		claims={item.claims}
-		portions={item.portionNo}
-		username={this.data.currentUser.username}
-		portionsLeft={item.portionNo - this.calculatePortionsLeft(item)}
-		accept={false}
-		finishIt={this.handleClose}
-	    />,
-	    <FlatButton
-		label="Cancel"
-		secondary={true}
-		onTouchTap={this.handleClose}
-	    />
-	];
-    },
-
-
-
-
-    
     renderItems(){
 
 	  if(this.props.renderer=='grid'){

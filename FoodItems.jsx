@@ -183,6 +183,7 @@ FoodItems = React.createClass({
 		>
 			<img className="fillDiv" src={this.props.foodItem.imgURL} />
 		</Dialog>
+		
 	    </div>
 	);
     }

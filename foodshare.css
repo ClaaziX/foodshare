@@ -14,8 +14,8 @@ body
 }
 
 .itemVimg{
-  width: 90%;
-  height: 200px;
+  max-height: 200px;
+  text-align: center;
 }
 
 .fillDiv{
@@ -39,6 +39,10 @@ body
 
 .leftcolumn{
   max-width: 75%;
+}
+
+.bottomPad{
+  padding-bottom: 10px;
 }
 
 .gm-style-iw {

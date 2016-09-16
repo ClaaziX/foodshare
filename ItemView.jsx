@@ -4,13 +4,24 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import {
     TextField,
-    RaisedButton
+    RaisedButton,
+    FlatButton,
+    Dialog,
+    Snackbar
 } from 'material-ui';
 
 import TimeSince from './TimeSince.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 var prvUsr;
+var actions = [];
+const styles = {
+  claim: {
+	width: '100%',
+	maxWidth: 'none',
+    },
+
+};
 
 ItemView = React.createClass({
     
@@ -19,15 +30,60 @@ ItemView = React.createClass({
     getMeteorData() {
 
 	return {
-	    foodItem: (FoodItemsC.find({_id: this.props.params.itemID}).fetch()[0])
-	};
-	
+		foodItem: (FoodItemsC.find({_id: this.props.params.itemID}).fetch()[0])};
     },
 
-    getInitialState(){
-		return{
+    getInitialState() {
+		return {
+		    openClaim: false,
+		    alreadyClaimed: false,
+		    claimPop: false,
+		    actions: [],
 		    commentText:"",
 		}
+    },
+
+    genClaimMess : function () {
+	if (this.state.alreadyClaimed){
+	    return "You've already claimed that item!"
+	}else{
+	    return "Item claimed! Please wait for a response."
+	}
+    },
+
+    handleRequestClose : function () {
+	this.setState({claimPop: false});
+    },
+
+    handleOpen : function (item) {
+    	console.log("handleOpen called..")
+		this.genActions(item);
+		this.setState({openClaim: true});
+    },
+
+    handleClose : function (alreadyClaimed) {
+	this.setState({openClaim: false});
+	this.setState({alreadyClaimed: alreadyClaimed});
+	this.setState({claimPop: true});
+    },
+
+    genActions : function (item) {
+		actions = [     
+		    <ClaimControl 
+			id={item._id}
+			claims={item.claims}
+			portions={item.portionNo}
+			username={Meteor.user().username}
+			portionsLeft={item.portionNo - this.calculatePortionsLeft(item)}
+			accept={false}
+			finishIt={this.handleClose}
+		    />,
+		    <FlatButton
+			label="Cancel"
+			secondary={true}
+			onTouchTap={this.handleClose}
+		    />
+		];
     },
 
 
@@ -67,17 +123,19 @@ ItemView = React.createClass({
 	    },
 
 	addComment(event) {
-	    if (event){
-			event.preventDefault();
+		if (this.state.commentText !== ""){
+		    if (event){
+				event.preventDefault();
+			}
+			FoodItemsC.update({_id: this.data.foodItem._id},{$push : {
+			    comments:{
+				username: Meteor.user().username,
+				comment: this.state.commentText,
+				createdAt: new Date()
+			    }
+			}});
+			this.setState({commentText:""});
 		}
-		FoodItemsC.update({_id: this.data.foodItem._id},{$push : {
-		    comments:{
-			username: Meteor.user().username,
-			comment: this.state.commentText,
-			createdAt: new Date()
-		    }
-		}});
-		this.setState({commentText:null});
     },
 
     keyDown (value) {
@@ -99,17 +157,14 @@ ItemView = React.createClass({
     render : function () {
 	return (
 	    <div className="fillDiv">
-	    	<div className="itemVimg">
-	    		<img className="fillDiv" src={this.data.foodItem.imgURL} />
-	    	</div>
 	    	<div className="bottomPad">
-		 		<FoodItems key={this.data.foodItem._id} foodItem={this.data.foodItem} calculatePortionsLeft={this.calculatePortionsLeft} />
+		 		<FoodItems
+		 			key={this.data.foodItem._id}
+		 			foodItem={this.data.foodItem}
+		 			calculatePortionsLeft={this.calculatePortionsLeft}
+		 			handlePop={this.handleOpen}
+		 		/>
 		 	</div>
-		 	<Scrollbars style={{ height: 350, position: 'relative' }}>
-		 	<div>
-				{this.renderComments()}
-			</div>
-			</Scrollbars>
 		 	<div style={{padding: "20px"}}>
 				<div>
 					<TextField hintText="You can leave a comment here" onKeyDown={this.keyDown} onChange={this.handleComment} value={this.state.commentText}/>
@@ -118,6 +173,30 @@ ItemView = React.createClass({
 					<RaisedButton label="Submit" primary={true} onTouchTap={this.addComment} />
 				</div>
 			</div>
+		 	<Scrollbars style={{ height: 200, position: 'relative' }}>
+		 	<div style={{border:"2px"}}>
+				{this.renderComments()}
+			</div>
+			</Scrollbars>
+
+		<Snackbar
+	     	open={this.state.claimPop}
+	     	message={this.genClaimMess()}
+	     	autoHideDuration={3600}
+	     	action="Close"
+	     	onTouchTap={this.handleRequestClose}
+	     	onRequestClose={this.handleRequestClose}
+	     />
+	     <Dialog
+	      	title="Claim!"
+	      	actions={actions}
+	      	modal={true}
+	      	contentStyle={styles.claim}
+	      	open={this.state.openClaim}
+	      >
+	      	How many portions do you wish to claim?
+	     </Dialog>
+
 	    </div>
 	);
     }
