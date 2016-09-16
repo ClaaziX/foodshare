@@ -15,12 +15,10 @@ multiple item add more obvious
 default times for collection
 descriptions?
 deafult pictures - ability to add item without picture
-<<<<<<< HEAD
 expiry date on item
 warning if upload9ing item outside of edinburgh
-=======
 if navigate away before submiting item is still there, needs pop up to confirm navigation and delete item if user wishes to quit
->>>>>>> infoWindow
+photo manip to make avatar (circular with green border)
 
 ITEM VIEW
 enter does not add location
@@ -39,6 +37,7 @@ username as well as profile picture
 better links to it
 
 MAP VIEW
+better pins!
 smaller pics/grouping
 
 YOUR ITEMS
