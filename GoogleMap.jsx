@@ -95,13 +95,13 @@ var seconds = Math.floor((new Date() - date) / 1000);
         var content = '<div id="iw-container">' +
                   '<div class="iw-title">' + foodItem.foodName.toString() + '</div>' +
                   '<div class="iw-content">' +
-                    '<div className="buttons-container">' +
-                      '<div className="rightbutton">'
-                         + "Uploadedd " + tSince + ' ago<br/>' +
+                    '<div className="iwTop-container">' +
+                      '<div className="leftcolumn">'
+                         + '<img className="smallButton" style="float:left" src="/imgs/icons/clock.svg" />' + 
+                         tSince + 
+                         '<img id="iconLinkItem" style="float:right" src="/imgs/icons/messages.svg" />' +
+                         '<br/>' +
                         'by ' + foodItem.username.toString() +
-                      '</div>' +
-                      '<div id="iconLinkItem" className="rightbutton">' +
-                        '<img src="/imgs/icons/messages.svg" />' +
                       '</div>' +
                     '</div>' +
                     imgsrc +
@@ -128,12 +128,14 @@ var seconds = Math.floor((new Date() - date) / 1000);
             });
         });
         var foodId = foodItem._id;
-        var el = ReactDOM.findDOMNode(this);
-        var iwMain = el.getElementsByClassName("gm-style-iw")[0];
         google.maps.event.addListener(infowindow, 'domready', function() {
           that.genDOMmanip();
-          el.getElementById("iconLinkItem").addEventListener("click", that.linkToItem(foodId));
-          el.getElementById("imgLinkItem").addEventListener("click", that.linkToItem(foodId));
+          document.getElementById("iconLinkItem").addEventListener("click", function(){
+              that.linkToItem(foodId);
+          });
+          document.getElementById("imgLinkItem").addEventListener("click", function(){
+              that.linkToItem(foodId);
+          });
         });
         return (
           infowindow.setContent(content), 
@@ -143,6 +145,7 @@ var seconds = Math.floor((new Date() - date) / 1000);
   },
 
   linkToItem(id) {
+    console.log("linkToItem called...")
     var path = '/ItemView/'+id;
     browserHistory.push(path);
   },

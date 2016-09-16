@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
 import ActionList from 'material-ui/svg-icons/action/list';
+import TimeSince from './TimeSince.jsx';
 
 import {
     FlatButton,
@@ -13,6 +14,8 @@ import {
     GridTile,
     Styles
 } from 'material-ui';
+
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
 
 const styles = {
     root: {
@@ -45,18 +48,25 @@ const GridPicView = React.createClass({
 	};
     },      
 
+    calcTime: function(date){
+    	return(
+      		<TimeSince time={date} />
+    	);
+  	},
+
+
     generatorFunction(foodItem){
-
-	return(
-	    <GridTile
-		key={foodItem._id}
-		onTouchTap = {this.props.handleChange(foodItem.imgURL)}
-		title={<span>Offered by: <b>{foodItem.username}</b></span>}>
-		    <img src={foodItem.imgURL} />
-	    </GridTile>
-	)
-
-
+	    var timeS = this.calcTime(foodItem.createdAt);
+		return(
+		    <GridTile
+			key={foodItem._id}
+			onTouchTap={this.props.handleChange(foodItem.imgURL)}
+			title={foodItem.foodName}
+			subtitle={timeS}
+			>
+			    <img src={foodItem.imgURL} />
+		    </GridTile>
+		)
     },
 
 

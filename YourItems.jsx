@@ -27,7 +27,7 @@ import {
 import ActionSchedule from 'material-ui/svg-icons/action/schedule';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
-import CommunicationForum from 'material-ui/svg-icons/communication/forum';
+import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import ImagePhoto from 'material-ui/svg-icons/image/photo';
 
 import TimeSince from './TimeSince.jsx';
@@ -126,7 +126,7 @@ const YourItems = React.createClass({
 									</div>
 									<div className="buttons-item">
 										<Link to={'/ItemView/'+item._id}>
-											<CommunicationForum />
+											<CommunicationChat />
 										</Link>
 									</div>
 								</div>

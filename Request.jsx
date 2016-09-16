@@ -27,7 +27,7 @@ import {
 
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
 import ContentBlock from 'material-ui/svg-icons/content/block';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 
 const claimContentStyle = {
     width: '100%',
@@ -60,36 +60,36 @@ Request = React.createClass({
 			      { claim.accepted == 0 ?
 				<div>
 				    <ListItem
-                                        primaryText={claim.username}
-                                        secondaryText={"Has requested " + claim.portions + " portions"}
-                                        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
-                                        primaryTogglesNestedList={true}
-                                        nestedItems={[
-                                            <ListItem
-				             				 	key={1}
-				             				 	primaryText="Accept"
-				             				 	leftIcon={<ActionCheckCircle color='Green'/>}
-				             				 	onTouchTap={this.getAcceptHandler(claim)}
-                                                                                           />,
-                                            <ListItem
-				             				 	key={2}
-				             				 	primaryText="Reject"
-				             				 	leftIcon={<ContentBlock color='Red'/>}
-				             				 	onTouchTap={this.getRejectHandler(claim)}
-                                                                                           />,
-                                        ]}
-                                    />
+                        primaryText={claim.username}
+                        secondaryText={"Has requested " + claim.portions + " portions"}
+                        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
+                        primaryTogglesNestedList={true}
+                        nestedItems={[
+                            <ListItem
+             				 	key={1}
+             				 	primaryText="Accept"
+             				 	leftIcon={<ActionCheckCircle color='Green'/>}
+             				 	onTouchTap={this.getAcceptHandler(claim)}
+                            />,
+                            <ListItem
+             				 	key={2}
+             				 	primaryText="Reject"
+             				 	leftIcon={<ContentBlock color='Red'/>}
+             				 	onTouchTap={this.getRejectHandler(claim)}
+                            />,
+                        ]}
+                    />
 				    <Divider />
 				</div>
 				:
 				<div>
 				    <ListItem
-                                        primaryText={claim.username}
-                                        secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + " requested portions"}
-                                        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
-                                        rightIcon={<CommunicationChatBubble color='Grey' />}
-                                        onTouchTap={this.getChatHandler(claim)}
-                                    />
+                        primaryText={claim.username}
+                        secondaryText={"You have accepted " + claim.accepted + " out of " + claim.portions + " requested portions"}
+                        leftAvatar={<Avatar src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />}
+                        rightIcon={<CommunicationChat />}
+                        onTouchTap={this.getChatHandler(claim)}
+                    />
 				    <Divider />
 				</div>
 			      }
