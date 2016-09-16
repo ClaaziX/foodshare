@@ -26,7 +26,7 @@ NumberOptions = React.createClass({
     },
 
     handleChange : function (e, index, value){
-	this.setState({values: value});
+		this.setState({values: value});
 	this.props.optionChange(value);
     },
 

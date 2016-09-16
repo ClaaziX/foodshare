@@ -20,15 +20,23 @@ import {
     Tab,
     GridList,
     GridTile,
-    IconButton
+    IconButton,
+    RaisedButton
 } from 'material-ui';
 
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
+import CommunicationForum from 'material-ui/svg-icons/communication/forum';
+import ImagePhoto from 'material-ui/svg-icons/image/photo';
+
+import TimeSince from './TimeSince.jsx';
 
 const YourItems = React.createClass({
 
     deleteThisItem(item) {
 		handleDelete = function(event) {
-			FoodItemsC.remove(item._id);
+			FoodItemsC.remove(item);
 		}
 		return handleDelete
     },
@@ -42,6 +50,16 @@ const YourItems = React.createClass({
 		    }
 		} return x
     },
+
+    getInitialState(){
+		return{
+			imgPop: false,
+			foodTit: "",
+			imgURL: "",
+			deletePop: false,
+			itemId: ""
+		}
+	},
 
     genPrtnImg: function (item) {
 		var pCla = this.calculatePortionsLeft(item);
@@ -58,12 +76,24 @@ const YourItems = React.createClass({
     	return <div>{x}{z}({pNum})</div>;
     },
 
+    calcTime: function(date){
+    	return(
+      		<TimeSince time={date} />
+    	);
+  	},
+
+
     generateItems: function () {
     	const noItemTxt = "You haven't posted any items yet... Get sharing!";
-
+    	const imgAction = [
+    		<FlatButton
+    		onTouchTap={this.closeImg}
+    		label="CLOSE"
+    		/>
+    	];
 		if(this.props.foodItems){
 			return this.props.foodItems.map((item) => {
-
+				var foodTit = item.foodName.toString()
 				return (
 			 		<div>
 						<Card>
@@ -74,18 +104,6 @@ const YourItems = React.createClass({
 							    actAsExpander={true}
 							    showExpandableButton={true}
 							/>
-							<CardMedia 
-							    expandable={true}
-							    overlay={
-									<CardTitle
-									    title={item.foodDesc}
-									    subtitle={"Offered By: " + item.username}
-									/>
-								}
-							>
-								<img src={item.imgURL} />
-							</CardMedia>
-
 							{ item.claims ?
 								<CardText>
 									<Request openMessages={this.props.openMessages} claims={item.claims} />
@@ -95,19 +113,27 @@ const YourItems = React.createClass({
 									<p>No one has claimed this item yet</p>
 								</CardText>
 							}
-
-							<CardActions expandable={true}>
-								<Link to={'/ItemView/'+item._id}>
-								    <FlatButton label="Discuss" />
-								</Link>
-								<FlatButton
-								    label="Delete"
-								    primary={true}
-								    onTouchTap={this.deleteThisItem(item)}
-								/>
+							<CardActions expandable={false}>
+								<div className="buttons-container">
+									<div className="buttons-item">
+										<ActionSchedule style="smallButton" /> {this.calcTime(item.createdAt)}
+									</div>
+									<div className="buttons-item">
+										<ImagePhoto onTouchTap={this.openImg(item)} />
+									</div>
+									<div className="buttons-item">
+										<ActionDelete onTouchTap={this.openDelete(item)} />
+									</div>
+									<div className="buttons-item">
+										<Link to={'/ItemView/'+item._id}>
+											<CommunicationForum />
+										</Link>
+									</div>
+								</div>
 							</CardActions>
 						</Card>
 						<div style={{height: "16px"}}></div>
+
 					</div>
 				);
 			});
@@ -123,11 +149,80 @@ const YourItems = React.createClass({
 		}
 	},
 
+	openDelete(item){
+		var that = this;
+		handleOpenImg = function(event){
+			that.setState({
+				deletePop: true,
+				itemId: item._id
+			})
+		}
+		return handleOpenImg
+	},
+
+	openImg(item){
+		var that = this;
+		handleOpenImg = function(event){
+			that.setState({
+				imgPop: true,
+				foodTit: item.foodName.toString(),
+				imgURL: item.imgURL,
+			})
+		}
+		return handleOpenImg
+	},
+
+	closeImg(){
+		this.setState({imgPop: false})
+	},
+
+	closeDelete(){
+		this.setState({deletePop: false})
+	},
+
     render(){
+    	const imgAction = [
+    		<FlatButton
+    		onTouchTap={this.closeImg}
+    		label="CLOSE"
+    		/>
+    	];
+    	const deleteAction = [
+    	   	<RaisedButton
+	    		onTouchTap={this.deleteThisItem}
+	    		label="DELETE"
+	    		style={{'margin-right': '8px'}}
+    		/>,
+    		<FlatButton
+	    		onTouchTap={this.closeDelete}
+	    		label="CLOSE"
+    		/>
+    	];
 		return(
-			<div style={{width: "345px"}}>
-		       {this.generateItems()}
-		    </div>
+			<div>
+				<div style={{width: "345px"}}>
+					{this.generateItems()}
+				</div>
+				<div>
+				<Dialog
+					title={this.state.foodTit}
+					modal={false}
+					actions={imgAction}
+					className="imgDia"
+					open={this.state.imgPop}
+					>
+						<img className="fillDiv" src={this.state.imgURL} />
+					</Dialog>
+									<Dialog
+					title={this.state.foodTit}
+					modal={true}
+					actions={deleteAction}
+					open={this.state.deletePop}
+					>
+						Are you sure you want to delete this item?
+					</Dialog>
+				</div>
+			</div>
 		)
     }
 });

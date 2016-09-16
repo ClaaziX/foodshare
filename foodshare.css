@@ -148,6 +148,18 @@ body
     align-self: auto;
     }
 
+.buttons-item:nth-child(4) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    }
+
     .rightbutton-item:nth-child(1) {
     -webkit-order: 0;
     -ms-flex-order: 0;

@@ -107,6 +107,10 @@ FoodItems = React.createClass({
     		/>
     	];
     	var foodTit = this.props.foodItem.foodName.toString()
+    	var expander = true;
+    	if (window.location.pathname == '/ItemView/'+this.props.foodItem._id){
+			expander = false;
+    	}
 	return(
 	    <div>
 	    	{ window.location.pathname == '/Messages' ?
@@ -143,7 +147,7 @@ FoodItems = React.createClass({
 
 			    :
 
-			    <CardActions expandable={true}>
+			    <CardActions expandable={expander}>
 			    	<div className="buttons-container">
 			    		<div className="buttons-item">
 			    			<ActionSchedule style="smallButton" /> {this.calcTime(this.props.foodItem.createdAt)}
@@ -151,10 +155,11 @@ FoodItems = React.createClass({
 			    		<div className="buttons-item">
 							<ActionShoppingCart onTouchTap={this.getOpenPop(this.props.foodItem)}/>
 						</div>
-					{ window.location.pathname == '/ItemView/'+this.props.foodItem._id ?
 						<div className="buttons-item">
 							<ImagePhoto onTouchTap={this.openImg} />
 						</div>
+					{ window.location.pathname == '/ItemView/'+this.props.foodItem._id ?
+						""
 					:
 			    		<div className="buttons-item">
 							<Link to={'/ItemView/'+this.props.foodItem._id}>

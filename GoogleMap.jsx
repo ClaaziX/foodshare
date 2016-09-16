@@ -85,7 +85,7 @@ var seconds = Math.floor((new Date() - date) / 1000);
           });
 
         var imgURL = foodItem.imgURL;
-        var imgsrc = "<IMG id='mapImg' width='100%' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
+        var imgsrc = "<IMG id='imgLinkItem' width='100%' BORDER='0' ALIGN='Left' SRC='" + imgURL + "' />";
         var tSince = this.calcTime(foodItem.createdAt);
         var foodDesc = foodItem.foodDesc;
         if (foodDesc == undefined){
@@ -100,8 +100,8 @@ var seconds = Math.floor((new Date() - date) / 1000);
                          + "Uploadedd " + tSince + ' ago<br/>' +
                         'by ' + foodItem.username.toString() +
                       '</div>' +
-                      '<div className="rightbutton">' +
-                        '<a href src="/ItemView/' + foodItem._id.toString() + '"><img src="/imgs/icons/messages.svg" /></a>' +
+                      '<div id="iconLinkItem" className="rightbutton">' +
+                        '<img src="/imgs/icons/messages.svg" />' +
                       '</div>' +
                     '</div>' +
                     imgsrc +
@@ -127,15 +127,24 @@ var seconds = Math.floor((new Date() - date) / 1000);
                 marker.open = false;
             });
         });
-
+        var foodId = foodItem._id;
+        var el = ReactDOM.findDOMNode(this);
+        var iwMain = el.getElementsByClassName("gm-style-iw")[0];
         google.maps.event.addListener(infowindow, 'domready', function() {
           that.genDOMmanip();
+          el.getElementById("iconLinkItem").addEventListener("click", that.linkToItem(foodId));
+          el.getElementById("imgLinkItem").addEventListener("click", that.linkToItem(foodId));
         });
         return (
           infowindow.setContent(content), 
         );
       });
     }else{console.log("error: props.markers == " + this.props.markers)}
+  },
+
+  linkToItem(id) {
+    var path = '/ItemView/'+id;
+    browserHistory.push(path);
   },
 
   closeAllInfoWindows() {
