@@ -33,12 +33,10 @@ body
 }
 
 .leftcolumn, .rightcolumn {
+  float: left;
+  padding: 5px;
+  vertical-align: center;
 
-    float: left;
-}
-
-.leftcolumn{
-  max-width: 75%;
 }
 
 .bottomPad{

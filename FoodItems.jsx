@@ -108,9 +108,8 @@ FoodItems = React.createClass({
     	];
     	var foodTit = this.props.foodItem.foodName.toString()
     	var expander = true;
-    	if (window.location.pathname == '/ItemView/'+this.props.foodItem._id){
-			expander = false;
-    	}
+    	var pathIV = window.location.pathname.includes("ItemView");
+    	if (pathIV){expander = false;}
 	return(
 	    <div>
 	    	{ window.location.pathname == '/Messages' ?
@@ -124,7 +123,7 @@ FoodItems = React.createClass({
 			    subtitle={this.genPrtnImg()}
 			    avatar={this.props.foodItem.imgURL}
 			    actAsExpander={true}
-			    showExpandableButton={true}
+			    showExpandableButton={expander}
 			/>
 
 			  { this.data.currentUser == this.props.foodItem.username ?

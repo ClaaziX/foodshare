@@ -279,6 +279,7 @@ const AppHeader = React.createClass({
 					    filter={AutoComplete.caseInsensitiveFilter}
 					    dataSource={searchNames}
 					    onUpdateInput={this.filterList}
+					    style={{color: 'white'}}
 					/>
 		  		    </ToolbarGroup>
 		  		    <ToolbarGroup lastChild={true}>

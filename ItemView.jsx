@@ -7,11 +7,25 @@ import {
     RaisedButton,
     FlatButton,
     Dialog,
-    Snackbar
+    Snackbar,
+    IconButton,
+    Paper
 } from 'material-ui';
 
 import TimeSince from './TimeSince.jsx';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ContentSend from 'material-ui/svg-icons/content/send';
+
+import { 
+	lightGreenA200,
+	lightGreen600,
+	green900,
+	blueGrey300,
+	blueGrey900,
+	blueGrey600,
+	grey50
+} from 'material-ui/styles/colors';
+
 
 var prvUsr;
 var actions = [];
@@ -20,7 +34,21 @@ const styles = {
 	width: '100%',
 	maxWidth: 'none',
     },
-
+  smallIcon: {
+    width: 25,
+    height: 25,
+  },
+  small: {
+    width: 50,
+    height: 50,
+    padding: 8,
+  },
+  paper:  {
+	  padding: '0px 0px 0px 10px',
+	  textAlign: 'center',
+	  display: 'inline-block',
+	  width: '100%'
+	}
 };
 
 ItemView = React.createClass({
@@ -157,7 +185,7 @@ ItemView = React.createClass({
     render : function () {
 	return (
 	    <div className="fillDiv">
-	    	<div className="bottomPad">
+	    	<div>
 		 		<FoodItems
 		 			key={this.data.foodItem._id}
 		 			foodItem={this.data.foodItem}
@@ -165,16 +193,24 @@ ItemView = React.createClass({
 		 			handlePop={this.handleOpen}
 		 		/>
 		 	</div>
-		 	<div style={{padding: "20px"}}>
-				<div>
-					<TextField hintText="You can leave a comment here" onKeyDown={this.keyDown} onChange={this.handleComment} value={this.state.commentText}/>
-				</div>
-				<div>
-					<RaisedButton label="Submit" primary={true} onTouchTap={this.addComment} />
-				</div>
+		 	<div>
+			 	<Paper style={styles.paper} zDepth={5}>
+					<div className="leftcolumn">
+						<TextField style={{color: 'white'}} hintText="You can leave a comment here" onKeyDown={this.keyDown} onChange={this.handleComment} value={this.state.commentText}/>
+					</div>
+					<div className="rightcolumn">
+					    <IconButton
+					      iconStyle={styles.smallIcon}
+					      style={styles.small}
+					      onTouchTap={this.addComment}
+					    >
+					      <ContentSend color={lightGreenA200} />
+					    </IconButton>
+					</div>
+				</Paper>
 			</div>
-		 	<Scrollbars style={{ height: 200, position: 'relative' }}>
-		 	<div style={{border:"2px"}}>
+		 	<Scrollbars style={{ height: 285, position: 'relative' }}>
+		 	<div>
 				{this.renderComments()}
 			</div>
 			</Scrollbars>
