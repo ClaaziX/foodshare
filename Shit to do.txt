@@ -1,50 +1,52 @@
 GENERAL
-notifications for everything! (messages
+**notifications for everything!
+**complete prosess - messages your items blah blah
+*report item
+bttom naviagtion
 increase portions size
 Add Item text under icon and info dropdown
 about thingy
-user ratings?
 general intro
-info page/donate button
-report item
-complete prosess - messages your items blah blah
+
+SEARCH
+*case sensitive search
+*don't re-render if db size is equivalent to exisiting
+*delete search text when navigating away
+*info page/donate button
 
 ITEM ADD
-weight
-multiple item add more obvious
-default times for collection
-descriptions?
+**store in temp array, read off that - then submit to database at end
+**weight (total per upload)
+*multiple item add more obvious
+*description (per upload)
 deafult pictures - ability to add item without picture
 expiry date on item
-warning if upload9ing item outside of edinburgh
-if navigate away before submiting item is still there, needs pop up to confirm navigation and delete item if user wishes to quit
+warning if uploading item outside of edinburgh
 photo manip to make avatar (circular with green border)
+default times for collection
 
 ITEM VIEW
-enter does not add location
-description
-link to map & center on item
-search no worky
-tabs always on top
+**link to map & center on item
+*tabs always on top
 distance away
-claim does not work on individual item view
-needs formating as going off page
 url direct to sinle item view does not load, need redirect!
-make comment submit a bit smaller
  
 ITEM DISCUSSION
+avatar pic not appearing on first comment (needs more testing)
 username as well as profile picture
-better links to it
 
 MAP VIEW
-better pins!
-smaller pics/grouping
+*grouping
+*add random component to map pin drop
 
 YOUR ITEMS
-overview of what you've claimed
-can accept more claims than i there are portions
+**can accept more claims than there are portions
+**delete button no worky 
+*overview of what you've claimed
+*Accept all button
+*open chat with dickhead wrong icon
 
-LOGIN/REGISTER
+***********LOGIN/REGISTER
 everything
 just...all the things
 make it all fit on one page

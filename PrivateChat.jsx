@@ -58,6 +58,9 @@ const PrivateChat = React.createClass({
 		    return this.data.privateMessages.map((message) => {
 		    	var same = false
 		    	var currUsr = message.username;
+		    	if (!prvUsr){
+		    		same = true;
+		    	}
 		    	if (prvUsr){
 		    		if (prvUsr == currUsr){
 		    			same = true;
