@@ -1,18 +1,26 @@
 GENERAL
 **notifications for everything!
 **complete prosess - messages your items blah blah
+*Title is collection of names!
 *report item
 bttom naviagtion
 increase portions size
 Add Item text under icon and info dropdown
 about thingy
 general intro
+firefox testing!
+wwirte portions next to the wee number!
+claim error message when all potions gone
+claim all items in upload
+
 
 SEARCH
 *case sensitive search
 *don't re-render if db size is equivalent to exisiting
 *delete search text when navigating away
 *info page/donate button
+map function
+auto complete list doesnt work!
 
 ITEM ADD
 **store in temp array, read off that - then submit to database at end
@@ -24,12 +32,16 @@ expiry date on item
 warning if uploading item outside of edinburgh
 photo manip to make avatar (circular with green border)
 default times for collection
+claim number, one click for one, or wee error message
+multiple picture upload?
+
 
 ITEM VIEW
 **link to map & center on item
 *tabs always on top
 distance away
 url direct to sinle item view does not load, need redirect!
+avatar pic link to popup pic
  
 ITEM DISCUSSION
 avatar pic not appearing on first comment (needs more testing)
@@ -38,6 +50,9 @@ username as well as profile picture
 MAP VIEW
 *grouping
 *add random component to map pin drop
+ask a question = link
+(could)
+Top search bar should filter items
 
 YOUR ITEMS
 **can accept more claims than there are portions
@@ -45,6 +60,7 @@ YOUR ITEMS
 *overview of what you've claimed
 *Accept all button
 *open chat with dickhead wrong icon
+bit wider than it should be
 
 ***********LOGIN/REGISTER
 everything
@@ -53,6 +69,8 @@ make it all fit on one page
 error messages in snackbar
 
 MESSAGES
+owner of items should be able 
+wee message if no messages
 enter on text input to submit
 email type split view for messages
 deafult message when accepting claim (pic, info of what you have claimed)
@@ -60,3 +78,5 @@ subtitle = last messages
 close window when message deleted
 buttons
 only owner of items can complete?
+
+History?
