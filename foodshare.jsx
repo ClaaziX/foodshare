@@ -145,71 +145,84 @@ if (Meteor.isServer) {
     });
     
     //Reset all the databases before we add the test data in.
+    
+    //Remove Users
+    Meteor.users.remove({});
+    
+    //Remove Fooditems
+    FoodItemsC.remove({});
+    
+    //Remove privateChat
+    PrivateChatC.remove({});
+    
+    //Create user accounts
+    var numUsers = 5;
+    for(i = 0; i < numUsers; i++){
+        var fN = faker.name.firstName();
+        var lN = faker.name.lastName();
+        
+     	Accounts.createUser({username:fN+lN, email: fN + '.' + lN + '@mail.com', password:'password'});
+    }
+    
+    //Create food items by random users
+    var items = [{image:'http://asset1.cxnmarksandspencer.com/is/image/mands/bbaeea693f4c2c6b9eaa0d7099c91b46dee181b5?$editorial_430x320$',imageContains:[{foodName:'Sushi',foodDesc:'',},{foodName:'Pizza Rolls',foodDesc:'',},{foodName:'',foodDesc:'Mini Pork Pies',},{foodName:'Pastry Parcels',foodDesc:'',},{foodName:'Kebab',foodDesc:'',}]},
+                 {image:'http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg',imageContains:[{foodName:'Carrots',foodDesc:'',},{foodName:'Peppers',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Broccoli',foodDesc:'',},{foodName:'Aubergine',foodDesc:'',},{foodName:'Lemons',foodDesc:'',},{foodName:'Beans',foodDesc:'',},{foodName:'Strawberries',foodDesc:'',}],location:{lat:55.948189, lng:-3.188353}},
+                 {image:'http://www3.imperial.ac.uk/newseventsimages?p_image_type=mainnews2012&p_image_id=33911',imageContains:[{foodName:'Doughnuts',foodDesc:'',}]},{image:'http://blog.oxforddictionaries.com/wp-content/uploads/food-quiz.jpg',imageContains:[{foodName:'Cakes',foodDesc:'',}],location:{lat:55.951361, lng:-3.203630}},
+                 {image:'http://barefootrunninguniversity.com/wp-content/uploads/2013/05/groceries.jpg',imageContains:[{foodName:'Milk',foodDesc:'',},{foodName:'Bread',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Oranges',foodDesc:'',},{foodName:'Celery',foodDesc:'',}],location:{lat:55.942037, lng:-3.196249}},
+                 {image:'http://www.tesco.com/groceries/MarketingContent/Sites/Retail/superstore/mercury/P/i/home/freshness/2016/wk29/stamp2ab-1.jpg',imageContains:[{foodName:'Bolognese Sauce',foodDesc:'',},{foodName:'Beef Mince',foodDesc:'',},{foodName:'Onions',foodDesc:'',},{foodName:'Grated Cheese',foodDesc:'',},{foodName:'Spaghetti',foodDesc:'',}]},
+                  {image:'https://secure.img2.wfrcdn.com/lf/maxsquare/hash/621/13143451/1/Melissa-and-Doug-Lets-Play-House%252521-Fridge-Groceries-4316.jpg',imageContains:[{foodName:'Butter',foodDesc:'',},{foodName:'Cheese',foodDesc:'',},{foodName:'Milk',foodDesc:'',},{foodName:'Orange Juice',foodDesc:'',},{foodName:'Meat Slices',foodDesc:'',},{foodName:'Yoghurt',foodDesc:'',},{foodName:'Parmesan Cheese',foodDesc:'',}],location:{lat:55.967120, lng:-3.188009}}  ];
+    
+    var numPortions = 10;
+    var numFoodItems = 10;
+    for(var item = 0; item<items.length; item++ ){
+
+        currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)]
+        for(var food=0; food < items[item].imageContains.length; food++){
+     	    FoodItemsC.insert({
+      	        foodName: items[item].imageContains[food].foodName,
+       	        foodDesc: items[item].imageContains[food].foodDesc,
+       	        portionNo: Math.floor(Math.random()*numPortions)+1,
+       	        portionsClaimed: 0,
+       	        imgURL: items[item].image,
+                imgThumbnail:'',
+       	        owner: currUser._id,
+       	        username: currUser.username,
+       	        createdAt: new Date(),
+ 	        location: items[item].location
+       	    });
+        }
+    }
+
     /* 
-     *     //Remove Users
-     *     Meteor.users.remove({});
+     * //Create some claims
+     * var numClaims = 30;
      * 
-     *     //Remove Fooditems
-     *     FoodItemsC.remove({});
      * 
-     *     //Remove privateChat
-     *     PrivateChatC.remove({});
-     * 
-     *     //Create user accounts
-     *     var numUsers = 5;
-     *     for(i = 0; i < numUsers; i++){
-     *     	  Accounts.createUser({username:'tom'+i,email:'tom'+i+'@mail.com', password:'password'});
-     *     }
-     * 
-     *     //Create food items by random users
-     *     images = ["http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg","http://ichef.bbci.co.uk/news/660/cpsprodpb/1325A/production/_88762487_junk_food.jpg","http://www.foodmanufacture.co.uk/var/plain_site/storage/images/publications/food-beverage-nutrition/foodmanufacture.co.uk/npd/top-10-functional-food-trends/11097085-1-eng-GB/Top-10-functional-food-trends_strict_xxl.jpg"]
-     *     var numFoodItems = 20;
-     *     var numPortions = 10;
-     *     for(i = 0; i < numFoodItems; i++){
-     *         currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)]
-     *     	FoodItemsC.insert({
-     *      		foodName: faker.lorem.words(),
-     *       		foodDesc: faker.lorem.sentence(),
-     *       		portionNo: Math.floor(Math.random()*numPortions),
-     *       		portionsClaimed: 0,
-     *       		imgURL: images[i % 3],
-     *       		owner: currUser._id,
-     *       		username: currUser.username,
-     *       		createdAt: new Date(),
-     * 		location: {lat:faker.address.latitude(), lng:faker.address.longitude()}
-     *       	});
-     *     	  
-     *     }
-     * 
-     *     //Create some claims
-     *     var numClaims = 30;
+     * //Create comments by random users
+     * var numComments = 35;
+     * for(i = 0; i < numComments; i++){
+     *     currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)];
+     *  	currItem = FoodItemsC.find().fetch()[Math.floor(Math.random()*numFoodItems)];
+     *     Meteor.call('createClaims', currUser.username,Math.floor(Math.random()*currItem.portionNo),currItem._id )
+       FoodItemsC.update({_id: currItem._id},{$push : {
+       comments:{
+       username: currUser.username,
+       comment: faker.lorem.sentences(),
+       createdAt: new Date()
+       }}});
      *     
+     * }    
      * 
-     *     //Create comments by random users
-     *     var numComments = 35;
-     *     for(i = 0; i < numComments; i++){
-     *           currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)];
-     *     	  currItem = FoodItemsC.find().fetch()[Math.floor(Math.random()*numFoodItems)];
-     *               Meteor.call('createClaims', currUser.username,Math.floor(Math.random()*currItem.portionNo),currItem._id )
-     * 	      FoodItemsC.update({_id: currItem._id},{$push : {
-     * 	      	comments:{
-     * 			username: currUser.username,
-     * 	    		comment: faker.lorem.sentences(),
-     * 	    		createdAt: new Date()
-     * 			}}});
-     *   
-     *      }    
-     *     
-     *     //Create private messages between people
-     *     var numMessages = 100;
-     *     for(i = 0; i < numComments; i++){
-     *     	  randNumFirst = Math.floor(Math.random()*numUsers);
-     * 	  randNumSecond = (randNumFirst + ((Math.floor(Math.random()*(numUsers-1)))+1) ) % numUsers;
-     *           allUsers = Meteor.users.find().fetch();
-     * 	  firstUser = allUsers[randNumFirst].username;
-     * 	  secondUser = allUsers[randNumSecond].username;
-     *           Meteor.call('addPrivateMessage',[firstUser,secondUser],firstUser,faker.lorem.sentences());
-     *      }    */
+     * //Create private messages between people
+     * var numMessages = 100;
+     * for(i = 0; i < numComments; i++){
+     *  	randNumFirst = Math.floor(Math.random()*numUsers);
+       randNumSecond = (randNumFirst + ((Math.floor(Math.random()*(numUsers-1)))+1) ) % numUsers;
+     *     allUsers = Meteor.users.find().fetch();
+       firstUser = allUsers[randNumFirst].username;
+       secondUser = allUsers[randNumSecond].username;
+     *     Meteor.call('addPrivateMessage',[firstUser,secondUser],firstUser,faker.lorem.sentences());
+     * }   */
     //Publish the aggregate sidebar here
 	Meteor.publish("sidebar", function(username){
 		ReactiveAggregate(this, PrivateChatC,
