@@ -90,7 +90,8 @@ body
   font-weight: 700;
   padding: 5px 0;
 }
-.iw-bottom-gradient {
+
+/*.iw-bottom-gradient {
   position: absolute;
   width: 326px;
   height: 25px;
@@ -100,7 +101,7 @@ body
   background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
   background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
   background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-}
+}*/
 
 .smallButton{
   width: 25px;
@@ -225,7 +226,7 @@ body
     align-self: auto;
     }
 
-    .rightbutton-item:nth-child(1) {
+.rightbutton-item:nth-child(1) {
     -webkit-order: 0;
     -ms-flex-order: 0;
     order: 0;
