@@ -25,11 +25,6 @@ const styles = {
     flexWrap: 'wrap',
     justifyContent: 'space-around',
   },
-  gridList: {
-    width: '100%',
-    height: 200,
-    marginBottom: 12,
-  },
     claim: {
 	width: '100%',
 	maxWidth: 'none',
@@ -114,13 +109,14 @@ getMeteorData() {
     },
 
     renderItems(){
-
+	var tileHeight = (window.innerHeight - 182) / 2;
+	console.log(tileHeight)
 	  if(this.props.renderer=='grid'){
 	      return(
 	  	<div style={styles.root}>
 	  	    <GridList
-	  		cellHeight={200}
-	  		style={styles.gridList}
+	  		cellHeight={tileHeight}
+	  		style={{ width: '100%', height: tileHeight, marginBottom: 12 }}
 	  	    >
 	  	{this.props.foodItems.map((foodItem) => (
 	  		     <GridTile

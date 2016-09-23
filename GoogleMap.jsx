@@ -56,6 +56,7 @@ var seconds = Math.floor((new Date() - date) / 1000);
     if(typeof this.props.markers !== "undefined"){
       var that= this;
       return this.props.markers.map((foodItem) => {
+        console.log("mapping food items...")
         var obj = foodItem.location;
         var keys = Object.keys(obj);
         var coords = [];

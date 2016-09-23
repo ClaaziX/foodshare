@@ -203,7 +203,7 @@ const AppHeader = React.createClass({
     },
 
     render : function(){
-
+    	var winHeight = window.innerHeight - 182;
     	var winWidth = window.innerWidth;
 		const actions = [
 	    <FlatButton
@@ -227,10 +227,9 @@ const AppHeader = React.createClass({
   	    return foodItem.foodName;
 	});
 	return(
-	    <div className="bigBoy">
+	    <div className="fillScreen">
 		<MuiThemeProvider muiTheme={muiTheme}>
-		    <div className="phone">
-			<div className="container">
+		    <div>
 
 			    <div className="headContain">
 				<AppBar
@@ -291,8 +290,8 @@ const AppHeader = React.createClass({
 
 
 		  	</div>
-		  	<div className="contentContain">
-				<Scrollbars style={{ height: 350, position: 'relative' }}>
+		  	<div className="contentContain" sytle={{height: winHeight}}>
+				<Scrollbars style={{ height: winHeight, position: 'relative' }}>
 			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, openMessages: this.handleOpenMessage })}
 			  	</Scrollbars>
 		  	</div>
@@ -391,7 +390,6 @@ const AppHeader = React.createClass({
 			    </div>
 
 			</div>
-		    </div>
 		</MuiThemeProvider>
 	    </div>
 );
