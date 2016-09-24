@@ -67,6 +67,7 @@ FoodItems = React.createClass({
     genPrtnImg: function () {
 	var pCla = this.props.calculatePortionsLeft(this.props.foodItem);
 	var pNum = this.props.foodItem.portionNo - pCla;
+	var p = "portions";
 	var x = [];
 	for (i = 0; i < pNum; i++){
 	    x.push(<img className="carrotImg" src="/imgs/carrot.png" />);
@@ -76,7 +77,7 @@ FoodItems = React.createClass({
 	for (n = 0; n < pCla; n++){
 	    z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
 	}
-	return <div>{x}{z}({pNum})</div>;
+	return <div>{x}{z}({pNum} {p})</div>;
     },
 
     genProfImg() {

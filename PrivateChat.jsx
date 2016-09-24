@@ -12,18 +12,51 @@ import {
     Divider,
     AppBar,
     Dialog,
-    IconButton
+    IconButton,
+    Paper
 } from 'material-ui';
 
 import SvgIcons from 'material-ui/svg-icons';
 
-import { 
-	green900
-} from 'material-ui/styles/colors';
-
 import { Scrollbars } from 'react-custom-scrollbars';
+import ContentSend from 'material-ui/svg-icons/content/send';
 
 import TimeSince from './TimeSince.jsx';
+
+import { 
+	lightGreenA200,
+	lightGreen600,
+	green900,
+	blueGrey300,
+	blueGrey900,
+	blueGrey600,
+	grey50
+} from 'material-ui/styles/colors';
+
+
+
+const styles = {
+  claim: {
+	width: '100%',
+	maxWidth: 'none',
+    },
+  smallIcon: {
+    width: 25,
+    height: 25,
+  },
+  small: {
+    width: 50,
+    height: 50,
+    padding: 8,
+  },
+  paper:  {
+	  padding: '0px 0px 0px 10px',
+	  textAlign: 'center',
+	  display: 'inline-block',
+	  width: '100%'
+	}
+};
+
 
 const PrivateChat = React.createClass({
 
@@ -175,38 +208,27 @@ const PrivateChat = React.createClass({
 				{this.generateChat()}
 				{this.messagesSeen()}
 				<div style={{height: "135px"}}></div>
-				<div className="textSubmit-container">
-
-					<div className="textSubmit-item">
-						<RaisedButton
-							label="Submit"
-							primary={true}
-							onTouchTap={this.addMessage}
-						/>
-					</div>
-					<div className="textSubmit-item">
-						<TextField
-							fullWidth={true}
-							hintText="You can leave a comment here"
-							onChange={this.handleComment}
-							value={this.state.messageText}
-							multiLine={true}
-							rows={2}
-							rowsMax={4}
-						/>
-					</div>
-
-					<div className="textSubmit-item">
-
-						<RaisedButton
-							label="Completed"
-							primary={true}
-							onTouchTap={this.openCompDia}
-							fullWidth={true}
-						/>
-
-					</div>
-
+				<div style={{ position: 'fixed', bottom: '0px', width: '100%' }}>
+				 	<Paper style={styles.paper} zDepth={5}>
+						<div className="leftcolumn">
+							<TextField
+								style={{color: 'white'}}
+								hintText="You can leave a comment here"
+								onKeyDown={this.keyDown}
+								onChange={this.handleComment}
+								value={this.state.commentText}
+							/>
+						</div>
+						<div className="rightcolumn">
+						    <IconButton
+						      iconStyle={styles.smallIcon}
+						      style={styles.small}
+						      onTouchTap={this.addMessage}
+						    >
+						      <ContentSend color={lightGreenA200} />
+						    </IconButton>
+						</div>
+					</Paper>
 				</div>
 		    </div>
 		    </Scrollbars>

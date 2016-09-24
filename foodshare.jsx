@@ -147,13 +147,13 @@ if (Meteor.isServer) {
     //Reset all the databases before we add the test data in.
     
     //Remove Users
-    Meteor.users.remove({});
+    // Meteor.users.remove({});
     
-    //Remove Fooditems
-    FoodItemsC.remove({});
+    // //Remove Fooditems
+    // FoodItemsC.remove({});
     
-    //Remove privateChat
-    PrivateChatC.remove({});
+    // //Remove privateChat
+    // PrivateChatC.remove({});
     
     //Create user accounts
     var numUsers = 5;

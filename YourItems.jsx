@@ -34,9 +34,9 @@ import TimeSince from './TimeSince.jsx';
 
 const YourItems = React.createClass({
 
-    deleteThisItem(item) {
+    deleteThisItem() {
 		handleDelete = function(event) {
-			FoodItemsC.remove(item);
+			FoodItemsC.remove(this.state.itemId);
 		}
 		return handleDelete
     },
@@ -64,6 +64,7 @@ const YourItems = React.createClass({
     genPrtnImg: function (item) {
 		var pCla = this.calculatePortionsLeft(item);
 		var pNum = item.portionNo - pCla;
+		var p = "portions";
 		var x = [];
 		for (i = 0; i < pNum; i++){
 		    x.push(<img className="carrotImg" src="/imgs/carrot.png" />);
@@ -73,7 +74,7 @@ const YourItems = React.createClass({
 		for (n = 0; n < pCla; n++){
 		    z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
 		}
-    	return <div>{x}{z}({pNum})</div>;
+    	return <div>{x}{z}({pNum} {p})</div>;
     },
 
     calcTime: function(date){
