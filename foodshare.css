@@ -47,6 +47,10 @@ body
 
 }
 
+.leftcolumn {
+  max-width: 70%;
+}
+
 .bottomPad{
   padding-bottom: 10px;
 }

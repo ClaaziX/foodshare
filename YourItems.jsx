@@ -35,8 +35,9 @@ import TimeSince from './TimeSince.jsx';
 const YourItems = React.createClass({
 
     deleteThisItem() {
+    	var that = this;
 		handleDelete = function(event) {
-			FoodItemsC.remove(this.state.itemId);
+			FoodItemsC.remove(that.state.itemId);
 		}
 		return handleDelete
     },
@@ -138,15 +139,13 @@ const YourItems = React.createClass({
 					</div>
 				);
 			});
-		}else{console.log("no items!")
-			return(
+		}else{
 				<div>
 				<h3>{noItemTxt}</h3>
 				<Link to={'/ItemCreation'}>
 					<FlatButton fullWidth={true} label="Share Food!" />
 				</Link>
 				</div>
-			);
 		}
 	},
 
@@ -201,7 +200,7 @@ const YourItems = React.createClass({
     	];
 		return(
 			<div>
-				<div style={{width: "345px"}}>
+				<div style={{width: "100%"}}>
 					{this.generateItems()}
 				</div>
 				<div>
