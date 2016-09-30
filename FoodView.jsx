@@ -110,6 +110,10 @@ getMeteorData() {
 
     renderItems(){
 	var tileHeight = (window.innerHeight - 182) / 2;
+	var winWidth = window.innerWidth;
+	if (winWidth > 500){
+		tileHeight = 200;
+	}
 	console.log(tileHeight)
 	  if(this.props.renderer=='grid'){
 	      return(

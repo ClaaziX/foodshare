@@ -147,13 +147,13 @@ if (Meteor.isServer) {
     //Reset all the databases before we add the test data in.
     
     //Remove Users
-    // Meteor.users.remove({});
+    Meteor.users.remove({});
     
     // //Remove Fooditems
-    // FoodItemsC.remove({});
+    FoodItemsC.remove({});
     
     // //Remove privateChat
-    // PrivateChatC.remove({});
+    PrivateChatC.remove({});
     
     //Create user accounts
     var numUsers = 5;
@@ -163,6 +163,8 @@ if (Meteor.isServer) {
         
      	Accounts.createUser({username:fN+lN, email: fN + '.' + lN + '@mail.com', password:'password'});
     }
+
+    Accounts.createUser({username: "overLord", email: "over@it.com", password:'password'});
     
     //Create food items by random users
     var items = [{image:'http://asset1.cxnmarksandspencer.com/is/image/mands/bbaeea693f4c2c6b9eaa0d7099c91b46dee181b5?$editorial_430x320$',imageContains:[{foodName:'Sushi',foodDesc:'',},{foodName:'Pizza Rolls',foodDesc:'',},{foodName:'',foodDesc:'Mini Pork Pies',},{foodName:'Pastry Parcels',foodDesc:'',},{foodName:'Kebab',foodDesc:'',}]},
@@ -176,6 +178,16 @@ if (Meteor.isServer) {
     var numFoodItems = 10;
     for(var item = 0; item<items.length; item++ ){
 
+    	var latMax = 55.992236732939304;
+    	var latMin = 55.893796284148955;
+    	var rLat = Math.random() * (latMax - latMin) + latMin;
+
+    	var langMax = -3.4002685546875;
+    	var langMin = -3.0706787109375;
+    	var rLang = Math.random() * (langMax - langMin) + -langMin;
+
+    	var locationz = {lat: rLat, lang: rLang};
+
         currUser = Meteor.users.find().fetch()[Math.floor(Math.random()*numUsers)]
         for(var food=0; food < items[item].imageContains.length; food++){
      	    FoodItemsC.insert({
@@ -188,7 +200,7 @@ if (Meteor.isServer) {
        	        owner: currUser._id,
        	        username: currUser.username,
        	        createdAt: new Date(),
- 	        location: items[item].location
+ 	        location: locationz
        	    });
         }
     }

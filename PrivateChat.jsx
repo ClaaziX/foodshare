@@ -213,7 +213,7 @@ const PrivateChat = React.createClass({
 						<div className="leftcolumn">
 							<TextField
 								style={{color: 'white'}}
-								hintText=""
+								hintText="..."
 								onKeyDown={this.keyDown}
 								onChange={this.handleComment}
 								value={this.state.commentText}

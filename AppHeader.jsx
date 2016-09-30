@@ -203,8 +203,23 @@ const AppHeader = React.createClass({
     },
 
     render : function(){
+    	var noMessages = "You have no messages, go share some food! :)"
+
     	var winHeight = window.innerHeight - 182;
     	var winWidth = window.innerWidth;
+    	var fullScreen = true;
+    	var divSize = "fillScreen";
+    	var phone = "";
+    	var container = "";
+    	
+    	if (winWidth > 500){
+    		fullScreen = false;
+    		winHeight = 350;
+    		var divSize = "bigBoy";
+	    	var phone = "phone";
+	    	var container = "container";
+    	}
+
 		const actions = [
 	    <FlatButton
 		label="Logout"
@@ -227,9 +242,10 @@ const AppHeader = React.createClass({
   	    return foodItem.foodName;
 	});
 	return(
-	    <div className="fillScreen">
+	    <div className={divSize}>
 		<MuiThemeProvider muiTheme={muiTheme}>
-		    <div>
+		    <div className={phone}>
+		    <div className={container}>
 
 			    <div className="headContain">
 				<AppBar
@@ -371,7 +387,7 @@ const AppHeader = React.createClass({
 				    {this.data.currentUser == '' ? 
 				     <div className="vertAlign">
 					 <br />
-					 You have no messages, go share some food! :)
+					 {noMessages}
 	    			     </div>
 				     : 
 
@@ -388,7 +404,7 @@ const AppHeader = React.createClass({
 				    onTouchTap={this.handleRequestClose}
 				/>
 			    </div>
-
+			    </div>
 			</div>
 		</MuiThemeProvider>
 	    </div>

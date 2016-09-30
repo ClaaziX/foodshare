@@ -58,6 +58,7 @@ var seconds = Math.floor((new Date() - date) / 1000);
       return this.props.markers.map((foodItem) => {
         console.log("mapping food items...")
         var obj = foodItem.location;
+        if (obj){
         var keys = Object.keys(obj);
         var coords = [];
 
@@ -141,6 +142,10 @@ var seconds = Math.floor((new Date() - date) / 1000);
         return (
           infowindow.setContent(content), 
         );
+      }else{
+        console.log(foodItem)
+        console.log("Location is null!")
+      }
       });
     }else{console.log("error: props.markers == " + this.props.markers)}
   },
