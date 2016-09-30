@@ -194,19 +194,18 @@ const PrivateChat = React.createClass({
 		const diaTxt = "CAUTION: This will delete the chat permanently!";
 		return (
 			<div id='containerDiv'>
-
-			<Scrollbars
-				style={{ position: 'relative' }}
-				ref="scrollbars"
-				autoHeight={true}
-				autoHeightMax={winHeight}
-				hideTracksWhenNotNeeded={true}
-			>
-		    <div className="divPM" id="divPM" ref="divPM">
 		    	<br/>
 				<br/>
-				{this.generateChat()}
-				{this.messagesSeen()}
+				<Scrollbars
+					style={{ position: 'relative' }}
+					ref="scrollbars"
+					autoHeight={true}
+					autoHeightMax={winHeight}
+					hideTracksWhenNotNeeded={true}
+				>
+					{this.generateChat()}
+					{this.messagesSeen()}
+				</Scrollbars>
 				<div style={{height: "135px"}}></div>
 				<div style={{ position: 'fixed', bottom: '0px', width: '100%' }}>
 				 	<Paper style={styles.paper} zDepth={5}>
@@ -230,8 +229,6 @@ const PrivateChat = React.createClass({
 						</div>
 					</Paper>
 				</div>
-		    </div>
-		    </Scrollbars>
 			<Dialog
 				title="Mark Exchange As Completed?"
 				actions={actions}
