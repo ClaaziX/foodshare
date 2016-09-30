@@ -152,9 +152,11 @@ const PrivateChat = React.createClass({
   	},
 
 	componentDidUpdate: function() {
-		var node = ReactDOM.findDOMNode(this.refs.divPM);
-		var container = document.getElementsByClassName('containerRoot')[0]
-  		container.scrollTop = node.scrollHeight;
+		var node = ReactDOM.findDOMNode(this);
+		var container = document.getElementsByClassName('containerRoot')[0];
+		if (node){
+		  		container.scrollTop = node.scrollHeight;
+		  	}
 	},
 
 	componentDidMount () {

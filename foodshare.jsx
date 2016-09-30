@@ -139,7 +139,7 @@ if (Meteor.isServer) {
 	    return true;
 	},
 	'download' : function(){
- 	    return true	
+ 	    return true;
 	}
 	
     });
@@ -178,13 +178,15 @@ if (Meteor.isServer) {
     var numFoodItems = 10;
     for(var item = 0; item<items.length; item++ ){
 
-    	var latMax = 55.992236732939304;
-    	var latMin = 55.893796284148955;
+    	var latMax = 55.962236732939304;
+    	var latMin = 55.903796284148955;
     	var rLat = Math.random() * (latMax - latMin) + latMin;
 
-    	var langMax = -3.4002685546875;
-    	var langMin = -3.0706787109375;
+    	var langMax = 3.3002685546875;
+    	var langMin = 3.2006787109375;
     	var rLang = Math.random() * (langMax - langMin) + -langMin;
+
+        console.log(rLat, rLang)
 
     	var locationz = {lat: rLat, lang: rLang};
 
