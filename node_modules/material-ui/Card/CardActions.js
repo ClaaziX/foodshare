@@ -18,6 +18,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -48,11 +50,19 @@ var CardActions = function (_Component) {
   _createClass(CardActions, [{
     key: 'render',
     value: function render() {
+      var _props = this.props;
+      var actAsExpander = _props.actAsExpander;
+      var children = _props.children;
+      var expandable = _props.expandable;
+      var style = _props.style;
+
+      var other = _objectWithoutProperties(_props, ['actAsExpander', 'children', 'expandable', 'style']);
+
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
       var styles = getStyles(this.props, this.context);
 
-      var children = _react2.default.Children.map(this.props.children, function (child) {
+      var styledChildren = _react2.default.Children.map(children, function (child) {
         if (_react2.default.isValidElement(child)) {
           return _react2.default.cloneElement(child, {
             style: (0, _simpleAssign2.default)({}, styles.action, child.props.style)
@@ -62,8 +72,8 @@ var CardActions = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        _extends({}, this.props, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, this.props.style)) }),
-        children
+        _extends({}, other, { style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) }),
+        styledChildren
       );
     }
   }]);

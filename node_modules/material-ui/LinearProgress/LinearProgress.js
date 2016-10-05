@@ -33,7 +33,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function getRelativeValue(value, min, max) {
   var clampedValue = Math.min(Math.max(min, value), max);
   var rangeValue = max - min;
-  var relValue = Math.round(clampedValue / rangeValue * 10000) / 10000;
+  var relValue = Math.round((clampedValue - min) / rangeValue * 10000) / 10000;
   return relValue * 100;
 }
 

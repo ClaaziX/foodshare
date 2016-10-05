@@ -71,11 +71,17 @@ var TableHeaderColumn = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableHeaderColumn)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
       hovered: false
     }, _this.onMouseEnter = function () {
-      if (_this.props.tooltip !== undefined) _this.setState({ hovered: true });
+      if (_this.props.tooltip !== undefined) {
+        _this.setState({ hovered: true });
+      }
     }, _this.onMouseLeave = function () {
-      if (_this.props.tooltip !== undefined) _this.setState({ hovered: false });
+      if (_this.props.tooltip !== undefined) {
+        _this.setState({ hovered: false });
+      }
     }, _this.onClick = function (event) {
-      if (_this.props.onClick) _this.props.onClick(event, _this.props.columnNumber);
+      if (_this.props.onClick) {
+        _this.props.onClick(event, _this.props.columnNumber);
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -86,14 +92,15 @@ var TableHeaderColumn = function (_Component) {
       var children = _props.children;
       var className = _props.className;
       var columnNumber = _props.columnNumber;
-      var // eslint-disable-line no-unused-vars
-      onClick = _props.onClick;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var hoverable = _props.hoverable;
+      var onClick = _props.onClick;
+      var onHover = _props.onHover;
+      var onHoverExit = _props.onHoverExit;
+      var style = _props.style;
       var tooltip = _props.tooltip;
       var tooltipStyle = _props.tooltipStyle;
 
-      var other = _objectWithoutProperties(_props, ['children', 'className', 'columnNumber', 'onClick', 'style', 'tooltip', 'tooltipStyle']);
+      var other = _objectWithoutProperties(_props, ['children', 'className', 'columnNumber', 'hoverable', 'onClick', 'onHover', 'onHoverExit', 'style', 'tooltip', 'tooltipStyle']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -143,9 +150,21 @@ TableHeaderColumn.propTypes = {
   columnNumber: _react.PropTypes.number,
   /**
    * @ignore
-   * Callback function for click event.
+   * Not used here but we need to remove it from the root element.
    */
+  hoverable: _react.PropTypes.bool,
+  /** @ignore */
   onClick: _react.PropTypes.func,
+  /**
+   * @ignore
+   * Not used here but we need to remove it from the root element.
+   */
+  onHover: _react.PropTypes.func,
+  /**
+   * @ignore
+   * Not used here but we need to remove it from the root element.
+   */
+  onHoverExit: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.
    */

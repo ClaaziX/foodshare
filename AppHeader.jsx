@@ -43,8 +43,6 @@ import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 import MapsMap from 'material-ui/svg-icons/maps/map';
 import ActionDashboard from 'material-ui/svg-icons/action/dashboard';
 
-import login from './login.jsx';
-
 const logoutContentStyle = {
     width: '100%',
     maxWidth: 'none',

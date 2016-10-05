@@ -62,10 +62,13 @@ var ClickAwayListener = function (_Component) {
         return;
       }
 
-      var el = _reactDom2.default.findDOMNode(_this);
+      // IE11 support, which trigger the handleClickAway even after the unbind
+      if (_this.isCurrentlyMounted) {
+        var el = _reactDom2.default.findDOMNode(_this);
 
-      if (document.documentElement.contains(event.target) && !isDescendant(el, event.target)) {
-        _this.props.onClickAway(event);
+        if (document.documentElement.contains(event.target) && !isDescendant(el, event.target)) {
+          _this.props.onClickAway(event);
+        }
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -73,6 +76,7 @@ var ClickAwayListener = function (_Component) {
   _createClass(ClickAwayListener, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.isCurrentlyMounted = true;
       if (this.props.onClickAway) {
         bind(this.handleClickAway);
       }
@@ -90,6 +94,7 @@ var ClickAwayListener = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      this.isCurrentlyMounted = false;
       unbind(this.handleClickAway);
     }
   }, {

@@ -2,20 +2,34 @@ Accounts.registerLoginHandler(function(loginRequest) {
   //there are multiple login handlers in meteor. 
   //a login request go through all these handlers to find it's login hander
   //so in our login handler, we only consider login requests which has admin field
-  if(!loginRequest.userLoginz) {
+  console.log("server login fired")
+
+  var loginRequest = loginRequest.loginRequest
+
+  console.log(loginRequest.login)
+  console.log(loginRequest.password)
+  console.log(loginRequest.username)
+  
+  if(!loginRequest.login) {
+    console.log("not recognised handler, exiting...")
     return undefined;
   }
 
   var userName = loginRequest.username;
   var user = Meteor.users.findOne({username: userName});
-  var pass = user.password
+  var pass = user.services.password
 
+  console.log(user)
   //our authentication logic :)
   if(loginRequest.password != pass) {
+    console.log(loginRequest.password)
+    console.log(pass)
+    console.log("password does not match, exiting...")
     return null;
   }
+
+  console.log("checks passed, creating token..")
   
-  //we create a admin user if not exists, and get the userId
   var userId = null;
 
   userId = user._id;
@@ -29,7 +43,7 @@ Accounts.registerLoginHandler(function(loginRequest) {
   Meteor.users.update(userId, 
     {$push: {'services.resume.loginTokens': hashStampedToken}}
   );
-
+  console.log("token created and pushed...")
   //sending token along with the userId
   return {
     id: userId,

@@ -111,32 +111,21 @@ var TableRow = function (_Component) {
       var _props = this.props;
       var className = _props.className;
       var displayBorder = _props.displayBorder;
-      var // eslint-disable-line no-unused-vars
-      hoverable = _props.hoverable;
-      var // eslint-disable-line no-unused-vars
-      onCellClick = _props.onCellClick;
-      var // eslint-disable-line no-unused-vars
-      onCellHover = _props.onCellHover;
-      var // eslint-disable-line no-unused-vars
-      onCellHoverExit = _props.onCellHoverExit;
-      var // eslint-disable-line no-unused-vars
-      onRowClick = _props.onRowClick;
-      var // eslint-disable-line no-unused-vars
-      onRowHover = _props.onRowHover;
-      var // eslint-disable-line no-unused-vars
-      onRowHoverExit = _props.onRowHoverExit;
-      var // eslint-disable-line no-unused-vars
-      rowNumber = _props.rowNumber;
-      var // eslint-disable-line no-unused-vars
-      selectable = _props.selectable;
-      var // eslint-disable-line no-unused-vars
-      selected = _props.selected;
-      var // eslint-disable-line no-unused-vars
-      striped = _props.striped;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var hoverable = _props.hoverable;
+      var hovered = _props.hovered;
+      var onCellClick = _props.onCellClick;
+      var onCellHover = _props.onCellHover;
+      var onCellHoverExit = _props.onCellHoverExit;
+      var onRowClick = _props.onRowClick;
+      var onRowHover = _props.onRowHover;
+      var onRowHoverExit = _props.onRowHoverExit;
+      var rowNumber = _props.rowNumber;
+      var selectable = _props.selectable;
+      var selected = _props.selected;
+      var striped = _props.striped;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['className', 'displayBorder', 'hoverable', 'onCellClick', 'onCellHover', 'onCellHoverExit', 'onRowClick', 'onRowHover', 'onRowHoverExit', 'rowNumber', 'selectable', 'selected', 'striped', 'style']);
+      var other = _objectWithoutProperties(_props, ['className', 'displayBorder', 'hoverable', 'hovered', 'onCellClick', 'onCellHover', 'onCellHoverExit', 'onRowClick', 'onRowHover', 'onRowHoverExit', 'rowNumber', 'selectable', 'selected', 'striped', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

@@ -63,24 +63,23 @@ var SvgIcon = function (_Component) {
       var color = _props.color;
       var hoverColor = _props.hoverColor;
       var onMouseEnter = _props.onMouseEnter;
-      var // eslint-disable-line no-unused-vars
-      onMouseLeave = _props.onMouseLeave;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var onMouseLeave = _props.onMouseLeave;
+      var style = _props.style;
       var viewBox = _props.viewBox;
 
       var other = _objectWithoutProperties(_props, ['children', 'color', 'hoverColor', 'onMouseEnter', 'onMouseLeave', 'style', 'viewBox']);
 
       var _context$muiTheme = this.context.muiTheme;
-      var baseTheme = _context$muiTheme.baseTheme;
+      var svgIcon = _context$muiTheme.svgIcon;
       var prepareStyles = _context$muiTheme.prepareStyles;
 
 
-      var offColor = color ? color : style && style.fill ? style.fill : baseTheme.palette.textColor;
+      var offColor = color ? color : 'currentColor';
       var onColor = hoverColor ? hoverColor : offColor;
 
       var mergedStyles = (0, _simpleAssign2.default)({
         display: 'inline-block',
+        color: svgIcon.color,
         fill: this.state.hovered ? onColor : offColor,
         height: 24,
         width: 24,
@@ -120,20 +119,16 @@ SvgIcon.propTypes = {
    * This is the icon color when the mouse hovers over the icon.
    */
   hoverColor: _react.PropTypes.string,
-  /**
-   * Function called when mouse enters this element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Function called when mouse leaves this element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.
    */
   style: _react.PropTypes.object,
   /**
-   * Allows you to redifine what the coordinates
+   * Allows you to redefine what the coordinates
    * without units mean inside an svg element. For example,
    * if the SVG element is 500 (width) by 200 (height), and you
    * pass viewBox="0 0 50 20", this means that the coordinates inside

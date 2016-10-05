@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var hasWarned = void 0;
 var warn = function warn() {
-  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(hasWarned, 'The \'material-ui/lib/utils/styles.js\' utility module has been deprecated.' + ' Please do not use this utility module as it will be removed in an upcoming release.') : void 0;
+  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(hasWarned, 'The \'material-ui/lib/utils/styles.js\' utility module has been deprecated.\n    It will be removed with v0.16.0.') : void 0;
   hasWarned = true;
 };
 

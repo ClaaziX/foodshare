@@ -68,13 +68,17 @@ var FontIcon = function (_Component) {
       hovered: false
     }, _this.handleMouseLeave = function (event) {
       // hover is needed only when a hoverColor is defined
-      if (_this.props.hoverColor !== undefined) _this.setState({ hovered: false });
+      if (_this.props.hoverColor !== undefined) {
+        _this.setState({ hovered: false });
+      }
       if (_this.props.onMouseLeave) {
         _this.props.onMouseLeave(event);
       }
     }, _this.handleMouseEnter = function (event) {
       // hover is needed only when a hoverColor is defined
-      if (_this.props.hoverColor !== undefined) _this.setState({ hovered: true });
+      if (_this.props.hoverColor !== undefined) {
+        _this.setState({ hovered: true });
+      }
       if (_this.props.onMouseEnter) {
         _this.props.onMouseEnter(event);
       }
@@ -85,13 +89,12 @@ var FontIcon = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var hoverColor = _props.hoverColor;
       var onMouseLeave = _props.onMouseLeave;
-      var // eslint-disable-line no-unused-vars
-      onMouseEnter = _props.onMouseEnter;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var onMouseEnter = _props.onMouseEnter;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['onMouseLeave', 'onMouseEnter', 'style']);
+      var other = _objectWithoutProperties(_props, ['hoverColor', 'onMouseLeave', 'onMouseEnter', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -119,17 +122,9 @@ FontIcon.propTypes = {
    * This is the icon color when the mouse hovers over the icon.
    */
   hoverColor: _react.PropTypes.string,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
   /**
    * Override the inline-styles of the root element.

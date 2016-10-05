@@ -56,6 +56,7 @@ function rtl(muiTheme) {
             break;
 
           case 'transform':
+            if (!value) break;
             var matches = void 0;
             if (matches = value.match(reTranslate)) {
               value = value.replace(matches[0], matches[1] + -parseFloat(matches[4]));
@@ -66,6 +67,7 @@ function rtl(muiTheme) {
             break;
 
           case 'transformOrigin':
+            if (!value) break;
             if (value.indexOf('right') > -1) {
               value = value.replace('right', 'left');
             } else if (value.indexOf('left') > -1) {

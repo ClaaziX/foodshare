@@ -80,10 +80,8 @@ var BeforeAfterWrapper = function (_Component) {
       var beforeStyle = _props.beforeStyle;
       var afterStyle = _props.afterStyle;
       var beforeElementType = _props.beforeElementType;
-      var // eslint-disable-line no-unused-vars
-      afterElementType = _props.afterElementType;
-      var // eslint-disable-line no-unused-vars
-      elementType = _props.elementType;
+      var afterElementType = _props.afterElementType;
+      var elementType = _props.elementType;
 
       var other = _objectWithoutProperties(_props, ['beforeStyle', 'afterStyle', 'beforeElementType', 'afterElementType', 'elementType']);
 

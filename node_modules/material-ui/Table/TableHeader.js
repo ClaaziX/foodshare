@@ -116,19 +116,27 @@ var TableHeader = function (_Component) {
     value: function getCheckboxPlaceholder(props) {
       if (!this.props.adjustForCheckbox) return null;
 
+      var disabled = !this.props.enableSelectAll;
       var key = 'hpcb' + props.rowNumber;
-      return _react2.default.createElement(_TableHeaderColumn2.default, { key: key, style: { width: 24 } });
+      return _react2.default.createElement(_TableHeaderColumn2.default, {
+        key: key,
+        style: {
+          width: 24,
+          cursor: disabled ? 'not-allowed' : 'inherit'
+        }
+      });
     }
   }, {
     key: 'getSelectAllCheckboxColumn',
     value: function getSelectAllCheckboxColumn(props) {
       if (!this.props.displaySelectAll) return this.getCheckboxPlaceholder(props);
 
+      var disabled = !this.props.enableSelectAll;
       var checkbox = _react2.default.createElement(_Checkbox2.default, {
         key: 'selectallcb',
         name: 'selectallcb',
         value: 'selected',
-        disabled: !this.props.enableSelectAll,
+        disabled: disabled,
         checked: this.props.selectAllSelected,
         onCheck: this.handleCheckAll
       });
@@ -136,7 +144,13 @@ var TableHeader = function (_Component) {
       var key = 'hpcb' + props.rowNumber;
       return _react2.default.createElement(
         _TableHeaderColumn2.default,
-        { key: key, style: { width: 24 } },
+        {
+          key: key,
+          style: {
+            width: 24,
+            cursor: disabled ? 'not-allowed' : 'inherit'
+          }
+        },
         checkbox
       );
     }

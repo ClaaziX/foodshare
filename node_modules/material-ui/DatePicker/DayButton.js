@@ -118,10 +118,8 @@ var DayButton = function (_Component) {
     value: function render() {
       var _props = this.props;
       var date = _props.date;
-      var // eslint-disable-line no-unused-vars
-      onTouchTap = _props.onTouchTap;
-      var // eslint-disable-line no-unused-vars
-      selected = _props.selected;
+      var onTouchTap = _props.onTouchTap;
+      var selected = _props.selected;
 
       var other = _objectWithoutProperties(_props, ['date', 'onTouchTap', 'selected']);
 
@@ -135,7 +133,6 @@ var DayButton = function (_Component) {
           disabled: this.props.disabled,
           disableFocusRipple: true,
           disableTouchRipple: true,
-          hoverStyle: styles.hover,
           onKeyboardFocus: this.handleKeyboardFocus,
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave,

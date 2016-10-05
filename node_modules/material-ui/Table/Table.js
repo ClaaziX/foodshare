@@ -65,7 +65,7 @@ var Table = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Table)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      allRowsSelected: _this.props.allRowsSelected
+      allRowsSelected: false
     }, _this.onCellClick = function (rowNumber, columnNumber, event) {
       if (_this.props.onCellClick) _this.props.onCellClick(rowNumber, columnNumber, event);
     }, _this.onCellHover = function (rowNumber, columnNumber, event) {
@@ -93,6 +93,13 @@ var Table = function (_Component) {
   }
 
   _createClass(Table, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      if (this.props.allRowsSelected) {
+        this.setState({ allRowsSelected: true });
+      }
+    }
+  }, {
     key: 'isScrollbarVisible',
     value: function isScrollbarVisible() {
       var tableDivHeight = this.refs.tableDiv.clientHeight;

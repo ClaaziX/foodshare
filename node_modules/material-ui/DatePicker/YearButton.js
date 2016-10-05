@@ -46,7 +46,6 @@ function getStyles(props, context, state) {
       textAlign: 'center',
       lineHeight: 'inherit',
       WebkitTapHighlightColor: 'rgba(0,0,0,0)' },
-    // Remove mobile color flashing (deprecated)
     label: {
       alignSelf: 'center',
       color: hover || selected ? datePicker.color : baseTheme.palette.textColor,
@@ -88,11 +87,9 @@ var YearButton = function (_Component) {
     value: function render() {
       var _props = this.props;
       var className = _props.className;
-      var // eslint-disable-line no-unused-vars
-      year = _props.year;
+      var year = _props.year;
       var onTouchTap = _props.onTouchTap;
-      var // eslint-disable-line no-unused-vars
-      selected = _props.selected;
+      var selected = _props.selected;
 
       var other = _objectWithoutProperties(_props, ['className', 'year', 'onTouchTap', 'selected']);
 

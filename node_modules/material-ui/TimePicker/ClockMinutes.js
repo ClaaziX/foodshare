@@ -47,7 +47,9 @@ var ClockMinutes = function (_Component) {
       _this.setClock(event.nativeEvent, true);
     }, _this.handleMove = function (event) {
       event.preventDefault();
-      if (_this.isMousePressed(event) !== 1) return;
+      if (_this.isMousePressed(event) !== 1) {
+        return;
+      }
       _this.setClock(event.nativeEvent, false);
     }, _this.handleTouch = function (event) {
       event.preventDefault();
@@ -123,9 +125,13 @@ var ClockMinutes = function (_Component) {
 
       var numbers = minutes.map(function (minute) {
         var isSelected = selectedMinutes === minute;
-        if (isSelected) hasSelected = true;
+        if (isSelected) {
+          hasSelected = true;
+        }
         return _react2.default.createElement(_ClockNumber2.default, {
-          key: minute, isSelected: isSelected, type: 'minute',
+          key: minute,
+          isSelected: isSelected,
+          type: 'minute',
           value: minute
         });
       });
@@ -163,12 +169,11 @@ var ClockMinutes = function (_Component) {
       return _react2.default.createElement(
         'div',
         { ref: 'clock', style: prepareStyles(styles.root) },
-        _react2.default.createElement(_ClockPointer2.default, { value: minutes.selected, type: 'minute' }),
+        _react2.default.createElement(_ClockPointer2.default, { value: minutes.selected, type: 'minute', hasSelected: minutes.hasSelected }),
         minutes.numbers,
         _react2.default.createElement('div', {
           ref: 'mask',
           style: prepareStyles(styles.hitMask),
-          hasSelected: minutes.hasSelected,
           onTouchMove: this.handleTouch,
           onTouchEnd: this.handleTouch,
           onMouseUp: this.handleUp,

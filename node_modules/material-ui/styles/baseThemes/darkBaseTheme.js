@@ -25,6 +25,7 @@ exports.default = {
     accent2Color: _colors.pinkA400,
     accent3Color: _colors.pinkA100,
     textColor: _colors.fullWhite,
+    secondaryTextColor: (0, _colorManipulator.fade)(_colors.fullWhite, 0.7),
     alternateTextColor: '#303030',
     canvasColor: '#303030',
     borderColor: (0, _colorManipulator.fade)(_colors.fullWhite, 0.3),

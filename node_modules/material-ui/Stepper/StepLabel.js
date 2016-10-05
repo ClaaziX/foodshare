@@ -86,6 +86,7 @@ var getStyles = function getStyles(_ref, _ref2) {
   if (disabled) {
     styles.icon.color = inactiveIconColor;
     styles.root.color = disabledTextColor;
+    styles.root.cursor = 'not-allowed';
   }
 
   return styles;
@@ -137,12 +138,14 @@ var StepLabel = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var active = _props.active;
       var children = _props.children;
       var completed = _props.completed;
       var userIcon = _props.icon;
+      var last = _props.last;
       var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['children', 'completed', 'icon', 'style']);
+      var other = _objectWithoutProperties(_props, ['active', 'children', 'completed', 'icon', 'last', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -187,6 +190,10 @@ StepLabel.propTypes = {
    * The icon displayed by the step label.
    */
   icon: _react.PropTypes.oneOfType([_react.PropTypes.element, _react.PropTypes.string, _react.PropTypes.number]),
+  /**
+   * @ignore
+   */
+  last: _react.PropTypes.bool,
   /**
    * Override the inline-style of the root element.
    */
