@@ -50,11 +50,16 @@ const userAccounts = React.createClass({
 	},
 
 	loginFail(err){
-		if(err == "close"){
-			this.setState({openErrPop: false})
+		if(typeof err == "string") {
+			if(err == "close"){
+				this.setState({openErrPop: false})
+			}else{
+				console.log("Error is string but not close cmd")
+				console.log(err)
+			}
 		}else{
-		this.setState({errPopMess: err, openErrPop: true, username: '', password: ''})
-		}
+			this.setState({errPopMess: err, openErrPop: true, username: '', password: ''})
+			}
 	},
 
 	handleLogin(){
@@ -88,11 +93,15 @@ const userAccounts = React.createClass({
 	haveAccSwitch(){
 		console.log("haveAccSwitch called...")
 		var hAcc = this.state.haveAcc;
+		console.log(hAcc)
 		if(hAcc){
+			console.log("hAcc conditional passed")
 			this.setState({haveAcc: false})
+			console.log(this.state.haveAcc)
 		}else{
 			this.setState({haveAcc: true})
 		}
+		console.log(hAcc)
 	},
 
 	rootHome : function () {
@@ -102,10 +111,10 @@ const userAccounts = React.createClass({
 	render : function () {
 		var haveAcc = this.state.haveAcc;
 		const errActions = [
-	    <FlatButton
+	    <RaisedButton
 		label="ok"
 		secondary={true}
-		onTouchTap={this.failedLogin("close")}
+		onTouchTap={this.loginFail("close")}
 	    />,
 	];
 	  	return(	
@@ -124,6 +133,7 @@ const userAccounts = React.createClass({
 									value={this.state.username}
 									onChange={this.handleUserName}
 									fullWidth={true}
+									ref="userNameInsertIt"
 								/>
 							</div>
 
@@ -135,6 +145,7 @@ const userAccounts = React.createClass({
 									value={this.state.password}
 									onChange={this.handlePassword}
 									fullWidth={true}
+									ref="userNameInsterIt"
 								/>
 							</div>
 
@@ -153,7 +164,10 @@ const userAccounts = React.createClass({
 					</div>
 				:
 					<div>
-						{this.register()}
+						<div className="loginField">
+							<p>Already have an account? <RaisedButton onTouchTap={this.haveAccSwitch} label="Login" /></p>
+						</div>
+						<userCreation />
 					</div>
 				}
 			</div>

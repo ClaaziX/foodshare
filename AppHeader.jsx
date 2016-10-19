@@ -257,6 +257,7 @@ const AppHeader = React.createClass({
 					    <SvgIcons.ContentAddCircle color={green900} />
 					</IconButton>}
 				    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+				    ref="appbarrinyaface"
 		  		/>
 		  	    </div>
 
