@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 import Accounts from 'meteor/std:accounts-basic';
 
-var bcrypt = require('bcryptjs');
-
 import {
 	TextField,
 	RaisedButton
@@ -21,9 +19,6 @@ import {
 	grey50
 } from 'material-ui/styles/colors';
 
-var bcryptHash = Meteor.wrapAsync(bcrypt.hash);
-var bcryptCompare = Meteor.wrapAsync(bcrypt.compare);
-
 const userAccounts = React.createClass({ 
 
 	shouldComponentUpdate(nextProps, nextState){
@@ -39,6 +34,8 @@ const userAccounts = React.createClass({
 			haveAcc: true,
 			username: '',
 			password: '',
+			openErrPop: false,
+			errPopMess: ''
 		}
 	},
 
@@ -52,54 +49,28 @@ const userAccounts = React.createClass({
 		console.log(this.state.password)
 	},
 
-	encryptPass(password){
-		Accounts._bcryptRounds = 10;
-
-		// Given a 'password' from the client, extract the string that we should
-		// bcrypt. 'password' can be one of:
-		//  - String (the plaintext password)
-		//  - Object with 'digest' and 'algorithm' keys. 'algorithm' must be "sha-256".
-		//
-		var getPasswordString = function (password) {
-			console.log("getPasswordString fired...")
-		  if (typeof password === "string") {
-		    password = CryptoJS.SHA256(password);
-		  } else { // 'password' is an object
-		    if (password.algorithm !== "sha-256") {
-		      throw new Error("Invalid password hash algorithm. " +
-		                      "Only 'sha-256' is allowed.");
-		    }
-		    password = password.digest;
-		  }
-		  return password;
-		};
-
-		// Use bcrypt to hash the password for storage in the database.
-		// `password` can be a string (in which case it will be run through
-		// SHA256 before bcrypt) or an object with properties `digest` and
-		// `algorithm` (in which case we bcrypt `password.digest`).
-		//
-		var hashPassword = function (password) {
-			Accounts._bcryptRounds = 10;
-			console.log("hashPassword fired...")
-			password = getPasswordString(password);
-			console.log(password)
-			console.log(bcryptHash(password, Accounts._bcryptRounds))
-			return bcryptHash(password, Accounts._bcryptRounds);
-		};
-		console.log(password)
-		console.log(hashPassword(password))
-
-		return (hashPassword(password));
+	loginFail(err){
+		if(err == "close"){
+			this.setState({openErrPop: false})
+		}else{
+		this.setState({errPopMess: err, openErrPop: true, username: '', password: ''})
+		}
 	},
 
 	handleLogin(){
 		console.log("Attempting to logIn....")
-		var pass = this.encryptPass(this.state.password);
+		var pass = this.state.password;
 		var username = this.state.username
 		console.log(pass)
 		if(pass !== '' && username !== ''){
-			Meteor.loginAsUser(pass, username)
+			Meteor.loginWithPassword(email, password, function(err) {
+  				if (err) {
+			    	this.loginFail(err.message);
+				}else{
+			  	console.log("Successful Login!")
+			  	browserHistory.push('/');
+			  }
+			});
 		}else{
 			console.log("put a password & username in mate!")
 		}
@@ -108,7 +79,7 @@ const userAccounts = React.createClass({
 	register(){
 		return(
 			<div>
-				<p>Already have an account? Click <a onTouchTap={this.haveAccSwitch}>here</a> to login.</p>
+				<div>Already have an account? <RaisedButton onTouchTap={this.haveAccSwitch} label="Login" /></div>
 				<TextField hintText="Enter Your Username..." />
 			</div>
 		);
@@ -130,13 +101,20 @@ const userAccounts = React.createClass({
 
 	render : function () {
 		var haveAcc = this.state.haveAcc;
+		const errActions = [
+	    <FlatButton
+		label="ok"
+		secondary={true}
+		onTouchTap={this.failedLogin("close")}
+	    />,
+	];
 	  	return(	
 			<div style={{height: '100%', width: '100%'}}>
 				{haveAcc ?
 					<div>
 						<div className="loginContain">
 							<div className="loginField">
-								<p>Need an account? Click <a href="#" onTouchTap={this.haveAccSwitch}>here</a> to register.</p>
+								<p>Need an account? <RaisedButton onTouchTap={this.haveAccSwitch} label="Register" /></p>
 							</div>
 
 							<div className="loginField">
