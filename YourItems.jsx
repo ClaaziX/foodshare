@@ -118,7 +118,7 @@ const YourItems = React.createClass({
 							<CardActions expandable={false}>
 								<div className="buttons-container">
 									<div className="buttons-item">
-										<ActionSchedule style="smallButton" /> {this.calcTime(item.createdAt)}
+										<ActionSchedule className="smallButton" /> {this.calcTime(item.createdAt)}
 									</div>
 									<div className="buttons-item">
 										<ImagePhoto onTouchTap={this.openImg(item)} />

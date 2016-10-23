@@ -150,7 +150,7 @@ FoodItems = React.createClass({
 			    <CardActions expandable={expander}>
 			    	<div className="buttons-container">
 			    		<div className="buttons-item">
-			    			<ActionSchedule style="smallButton" /> {this.calcTime(this.props.foodItem.createdAt)}
+			    			<ActionSchedule className="smallButton" /> {this.calcTime(this.props.foodItem.createdAt)}
 			    		</div>
 			    		<div className="buttons-item">
 							<ActionShoppingCart onTouchTap={this.getOpenPop(this.props.foodItem)}/>
