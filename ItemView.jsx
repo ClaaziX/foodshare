@@ -117,6 +117,7 @@ ItemView = React.createClass({
 
     renderComments(){
 
+		prvUsr = null;
 		if (this.data.foodItem.comments){
 		    return this.data.foodItem.comments.map((message) => {
     			var currUsr = message.username;

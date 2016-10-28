@@ -35,6 +35,8 @@ render(){
 						</div>
 					:
 						<div>
+							{this.props.username}
+							<br/>
 							<img className="avatar" src="http://thesocialmediamonthly.com/wp-content/uploads/2015/08/photo.png" />
 							<br/>
 							{this.props.date}
