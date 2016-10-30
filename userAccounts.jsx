@@ -21,14 +21,6 @@ import {
 
 const userAccounts = React.createClass({ 
 
-	shouldComponentUpdate(nextProps, nextState){
-		return false;
-	},
-
-	shouldComponentUpdate(nextProps, nextState){
-		return false;
-	},
-
 	getInitialState(){
 		return{
 			username: '',
@@ -38,13 +30,13 @@ const userAccounts = React.createClass({
 		}
 	},
 
-	handleUserName(event){
-		this.setState({username:event.target.value});
+	handleUserName: function(event){
+		this.setState({username: event.target.value});
 		console.log(this.state.username)
 	},
 
-	handlePassword(event){
-		this.setState({password:event.target.value});
+	handlePassword: function(event){
+		this.setState({password: event.target.value});
 		console.log(this.state.password)
 	},
 

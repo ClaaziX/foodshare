@@ -1,13 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
-import Accounts from 'meteor/std:accounts-basic';
+
+import { Meteor } from 'meteor/meteor'
 
 import {
-	TextField,
-	RaisedButton
+    Step,
+    Stepper,
+    StepLabel,
+    StepContent,
+} from 'material-ui/Stepper';
 
-} from 'material-ui'
+
+import {
+    Snackbar,
+    TextField,
+    RaisedButton,
+    FlatButton,
+    Dialog,
+    Paper,
+    Styles,
+    Swipe,
+    Tab,
+    Tabs,
+    IconButton,
+} from 'material-ui';
+
+
+
+import {ImagePhotoCamera } from 'material-ui/svg-icons/image/photo-camera';
+import {EditorModeEdit } from 'material-ui/svg-icons/editor/mode-edit';
+import {MapsPlace } from 'material-ui/svg-icons/maps/place';
+
+import PhotoUpload from './PhotoUpload.jsx';
+import AddLocation from './AddLocation.jsx';
+import AddItem from './AddItem.jsx';
+import AddItemView from './AddItemView.jsx';
+import FoodView from './FoodView.jsx';
+
+const errContentStyle = {
+    width: '100%',
+    maxWidth: 'none',
+};
+
+const paperStyle = {
+    margin: 20,
+    textAlign: 'center',
+    display: 'inline-block',
+};
+
+const styles = {
+    headline: {
+        fontSize: 24,
+        paddingTop: 16,
+        marginBottom: 12,
+        fontWeight: 400,
+    },
+    slide: {
+        padding: 10,
+    },
+};
 
 import { 
 	lightGreenA200,
@@ -19,98 +71,212 @@ import {
 	grey50
 } from 'material-ui/styles/colors';
 
-const userAccountsRegister = React.createClass({ 
+const userAccountRegister = React.createClass({
 
-	shouldComponentUpdate(nextProps, nextState){
-		return false;
-	},
+    getInitialState(){
+        return{
+            //State for the stepper
+			finished: false,
+			stepIndex: 0,
+			completedIndex: 0,
 
-	shouldComponentUpdate(nextProps, nextState){
-		return false;
-	},
+			//Once the image is uploaded this gets set with the query for the items
+			imageURL:'{not:/*/}',
+			//For the snackbar
+			open:false,
 
-	getInitialState(){
-		return{
 			username: '',
 			email: '',
 			password: '',
+			fName: '',
+			lName: '',
+
 			openErrPop: false,
 			errPopMess: ''
 		}
+    },
+
+    handleError() {
+        this.setState({
+            open: true,
+		});
+    },
+
+    handleRequestClose() {
+        this.setState({
+            open: false,
+		});
+    },
+
+	handlefName: function(event){
+		this.setState({fName: event.target.value});
 	},
 
-	handleUserName(event){
-		this.setState({username:event.target.value});
-		console.log(this.state.username)
+	handlelName: function(event){
+		this.setState({lName: event.target.value});
 	},
 
-	handlePassword(event){
-		this.setState({password:event.target.value});
-		console.log(this.state.password)
+	handleUserName: function(event){
+		this.setState({username: event.target.value});
+	},
+	
+	handleEmail: function(event){
+		this.setState({email: event.target.value});
 	},
 
-	handleEmail(event){
-		this.setState({email:event.target.value});
-		console.log(this.state.password)
+	handlePassword: function(event){
+		this.setState({password: event.target.value});
 	},
 
-	loginFail(err){
-		var that = this;
-		loginF = function (event) {
-			if(err == "close"){
-				that.setState({openErrPop: false})
-			}else{
-				that.setState({errPopMess: err, openErrPop: true, username: '', password: ''})
-			}
+    //Stepper Code 
+    handleNext() {
+        stepIndex = this.state.stepIndex;
+        if((stepIndex+1) == this.state.completedIndex){
+            this.setState({
+				stepIndex: stepIndex + 1,
+				finished: stepIndex >= 2,
+			});
+		} else {
+	    	this.handleError()
 		}
-		return loginF
-	},
+    },
 
-	handleRegister(){
+    handlePrev(){
+        stepIndex = this.state.stepIndex;
+        if (stepIndex > 0){
+            this.setState({stepIndex: stepIndex - 1});
+	}
+    },
+
+    onUpload(url, tinyURL){
+        this.setState({
+        	imageURL:url,
+	        completedIndex:1
+	    })
+
+    },
+
+    onCoordSelection(location){
+        this.setState({latLng:{lat:location.latLng.lat(),lng:location.latLng.lng()},
+	               address:location.address,
+		       completedIndex:2
+	})
+
+    },
+
+    handleSubmit(item){
 		console.log("Attempting to register....")
 		var pass = this.state.password;
 		var username = this.state.username
 		console.log(pass)
 		if(pass !== '' && username !== ''){
-			Meteor.loginWithPassword(username, pass, function(err) {
-  				if (err) {
-			    	this.loginFail(err.message);
-				}else{
-			  	console.log("Successful Login!")
-			  	browserHistory.push('/');
-			  }
+
+			Accounts.createUser({
+				username: username,
+				emails: this.state.email,
+				password: pass,
+				profile: {
+					avatar: this.state.imageURL,
+					location: this.state.latLng,
+					address: this.state.address,
+					fName: this.state.fName,
+					lName: this.state.lName
+					}},
+				function(err) {
+					if (err){
+						console.log(err);
+					}
+					else{
+						console.log('User Registered!');
+						this.setState({completedIndex:3})
+					}
 			});
 		}else{
 			console.log("put a password & username in mate!")
 		}
-	},
+	
+    },
+    
+    genStepButtons(step) {
 
-	haveAccSwitch(){
+        const {stepIndex} = this.state;
+
+        return (
+			<div style={{margin: '12px 0'}}>
+				<RaisedButton
+					label={stepIndex === 2 ? 'Register!' : 'Next'}
+					disableTouchRipple={true}
+					disableFocusRipple={true}
+					primary={true}
+					onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
+					style={{marginRight: 12}}
+				/>
+				{step > 0 && (
+					<FlatButton
+						label="Back"
+						disabled={stepIndex === 0}
+						disableTouchRipple={true}
+						disableFocusRipple={true}
+						onTouchTap={this.handlePrev}
+					/>
+				)}
+			</div>
+			);
+    },
+
+    haveAccSwitch(){
 		switchA = function(event) {
 			browserHistory.push('/login');
 		}
 		return switchA
 	},
 
-	rootHome : function () {
-		browserHistory.push('/');
-	},
+    render() {
+        const {finished, stepIndex} = this.state;
+        const contentStyle = {margin: '0 16px'};
 
-	render : function () {
-		var haveAcc = this.state.haveAcc;
-		const errActions = [
-	    <RaisedButton
-		label="ok"
-		secondary={true}
-		onTouchTap={this.loginFail("close")}
-	    />,
-	];
-	  	return(	
-			<div style={{height: '100%', width: '100%'}}>
-				<div>
-					<div className="loginContain">
-						<div className="loginField">
+        return (
+            <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+	        <div className="loginField">
 							Have an account? <RaisedButton backgroundColor={lightGreenA200} onTouchTap={this.haveAccSwitch()} label="Login" />
+			</div>
+	        <Stepper activeStep={stepIndex} orientation="vertical">
+	     	    <Step>
+			<StepLabel>Upload A Profile Picture!</StepLabel>
+			<StepContent>
+			    <PhotoUpload onUpload={this.onUpload}/>
+			    {this.genStepButtons(0)}
+			</StepContent>
+		    </Step>
+		    <Step>
+			<StepLabel>Set Your Default Location</StepLabel>
+			<StepContent>
+			    <AddLocation onCoordSelection={this.onCoordSelection}/>
+			    {this.genStepButtons(1)}
+			</StepContent>
+		    </Step>
+		    <Step>
+			<StepLabel>Fill In Your Details</StepLabel>
+			<StepContent>
+			    <div className="loginContain">
+						<div className="loginField">
+							<TextField
+								hintText="Enter Your First Name..."
+								floatingLabelText="First Name"
+								value={this.state.fName}
+								onChange={this.handlefName}
+								fullWidth={true}
+							/>
+						</div>
+
+						<div className="loginField">
+							<TextField
+								hintText="Enter Your Last Name..."
+								floatingLabelText="Last Name"
+								value={this.state.lName}
+								onChange={this.handlelName}
+								fullWidth={true}
+							/>
 						</div>
 
 						<div className="loginField">
@@ -133,8 +299,6 @@ const userAccountsRegister = React.createClass({
 							/>
 						</div>
 
-						<div className="loginField"> </div>
-
 						<div className="loginField">
 							<TextField
 								type="password"
@@ -145,22 +309,22 @@ const userAccountsRegister = React.createClass({
 								fullWidth={true}
 							/>
 						</div>
-
-						<div className="loginField"> </div>
-
-						<div className="loginField">
-							<RaisedButton
-								label="Register"
-								onTouchTap={this.handleRegister}
-								fullWidth={true}
-								style={{width: '100%', backgroundColor: lightGreenA200 }}
-								backgroundColor={lightGreenA200}
-							/>
-						</div>
 					</div>
-				</div>
-			</div>
-	  	);
-	  }
-	});
-export default userAccountsRegister;
+			    {this.genStepButtons(2)}
+			</StepContent>
+		    </Step>
+		</Stepper>
+
+		<Snackbar
+		    open={this.state.open}
+		    message="Please complete this section before moving on."
+		    autoHideDuration={4000}
+		    onRequestClose={this.handleRequestClose}
+		/>
+	    </div>
+	);
+	
+    }
+});
+
+export default userAccountRegister;

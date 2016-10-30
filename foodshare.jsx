@@ -100,18 +100,11 @@ if (Meteor.isClient) {
 
     Meteor.startup(function () {
 
-        //Config the accounts
-	Accounts.ui.config({
-		passwordSignupFields: 'USERNAME_AND_EMAIL',
-		onSignedInHook : () => browserHistory.push('/')
-	});
-
 	const requireAuth = function(nextState, replace){
 	      if(Meteor.userId() == null){
 				 replace('/login');
 				 }
 	      }
-
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
 
@@ -144,6 +137,10 @@ if (Meteor.isServer) {
  	    return true;
 	}
 	
+    });
+
+    Accounts.config({
+        sendVerificationEmail: true
     });
     
     //Reset all the databases before we add the test data in.
