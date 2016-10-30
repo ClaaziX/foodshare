@@ -240,8 +240,9 @@ const AppHeader = React.createClass({
   	    return foodItem.foodName;
 	});
 	return(
-	    <div className={divSize}>
 		<MuiThemeProvider muiTheme={muiTheme}>
+	    <div className={divSize}>
+		
 		    <div className={phone}>
 		    <div className={container}>
 
@@ -256,7 +257,6 @@ const AppHeader = React.createClass({
 					<IconButton containerElement={<Link to={'/ItemCreation'} />}>
 					    <SvgIcons.ContentAddCircle color={green900} />
 					</IconButton>}
-				    targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		  		/>
 		  	    </div>
 
@@ -304,7 +304,7 @@ const AppHeader = React.createClass({
 
 
 		  	</div>
-		  	<div className="contentContain" sytle={{height: winHeight}}>
+		  	<div className="contentContain">
 				<Scrollbars style={{ height: winHeight, position: 'relative' }}>
 			  		{React.cloneElement(this.props.children, { foodItems: this.data.foodItems, openMessages: this.handleOpenMessage })}
 			  	</Scrollbars>
@@ -379,7 +379,6 @@ const AppHeader = React.createClass({
 						<IconButton onTouchTap={this.handleOpen}>
 						    <SvgIcons.ActionSettings color={green900}/>
 						</IconButton>}
-					    targetOrigin={{horizontal: 'right', vertical: 'top'}}
 				  	/>
 		  		    </div>
 				    {this.data.currentUser == '' ? 
@@ -404,8 +403,8 @@ const AppHeader = React.createClass({
 			    </div>
 			    </div>
 			</div>
-		</MuiThemeProvider>
 	    </div>
+	    </MuiThemeProvider>
 );
 
     }

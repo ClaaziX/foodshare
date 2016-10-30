@@ -94,6 +94,7 @@ if (Meteor.isClient) {
     import MapView from './MapView.jsx';
     import PrivateChat from './PrivateChat.jsx';
     import userAccounts from './userAccounts.jsx';
+    import userAccountsRegister from './userAccountsRegister.jsx';
     import GridListTab from './GridListTab.jsx';
     import YourItems from './YourItems.jsx';
 
@@ -124,6 +125,7 @@ if (Meteor.isClient) {
 		    <Route path='/MapView' component={MapView} onEnter={requireAuth} />
 		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} onEnter={requireAuth} />
 		    <Route path='/login' component={userAccounts} formState={STATES.SIGN_IN} />
+            <Route path='/register' component={userAccountsRegister} formState={STATES.SIGN_IN} />
 		</Route>
 	    </Router>
 	, document.getElementById('render-target'));

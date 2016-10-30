@@ -19,7 +19,7 @@ import {
 	grey50
 } from 'material-ui/styles/colors';
 
-const userAccounts = React.createClass({ 
+const userAccountsRegister = React.createClass({ 
 
 	shouldComponentUpdate(nextProps, nextState){
 		return false;
@@ -32,6 +32,7 @@ const userAccounts = React.createClass({
 	getInitialState(){
 		return{
 			username: '',
+			email: '',
 			password: '',
 			openErrPop: false,
 			errPopMess: ''
@@ -48,6 +49,11 @@ const userAccounts = React.createClass({
 		console.log(this.state.password)
 	},
 
+	handleEmail(event){
+		this.setState({email:event.target.value});
+		console.log(this.state.password)
+	},
+
 	loginFail(err){
 		var that = this;
 		loginF = function (event) {
@@ -60,8 +66,8 @@ const userAccounts = React.createClass({
 		return loginF
 	},
 
-	handleLogin(){
-		console.log("Attempting to logIn....")
+	handleRegister(){
+		console.log("Attempting to register....")
 		var pass = this.state.password;
 		var username = this.state.username
 		console.log(pass)
@@ -81,7 +87,7 @@ const userAccounts = React.createClass({
 
 	haveAccSwitch(){
 		switchA = function(event) {
-			browserHistory.push('/register');
+			browserHistory.push('/login');
 		}
 		return switchA
 	},
@@ -104,7 +110,7 @@ const userAccounts = React.createClass({
 				<div>
 					<div className="loginContain">
 						<div className="loginField">
-							Need an account? <RaisedButton backgroundColor={lightGreenA200} onTouchTap={this.haveAccSwitch()} label="Register" />
+							Have an account? <RaisedButton backgroundColor={lightGreenA200} onTouchTap={this.haveAccSwitch()} label="Login" />
 						</div>
 
 						<div className="loginField">
@@ -116,6 +122,18 @@ const userAccounts = React.createClass({
 								fullWidth={true}
 							/>
 						</div>
+
+						<div className="loginField">
+							<TextField
+								hintText="Enter Your Email..."
+								floatingLabelText="Email"
+								value={this.state.email}
+								onChange={this.handleEmail}
+								fullWidth={true}
+							/>
+						</div>
+
+						<div className="loginField"> </div>
 
 						<div className="loginField">
 							<TextField
@@ -132,8 +150,8 @@ const userAccounts = React.createClass({
 
 						<div className="loginField">
 							<RaisedButton
-								label="Login"
-								onTouchTap={this.handleLogin}
+								label="Register"
+								onTouchTap={this.handleRegister}
 								fullWidth={true}
 								style={{width: '100%', backgroundColor: lightGreenA200 }}
 								backgroundColor={lightGreenA200}
@@ -145,4 +163,4 @@ const userAccounts = React.createClass({
 	  	);
 	  }
 	});
-export default userAccounts;
+export default userAccountsRegister;
