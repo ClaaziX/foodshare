@@ -61,7 +61,7 @@ const styles = {
     },
 };
 
-import { 
+import {
 	lightGreenA200,
 	lightGreen600,
 	green900,
@@ -119,7 +119,7 @@ const userAccountRegister = React.createClass({
 	handleUserName: function(event){
 		this.setState({username: event.target.value});
 	},
-	
+
 	handleEmail: function(event){
 		this.setState({email: event.target.value});
 	},
@@ -128,7 +128,7 @@ const userAccountRegister = React.createClass({
 		this.setState({password: event.target.value});
 	},
 
-    //Stepper Code 
+    //Stepper Code
     handleNext() {
         stepIndex = this.state.stepIndex;
         if((stepIndex+1) == this.state.completedIndex){
@@ -164,7 +164,7 @@ const userAccountRegister = React.createClass({
 
     },
 
-    handleSubmit(item){
+    handleSubmit(){
 		console.log("Attempting to register....")
 		var pass = this.state.password;
 		var username = this.state.username
@@ -188,15 +188,15 @@ const userAccountRegister = React.createClass({
 					}
 					else{
 						console.log('User Registered!');
-						this.setState({completedIndex:3})
+						//this.setState({completedIndex:3})
 					}
 			});
 		}else{
 			console.log("put a password & username in mate!")
 		}
-	
+
     },
-    
+
     genStepButtons(step) {
 
         const {stepIndex} = this.state;
@@ -208,7 +208,7 @@ const userAccountRegister = React.createClass({
 					disableTouchRipple={true}
 					disableFocusRipple={true}
 					primary={true}
-					onTouchTap={stepIndex === 3 ? browserHistory.push('/')  : this.handleNext}
+					onTouchTap={stepIndex === 2 ? this.handleSubmit : this.handleNext}
 					style={{marginRight: 12}}
 				/>
 				{step > 0 && (
@@ -323,7 +323,7 @@ const userAccountRegister = React.createClass({
 		/>
 	    </div>
 	);
-	
+
     }
 });
 
