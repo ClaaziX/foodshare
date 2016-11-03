@@ -150,8 +150,8 @@ function getLuminance(color) {
     });
     return Number((0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]).toFixed(3)); // Truncate at 3 digits
   } else if (color.type.indexOf('hsl') > -1) {
-      return color.values[2] / 100;
-    }
+    return color.values[2] / 100;
+  }
 }
 
 /**

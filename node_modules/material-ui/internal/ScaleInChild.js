@@ -107,10 +107,11 @@ var ScaleInChild = function (_Component) {
       var _props = this.props;
       var children = _props.children;
       var enterDelay = _props.enterDelay;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var maxScale = _props.maxScale;
+      var minScale = _props.minScale;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['children', 'enterDelay', 'style']);
+      var other = _objectWithoutProperties(_props, ['children', 'enterDelay', 'maxScale', 'minScale', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

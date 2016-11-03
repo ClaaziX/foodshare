@@ -61,9 +61,10 @@ var Toolbar = function (_Component) {
       var _props = this.props;
       var children = _props.children;
       var className = _props.className;
+      var noGutter = _props.noGutter;
       var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['children', 'className', 'style']);
+      var other = _objectWithoutProperties(_props, ['children', 'className', 'noGutter', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

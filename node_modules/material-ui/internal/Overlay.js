@@ -89,8 +89,9 @@ var Overlay = function (_Component) {
       var autoLockScrolling = _props.autoLockScrolling;
       var show = _props.show;
       var style = _props.style;
+      var transitionEnabled = _props.transitionEnabled;
 
-      var other = _objectWithoutProperties(_props, ['autoLockScrolling', 'show', 'style']);
+      var other = _objectWithoutProperties(_props, ['autoLockScrolling', 'show', 'style', 'transitionEnabled']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -118,8 +119,8 @@ Overlay.propTypes = {
 };
 Overlay.defaultProps = {
   autoLockScrolling: true,
-  transitionEnabled: true,
-  style: {}
+  style: {},
+  transitionEnabled: true
 };
 Overlay.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

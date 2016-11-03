@@ -111,12 +111,13 @@ var CircleRipple = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var aborted = _props.aborted;
       var color = _props.color;
       var opacity = _props.opacity;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var style = _props.style;
+      var touchGenerated = _props.touchGenerated;
 
-      var other = _objectWithoutProperties(_props, ['color', 'opacity', 'style']);
+      var other = _objectWithoutProperties(_props, ['aborted', 'color', 'opacity', 'style', 'touchGenerated']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -142,7 +143,8 @@ CircleRipple.propTypes = {
   aborted: _react.PropTypes.bool,
   color: _react.PropTypes.string,
   opacity: _react.PropTypes.number,
-  style: _react.PropTypes.object
+  style: _react.PropTypes.object,
+  touchGenerated: _react.PropTypes.bool
 };
 CircleRipple.defaultProps = {
   opacity: 0.1,

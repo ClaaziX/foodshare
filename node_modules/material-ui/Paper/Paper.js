@@ -35,8 +35,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function getStyles(props, context) {
-  var circle = props.circle;
   var rounded = props.rounded;
+  var circle = props.circle;
   var transitionEnabled = props.transitionEnabled;
   var zDepth = props.zDepth;
   var _context$muiTheme = context.muiTheme;
@@ -72,9 +72,13 @@ var Paper = function (_Component) {
     value: function render() {
       var _props = this.props;
       var children = _props.children;
+      var circle = _props.circle;
+      var rounded = _props.rounded;
       var style = _props.style;
+      var transitionEnabled = _props.transitionEnabled;
+      var zDepth = _props.zDepth;
 
-      var other = _objectWithoutProperties(_props, ['children', 'style']);
+      var other = _objectWithoutProperties(_props, ['children', 'circle', 'rounded', 'style', 'transitionEnabled', 'zDepth']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

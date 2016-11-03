@@ -81,10 +81,15 @@ var Step = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var active = _props.active;
+      var completed = _props.completed;
+      var disabled = _props.disabled;
+      var index = _props.index;
+      var last = _props.last;
       var children = _props.children;
       var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['children', 'style']);
+      var other = _objectWithoutProperties(_props, ['active', 'completed', 'disabled', 'index', 'last', 'children', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

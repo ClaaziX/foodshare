@@ -78,20 +78,17 @@ var Tab = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
-      var
-      /* eslint-disable no-unused-vars */
-      onActive = _props.onActive;
+      var icon = _props.icon;
+      var index = _props.index;
+      var onActive = _props.onActive;
       var onTouchTap = _props.onTouchTap;
       var selected = _props.selected;
+      var label = _props.label;
+      var style = _props.style;
       var value = _props.value;
       var width = _props.width;
-      var
-      /* eslint-enable no-unused-vars */
-      label = _props.label;
-      var style = _props.style;
-      var icon = _props.icon;
 
-      var other = _objectWithoutProperties(_props, ['onActive', 'onTouchTap', 'selected', 'value', 'width', 'label', 'style', 'icon']);
+      var other = _objectWithoutProperties(_props, ['icon', 'index', 'onActive', 'onTouchTap', 'selected', 'label', 'style', 'value', 'width']);
 
       var styles = getStyles(this.props, this.context);
 
@@ -147,6 +144,10 @@ Tab.propTypes = {
    * Sets the icon of the tab, you can pass `FontIcon` or `SvgIcon` elements.
    */
   icon: _react.PropTypes.node,
+  /**
+   * @ignore
+   */
+  index: _react.PropTypes.any,
   /**
    * Sets the text value of the tab item to the string specified.
    */

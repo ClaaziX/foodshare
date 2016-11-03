@@ -93,24 +93,18 @@ if (Meteor.isClient) {
     import ItemCreation from './ItemCreation.jsx';
     import MapView from './MapView.jsx';
     import PrivateChat from './PrivateChat.jsx';
-    import login from './login.jsx';
+    import userAccounts from './userAccounts.jsx';
+    import userAccountsRegister from './userAccountsRegister.jsx';
     import GridListTab from './GridListTab.jsx';
     import YourItems from './YourItems.jsx';
 
     Meteor.startup(function () {
-
-        //Config the accounts
-	Accounts.ui.config({
-		passwordSignupFields: 'USERNAME_AND_EMAIL',
-		onSignedInHook : () => browserHistory.push('/')
-	});
 
 	const requireAuth = function(nextState, replace){
 	      if(Meteor.userId() == null){
 				 replace('/login');
 				 }
 	      }
-
 	// Use Meteor.startup to render the component after the page is ready
 	ReactDOM.render(
 
@@ -123,7 +117,8 @@ if (Meteor.isClient) {
 		    <Route path='/ItemCreation' component={ItemCreation} onEnter={requireAuth} />
 		    <Route path='/MapView' component={MapView} onEnter={requireAuth} />
 		    <Route path='/PrivateChat/:messagedUsername' component={PrivateChat} onEnter={requireAuth} />
-		    <Route path='/login' component={login} formState={STATES.SIGN_IN} />
+		    <Route path='/login' component={userAccounts} formState={STATES.SIGN_IN} />
+            <Route path='/register' component={userAccountsRegister} formState={STATES.SIGN_IN} />
 		</Route>
 	    </Router>
 	, document.getElementById('render-target'));
@@ -143,7 +138,7 @@ if (Meteor.isServer) {
 	}
 	
     });
-    
+
     //Reset all the databases before we add the test data in.
     
     //Remove Users
@@ -164,15 +159,17 @@ if (Meteor.isServer) {
      	Accounts.createUser({username:fN+lN, email: fN + '.' + lN + '@mail.com', password:'password'});
     }
 
-    Accounts.createUser({username: "overLord", email: "over@it.com", password:'password'});
+    Accounts.createUser({username: "overLord", emails: "over@it.com", password:'password', profile: {fName: "Steve", lName: "Smith"}});
     
     //Create food items by random users
-    var items = [{image:'http://asset1.cxnmarksandspencer.com/is/image/mands/bbaeea693f4c2c6b9eaa0d7099c91b46dee181b5?$editorial_430x320$',imageContains:[{foodName:'Sushi',foodDesc:'',},{foodName:'Pizza Rolls',foodDesc:'',},{foodName:'',foodDesc:'Mini Pork Pies',},{foodName:'Pastry Parcels',foodDesc:'',},{foodName:'Kebab',foodDesc:'',}]},
-                 {image:'http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg',imageContains:[{foodName:'Carrots',foodDesc:'',},{foodName:'Peppers',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Broccoli',foodDesc:'',},{foodName:'Aubergine',foodDesc:'',},{foodName:'Lemons',foodDesc:'',},{foodName:'Beans',foodDesc:'',},{foodName:'Strawberries',foodDesc:'',}],location:{lat:55.948189, lng:-3.188353}},
-                 {image:'http://www3.imperial.ac.uk/newseventsimages?p_image_type=mainnews2012&p_image_id=33911',imageContains:[{foodName:'Doughnuts',foodDesc:'',}]},{image:'http://blog.oxforddictionaries.com/wp-content/uploads/food-quiz.jpg',imageContains:[{foodName:'Cakes',foodDesc:'',}],location:{lat:55.951361, lng:-3.203630}},
-                 {image:'http://barefootrunninguniversity.com/wp-content/uploads/2013/05/groceries.jpg',imageContains:[{foodName:'Milk',foodDesc:'',},{foodName:'Bread',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Oranges',foodDesc:'',},{foodName:'Celery',foodDesc:'',}],location:{lat:55.942037, lng:-3.196249}},
-                 {image:'http://www.tesco.com/groceries/MarketingContent/Sites/Retail/superstore/mercury/P/i/home/freshness/2016/wk29/stamp2ab-1.jpg',imageContains:[{foodName:'Bolognese Sauce',foodDesc:'',},{foodName:'Beef Mince',foodDesc:'',},{foodName:'Onions',foodDesc:'',},{foodName:'Grated Cheese',foodDesc:'',},{foodName:'Spaghetti',foodDesc:'',}]},
-                  {image:'https://secure.img2.wfrcdn.com/lf/maxsquare/hash/621/13143451/1/Melissa-and-Doug-Lets-Play-House%252521-Fridge-Groceries-4316.jpg',imageContains:[{foodName:'Butter',foodDesc:'',},{foodName:'Cheese',foodDesc:'',},{foodName:'Milk',foodDesc:'',},{foodName:'Orange Juice',foodDesc:'',},{foodName:'Meat Slices',foodDesc:'',},{foodName:'Yoghurt',foodDesc:'',},{foodName:'Parmesan Cheese',foodDesc:'',}],location:{lat:55.967120, lng:-3.188009}}  ];
+    var items = [
+        {image:'http://asset1.cxnmarksandspencer.com/is/image/mands/bbaeea693f4c2c6b9eaa0d7099c91b46dee181b5?$editorial_430x320$',imageContains:[{foodName:'Sushi',foodDesc:'',},{foodName:'Pizza Rolls',foodDesc:'',},{foodName:'',foodDesc:'Mini Pork Pies',},{foodName:'Pastry Parcels',foodDesc:'',},{foodName:'Kebab',foodDesc:'',}]},
+        {image:'http://images.mentalfloss.com/sites/default/files/styles/article_640x430/public/istock_000050960496_medium.jpg',imageContains:[{foodName:'Carrots',foodDesc:'',},{foodName:'Peppers',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Broccoli',foodDesc:'',},{foodName:'Aubergine',foodDesc:'',},{foodName:'Lemons',foodDesc:'',},{foodName:'Beans',foodDesc:'',},{foodName:'Strawberries',foodDesc:'',}],location:{lat:55.948189, lng:-3.188353}},
+        {image:'http://www3.imperial.ac.uk/newseventsimages?p_image_type=mainnews2012&p_image_id=33911',imageContains:[{foodName:'Doughnuts',foodDesc:'',}]},{image:'http://blog.oxforddictionaries.com/wp-content/uploads/food-quiz.jpg',imageContains:[{foodName:'Cakes',foodDesc:'',}],location:{lat:55.951361, lng:-3.203630}},
+        {image:'http://barefootrunninguniversity.com/wp-content/uploads/2013/05/groceries.jpg',imageContains:[{foodName:'Milk',foodDesc:'',},{foodName:'Bread',foodDesc:'',},{foodName:'Apples',foodDesc:'',},{foodName:'Oranges',foodDesc:'',},{foodName:'Celery',foodDesc:'',}],location:{lat:55.942037, lng:-3.196249}},
+        {image:'http://www.tesco.com/groceries/MarketingContent/Sites/Retail/superstore/mercury/P/i/home/freshness/2016/wk29/stamp2ab-1.jpg',imageContains:[{foodName:'Bolognese Sauce',foodDesc:'',},{foodName:'Beef Mince',foodDesc:'',},{foodName:'Onions',foodDesc:'',},{foodName:'Grated Cheese',foodDesc:'',},{foodName:'Spaghetti',foodDesc:'',}]},
+        {image:'https://secure.img2.wfrcdn.com/lf/maxsquare/hash/621/13143451/1/Melissa-and-Doug-Lets-Play-House%252521-Fridge-Groceries-4316.jpg',imageContains:[{foodName:'Butter',foodDesc:'',},{foodName:'Cheese',foodDesc:'',},{foodName:'Milk',foodDesc:'',},{foodName:'Orange Juice',foodDesc:'',},{foodName:'Meat Slices',foodDesc:'',},{foodName:'Yoghurt',foodDesc:'',},{foodName:'Parmesan Cheese',foodDesc:'',}],location:{lat:55.967120, lng:-3.188009}}
+    ];
     
     var numPortions = 10;
     var numFoodItems = 10;
@@ -185,8 +182,6 @@ if (Meteor.isServer) {
     	var langMax = 3.3002685546875;
     	var langMin = 3.2006787109375;
     	var rLang = Math.random() * (langMax - langMin) + -langMin;
-
-        console.log(rLat, rLang)
 
     	var locationz = {lat: rLat, lang: rLang};
 

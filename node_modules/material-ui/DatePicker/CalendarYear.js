@@ -106,24 +106,31 @@ var CalendarYear = function (_Component) {
     value: function render() {
       var years = this.getYears();
       var backgroundColor = this.context.muiTheme.datePicker.calendarYearBackgroundColor;
+      var prepareStyles = this.context.muiTheme.prepareStyles;
+
       var styles = {
-        backgroundColor: backgroundColor,
-        height: 'inherit',
-        lineHeight: '35px',
-        overflowX: 'hidden',
-        overflowY: 'scroll',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
+        root: {
+          backgroundColor: backgroundColor,
+          height: 'inherit',
+          lineHeight: '35px',
+          overflowX: 'hidden',
+          overflowY: 'scroll',
+          position: 'relative'
+        },
+        child: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: '100%'
+        }
       };
 
       return _react2.default.createElement(
         'div',
-        { style: styles },
+        { style: prepareStyles(styles.root) },
         _react2.default.createElement(
           'div',
-          null,
+          { style: prepareStyles(styles.child) },
           years
         )
       );

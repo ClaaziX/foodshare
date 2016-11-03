@@ -39,32 +39,41 @@ const AddItem = React.createClass({
     },
     
     render() {
-    	return (<div>
-	    <div className="textBox">
-	    <TextField
-		hintText="Please enter name of the item."
-		value={this.state.foodName}
-		onChange={this.handleName}
-	    />
-	    </div>
-	    <br />
-	    <div className="textBox">
-	    Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
-	    </div>
-	    
-	    <p>
-	    Fill this in for each item in your picture!
-	    </p>
+    	return (
+    		<div>
+				<div className="textBox">
+					<TextField
+						hintText="Please enter name of the item."
+						value={this.state.foodName}
+						onChange={this.handleName}
+					/>
+				</div>
 
-	    <RaisedButton label="Add Item" primary={true} fullWidth={true} onTouchTap={this.handleSubmit} />
+				<br />
+				
+				<div className="textBox">
+					Number of Portions: <NumberOptionsState value={this.state.prtNo} options="20" optionChange={this.setPrtNo} />
+				</div>
 
-	    <Snackbar
-		open={this.state.open}
-		message="Please fill out all fields."
-		autoHideDuration={4000}
-		onRequestClose={this.handleRequestClose}
-            />
-	</div>);
+				<p>
+					Fill this in for each item in your picture!
+				</p>
+
+				<RaisedButton
+					label="Add Item"
+					primary={true}
+					fullWidth={true}
+					onTouchTap={this.handleSubmit}
+				/>
+
+				<Snackbar
+					open={this.state.open}
+					message="Please fill out all fields."
+					autoHideDuration={4000}
+					onRequestClose={this.handleRequestClose}
+				/>
+			</div>
+		);
     }
     
 });

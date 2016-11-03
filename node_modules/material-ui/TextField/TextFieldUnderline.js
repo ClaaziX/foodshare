@@ -95,7 +95,8 @@ var TextFieldUnderline = function TextFieldUnderline(props) {
     },
     disabled: {
       borderBottom: 'dotted 2px',
-      borderColor: disabledTextColor
+      borderColor: disabledTextColor,
+      cursor: 'not-allowed'
     },
     focus: {
       borderBottom: 'solid 2px',

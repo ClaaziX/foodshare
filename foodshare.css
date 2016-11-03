@@ -50,6 +50,32 @@ body
   padding-bottom: 10px;
 }
 
+/* Login */
+.loginContain{
+  padding:3px;
+  max-height: 100%;
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.loginField{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+}
+
+.registerField{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Map Stuff */
 .gm-style-iw {
   top: 15px !important;
   background-color: #fff;

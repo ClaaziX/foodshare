@@ -78,11 +78,18 @@ var ClockPointer = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ClockPointer)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      inner: (0, _timeUtils.isInner)(_this.props)
+      inner: false
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(ClockPointer, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({
+        inner: (0, _timeUtils.isInner)(this.props)
+      });
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState({
@@ -117,9 +124,9 @@ ClockPointer.propTypes = {
   value: _react.PropTypes.number
 };
 ClockPointer.defaultProps = {
+  hasSelected: false,
   value: null,
-  type: 'minute',
-  hasSelected: false
+  type: 'minute'
 };
 ClockPointer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

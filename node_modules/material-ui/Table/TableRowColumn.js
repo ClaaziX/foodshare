@@ -67,16 +67,22 @@ var TableRowColumn = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableRowColumn)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
       hovered: false
     }, _this.onClick = function (event) {
-      if (_this.props.onClick) _this.props.onClick(event, _this.props.columnNumber);
+      if (_this.props.onClick) {
+        _this.props.onClick(event, _this.props.columnNumber);
+      }
     }, _this.onMouseEnter = function (event) {
       if (_this.props.hoverable) {
         _this.setState({ hovered: true });
-        if (_this.props.onHover) _this.props.onHover(event, _this.props.columnNumber);
+        if (_this.props.onHover) {
+          _this.props.onHover(event, _this.props.columnNumber);
+        }
       }
     }, _this.onMouseLeave = function (event) {
       if (_this.props.hoverable) {
         _this.setState({ hovered: false });
-        if (_this.props.onHoverExit) _this.props.onHoverExit(event, _this.props.columnNumber);
+        if (_this.props.onHoverExit) {
+          _this.props.onHoverExit(event, _this.props.columnNumber);
+        }
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -88,16 +94,11 @@ var TableRowColumn = function (_Component) {
       var children = _props.children;
       var className = _props.className;
       var columnNumber = _props.columnNumber;
-      var // eslint-disable-line no-unused-vars
-      hoverable = _props.hoverable;
-      var // eslint-disable-line no-unused-vars
-      onClick = _props.onClick;
-      var // eslint-disable-line no-unused-vars
-      onHover = _props.onHover;
-      var // eslint-disable-line no-unused-vars
-      onHoverExit = _props.onHoverExit;
-      var // eslint-disable-line no-unused-vars
-      style = _props.style;
+      var hoverable = _props.hoverable;
+      var onClick = _props.onClick;
+      var onHover = _props.onHover;
+      var onHoverExit = _props.onHoverExit;
+      var style = _props.style;
 
       var other = _objectWithoutProperties(_props, ['children', 'className', 'columnNumber', 'hoverable', 'onClick', 'onHover', 'onHoverExit', 'style']);
 
@@ -142,15 +143,9 @@ TableRowColumn.propTypes = {
    * If true, this column responds to hover events.
    */
   hoverable: _react.PropTypes.bool,
-  /**
-   * @ignore
-   * Callback function for click event.
-   */
+  /** @ignore */
   onClick: _react.PropTypes.func,
-  /**
-   * @ignore
-   * Callback function for hover event.
-   */
+  /** @ignore */
   onHover: _react.PropTypes.func,
   /**
    * @ignore

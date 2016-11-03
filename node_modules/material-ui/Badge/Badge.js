@@ -89,12 +89,14 @@ var Badge = function (_Component) {
     key: 'render',
     value: function render() {
       var _props = this.props;
-      var style = _props.style;
-      var children = _props.children;
       var badgeContent = _props.badgeContent;
       var badgeStyle = _props.badgeStyle;
+      var children = _props.children;
+      var primary = _props.primary;
+      var secondary = _props.secondary;
+      var style = _props.style;
 
-      var other = _objectWithoutProperties(_props, ['style', 'children', 'badgeContent', 'badgeStyle']);
+      var other = _objectWithoutProperties(_props, ['badgeContent', 'badgeStyle', 'children', 'primary', 'secondary', 'style']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

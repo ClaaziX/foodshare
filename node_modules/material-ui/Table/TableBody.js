@@ -55,7 +55,7 @@ var TableBody = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableBody)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      selectedRows: _this.calculatePreselectedRows(_this.props)
+      selectedRows: []
     }, _this.handleClickAway = function () {
       if (_this.props.deselectOnClickaway && _this.state.selectedRows.length) {
         _this.setState({
@@ -75,21 +75,36 @@ var TableBody = function (_Component) {
       }
     }, _this.onCellClick = function (event, rowNumber, columnNumber) {
       event.stopPropagation();
-      if (_this.props.onCellClick) _this.props.onCellClick(rowNumber, _this.getColumnId(columnNumber), event);
+      if (_this.props.onCellClick) {
+        _this.props.onCellClick(rowNumber, _this.getColumnId(columnNumber), event);
+      }
     }, _this.onCellHover = function (event, rowNumber, columnNumber) {
-      if (_this.props.onCellHover) _this.props.onCellHover(rowNumber, _this.getColumnId(columnNumber), event);
+      if (_this.props.onCellHover) {
+        _this.props.onCellHover(rowNumber, _this.getColumnId(columnNumber), event);
+      }
       _this.onRowHover(event, rowNumber);
     }, _this.onCellHoverExit = function (event, rowNumber, columnNumber) {
-      if (_this.props.onCellHoverExit) _this.props.onCellHoverExit(rowNumber, _this.getColumnId(columnNumber), event);
+      if (_this.props.onCellHoverExit) {
+        _this.props.onCellHoverExit(rowNumber, _this.getColumnId(columnNumber), event);
+      }
       _this.onRowHoverExit(event, rowNumber);
     }, _this.onRowHover = function (event, rowNumber) {
-      if (_this.props.onRowHover) _this.props.onRowHover(rowNumber);
+      if (_this.props.onRowHover) {
+        _this.props.onRowHover(rowNumber);
+      }
     }, _this.onRowHoverExit = function (event, rowNumber) {
-      if (_this.props.onRowHoverExit) _this.props.onRowHoverExit(rowNumber);
+      if (_this.props.onRowHoverExit) {
+        _this.props.onRowHoverExit(rowNumber);
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(TableBody, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({ selectedRows: this.calculatePreselectedRows(this.props) });
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.allRowsSelected && !nextProps.allRowsSelected) {
@@ -98,10 +113,10 @@ var TableBody = function (_Component) {
         });
         // TODO: should else be conditional, not run any time props other than allRowsSelected change?
       } else {
-          this.setState({
-            selectedRows: this.calculatePreselectedRows(nextProps)
-          });
-        }
+        this.setState({
+          selectedRows: this.calculatePreselectedRows(nextProps)
+        });
+      }
     }
   }, {
     key: 'createRows',
@@ -123,19 +138,18 @@ var TableBody = function (_Component) {
         if (_react2.default.isValidElement(child)) {
           var _ret2 = function () {
             var props = {
-              displayRowCheckbox: _this2.props.displayRowCheckbox,
               hoverable: _this2.props.showRowHover,
               selected: _this2.isRowSelected(rowNumber),
               striped: _this2.props.stripedRows && rowNumber % 2 === 0,
               rowNumber: rowNumber++
             };
-            var checkboxColumn = _this2.createRowCheckboxColumn(props);
 
             if (rowNumber === numChildren) {
               props.displayBorder = false;
             }
 
-            var children = [checkboxColumn];
+            var children = [_this2.createRowCheckboxColumn(props)];
+
             _react2.default.Children.forEach(child.props.children, function (child) {
               children.push(child);
             });
@@ -152,14 +166,17 @@ var TableBody = function (_Component) {
   }, {
     key: 'createRowCheckboxColumn',
     value: function createRowCheckboxColumn(rowProps) {
-      if (!this.props.displayRowCheckbox) return null;
+      if (!this.props.displayRowCheckbox) {
+        return null;
+      }
 
       var key = rowProps.rowNumber + '-cb';
+      var disabled = !this.props.selectable;
       var checkbox = _react2.default.createElement(_Checkbox2.default, {
         ref: 'rowSelectCB',
         name: key,
         value: 'selected',
-        disabled: !this.props.selectable,
+        disabled: disabled,
         checked: rowProps.selected
       });
 
@@ -168,7 +185,10 @@ var TableBody = function (_Component) {
         {
           key: key,
           columnNumber: 0,
-          style: { width: 24 }
+          style: {
+            width: 24,
+            cursor: disabled ? 'not-allowed' : 'inherit'
+          }
         },
         checkbox
       );
@@ -339,7 +359,9 @@ var TableBody = function (_Component) {
     key: 'getColumnId',
     value: function getColumnId(columnNumber) {
       var columnId = columnNumber;
-      if (this.props.displayRowCheckbox) columnId--;
+      if (this.props.displayRowCheckbox) {
+        columnId--;
+      }
 
       return columnId;
     }
@@ -351,7 +373,6 @@ var TableBody = function (_Component) {
       var style = _props.style;
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
-      var rows = this.createRows();
 
       return _react2.default.createElement(
         _ClickAwayListener2.default,
@@ -359,7 +380,7 @@ var TableBody = function (_Component) {
         _react2.default.createElement(
           'tbody',
           { className: className, style: prepareStyles((0, _simpleAssign2.default)({}, style)) },
-          rows
+          this.createRows()
         )
       );
     }
