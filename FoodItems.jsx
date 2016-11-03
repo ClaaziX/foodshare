@@ -70,12 +70,12 @@ FoodItems = React.createClass({
 	var p = "portions";
 	var x = [];
 	for (i = 0; i < pNum; i++){
-	    x.push(<img className="carrotImg" src="/imgs/carrot.png" />);
+	    x.push(<img key={i} className="carrotImg" src="/imgs/carrot.png" />);
 	}
 
 	var z = [];
 	for (n = 0; n < pCla; n++){
-	    z.push(<img className="carrotImg" src="/imgs/noCarrot.png" />);
+	    z.push(<img key={i+1000} className="carrotImg" src="/imgs/noCarrot.png" />);
 	}
 	return <div>{x}{z}({pNum} {p})</div>;
     },

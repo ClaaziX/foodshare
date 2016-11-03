@@ -127,7 +127,7 @@ getMeteorData() {
 	  			 title={foodItem.foodName}
 	  			 subtitle={<span>by <b>{foodItem.username}</b></span>}
 	  			 actionIcon={
-	  			     <div>
+	  			     <div key={"foodViewDivKey"+foodItem._id}>
 	  				 <IconButton onTouchTap={ (function(event){this.handleOpen(foodItem)}).bind(this) }>
 	  				     <ActionShoppingCart color='White' />
 	  				 </IconButton>                        
@@ -137,7 +137,7 @@ getMeteorData() {
 	  			     </div>
 	  				    }
 	  		     >
-	  			     <img src={foodItem.imgURL} />
+	  			     <img key={"FoodViewImgKey"+foodItem._id} src={foodItem.imgURL} />
 	  		     </GridTile>
 	  		 ))}
 	  	    </GridList>
@@ -154,7 +154,7 @@ getMeteorData() {
 
 	return foodItemsFiltered.map((foodItem) => {
 	    return (
-	    <div>
+	    <div key={"FoodViewFilteredDiv"+foodItem._id}>
 		<FoodItems 
 		foodItem={foodItem}
 		pathName={foodItem}
