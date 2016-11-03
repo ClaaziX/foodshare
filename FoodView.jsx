@@ -114,7 +114,6 @@ getMeteorData() {
 	if (winWidth > 500){
 		tileHeight = 200;
 	}
-	console.log(tileHeight)
 	  if(this.props.renderer=='grid'){
 	      return(
 	  	<div style={styles.root}>

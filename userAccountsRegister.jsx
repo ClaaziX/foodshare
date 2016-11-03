@@ -37,6 +37,7 @@ import AddLocation from './AddLocation.jsx';
 import AddItem from './AddItem.jsx';
 import AddItemView from './AddItemView.jsx';
 import FoodView from './FoodView.jsx';
+import RegisterForm from './RegisterForm.jsx';
 
 const errContentStyle = {
     width: '100%',
@@ -73,9 +74,9 @@ import {
 
 const userAccountRegister = React.createClass({
 
-    getInitialState(){
-        return{
-            //State for the stepper
+	getInitialState(){
+		return{
+	        //State for the stepper
 			finished: false,
 			stepIndex: 0,
 			completedIndex: 0,
@@ -94,7 +95,7 @@ const userAccountRegister = React.createClass({
 			openErrPop: false,
 			errPopMess: ''
 		}
-    },
+	},
 
     handleError() {
         this.setState({
@@ -107,26 +108,6 @@ const userAccountRegister = React.createClass({
             open: false,
 		});
     },
-
-	handlefName: function(event){
-		this.setState({fName: event.target.value});
-	},
-
-	handlelName: function(event){
-		this.setState({lName: event.target.value});
-	},
-
-	handleUserName: function(event){
-		this.setState({username: event.target.value});
-	},
-
-	handleEmail: function(event){
-		this.setState({email: event.target.value});
-	},
-
-	handlePassword: function(event){
-		this.setState({password: event.target.value});
-	},
 
     //Stepper Code
     handleNext() {
@@ -141,60 +122,52 @@ const userAccountRegister = React.createClass({
 		}
     },
 
-    handlePrev(){
-        stepIndex = this.state.stepIndex;
-        if (stepIndex > 0){
-            this.setState({stepIndex: stepIndex - 1});
-	}
-    },
-
-    onUpload(url, tinyURL){
-        this.setState({
-        	imageURL:url,
-	        completedIndex:1
-	    })
-
-    },
-
-    onCoordSelection(location){
-        this.setState({latLng:{lat:location.latLng.lat(),lng:location.latLng.lng()},
-	               address:location.address,
-		       completedIndex:2
-	})
-
-    },
-
-    handleSubmit(){
-		console.log("Attempting to register....")
-		var pass = this.state.password;
-		var username = this.state.username
-		console.log(pass)
-		if(pass !== '' && username !== ''){
-
-			Accounts.createUser({
-				username: username,
-				emails: this.state.email,
-				password: pass,
-				profile: {
-					avatar: this.state.imageURL,
-					location: this.state.latLng,
-					address: this.state.address,
-					fName: this.state.fName,
-					lName: this.state.lName
-					}},
-				function(err) {
-					if (err){
-						console.log(err);
-					}
-					else{
-						console.log('User Registered!');
-						//this.setState({completedIndex:3})
-					}
-			});
-		}else{
-			console.log("put a password & username in mate!")
+	handlePrev(){
+		stepIndex = this.state.stepIndex;
+		if (stepIndex > 0){
+			this.setState({stepIndex: stepIndex - 1});
 		}
+	},
 
+	onUpload(url, tinyURL){
+		this.setState({
+			imageURL:url,
+			completedIndex:1
+		})
+	},
+
+	onCoordSelection(location){
+		this.setState({
+			latLng:{lat:location.latLng.lat(),lng:location.latLng.lng()},
+			address:location.address,
+			completedIndex:2
+		})
+	},
+
+    handleSubmit(item){
+		console.log("Attempting to register....")
+
+		Accounts.createUser({
+			username: item.username,
+			emails: item.email,
+			password: item.password,
+			profile: {
+				avatar: this.state.imageURL,
+				location: this.state.latLng,
+				address: this.state.address,
+				fName: item.fName,
+				lName: item.lName
+				}},
+			function(err) {
+				if (err){
+					console.log(err);
+				}
+				else{
+					console.log('User Registered!');
+					browserHistory.push('/')
+					//this.setState({completedIndex:3})
+				}
+		});
     },
 
     genStepButtons(step) {
@@ -203,15 +176,19 @@ const userAccountRegister = React.createClass({
 
         return (
 			<div style={{margin: '12px 0'}}>
-				<RaisedButton
-					label={stepIndex === 2 ? 'Register!' : 'Next'}
-					disableTouchRipple={true}
-					disableFocusRipple={true}
-					primary={true}
-					onTouchTap={stepIndex === 2 ? this.handleSubmit : this.handleNext}
-					style={{marginRight: 12}}
-				/>
-				{step > 0 && (
+				{stepIndex !== 2 ?
+					<RaisedButton
+						label={'Next'}
+						disableTouchRipple={true}
+						disableFocusRipple={true}
+						primary={true}
+						onTouchTap={this.handleNext}
+						style={{marginRight: 12}}
+					/>
+					:
+					""
+				}
+				{step > 0 && stepIndex !== 2 ?
 					<FlatButton
 						label="Back"
 						disabled={stepIndex === 0}
@@ -219,7 +196,9 @@ const userAccountRegister = React.createClass({
 						disableFocusRipple={true}
 						onTouchTap={this.handlePrev}
 					/>
-				)}
+					:
+					""
+				}
 			</div>
 			);
     },
@@ -236,93 +215,41 @@ const userAccountRegister = React.createClass({
         const contentStyle = {margin: '0 16px'};
 
         return (
-            <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-	        <div className="loginField">
-							Have an account? <RaisedButton backgroundColor={lightGreenA200} onTouchTap={this.haveAccSwitch()} label="Login" />
+			<div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+				<div className="loginField">
+					Have an account? <RaisedButton backgroundColor={lightGreenA200} onTouchTap={this.haveAccSwitch()} label="Login" />
+				</div>
+				<Stepper activeStep={stepIndex} orientation="vertical">
+					<Step>
+						<StepLabel>Upload A Profile Picture!</StepLabel>
+						<StepContent>
+							<PhotoUpload onUpload={this.onUpload}/>
+							{this.genStepButtons(0)}
+						</StepContent>
+					</Step>
+					<Step>
+						<StepLabel>Set Your Default Location</StepLabel>
+						<StepContent>
+							<AddLocation onCoordSelection={this.onCoordSelection}/>
+							{this.genStepButtons(1)}
+						</StepContent>
+					</Step>
+					<Step>
+						<StepLabel>Fill In Your Details</StepLabel>
+						<StepContent>
+							<RegisterForm handlePrev={this.handlePrev} handleSubmit={this.handleSubmit} />
+						</StepContent>
+					</Step>
+				</Stepper>
+
+				<Snackbar
+					open={this.state.open}
+					message="Please complete this section before moving on."
+					autoHideDuration={4000}
+					onRequestClose={this.handleRequestClose}
+				/>
 			</div>
-	        <Stepper activeStep={stepIndex} orientation="vertical">
-	     	    <Step>
-			<StepLabel>Upload A Profile Picture!</StepLabel>
-			<StepContent>
-			    <PhotoUpload onUpload={this.onUpload}/>
-			    {this.genStepButtons(0)}
-			</StepContent>
-		    </Step>
-		    <Step>
-			<StepLabel>Set Your Default Location</StepLabel>
-			<StepContent>
-			    <AddLocation onCoordSelection={this.onCoordSelection}/>
-			    {this.genStepButtons(1)}
-			</StepContent>
-		    </Step>
-		    <Step>
-			<StepLabel>Fill In Your Details</StepLabel>
-			<StepContent>
-			    <div className="loginContain">
-						<div className="loginField">
-							<TextField
-								hintText="Enter Your First Name..."
-								floatingLabelText="First Name"
-								value={this.state.fName}
-								onChange={this.handlefName}
-								fullWidth={true}
-							/>
-						</div>
-
-						<div className="loginField">
-							<TextField
-								hintText="Enter Your Last Name..."
-								floatingLabelText="Last Name"
-								value={this.state.lName}
-								onChange={this.handlelName}
-								fullWidth={true}
-							/>
-						</div>
-
-						<div className="loginField">
-							<TextField
-								hintText="Enter Your Username..."
-								floatingLabelText="Username"
-								value={this.state.username}
-								onChange={this.handleUserName}
-								fullWidth={true}
-							/>
-						</div>
-
-						<div className="loginField">
-							<TextField
-								hintText="Enter Your Email..."
-								floatingLabelText="Email"
-								value={this.state.email}
-								onChange={this.handleEmail}
-								fullWidth={true}
-							/>
-						</div>
-
-						<div className="loginField">
-							<TextField
-								type="password"
-								hintText="Enter Your Password..."
-								floatingLabelText="Password"
-								value={this.state.password}
-								onChange={this.handlePassword}
-								fullWidth={true}
-							/>
-						</div>
-					</div>
-			    {this.genStepButtons(2)}
-			</StepContent>
-		    </Step>
-		</Stepper>
-
-		<Snackbar
-		    open={this.state.open}
-		    message="Please complete this section before moving on."
-		    autoHideDuration={4000}
-		    onRequestClose={this.handleRequestClose}
-		/>
-	    </div>
-	);
+			);
 
     }
 });

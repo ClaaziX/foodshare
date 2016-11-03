@@ -139,10 +139,6 @@ if (Meteor.isServer) {
 	
     });
 
-    Accounts.config({
-        sendVerificationEmail: true
-    });
-    
     //Reset all the databases before we add the test data in.
     
     //Remove Users

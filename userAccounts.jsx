@@ -55,12 +55,12 @@ const userAccounts = React.createClass({
 	handleLogin(){
 		console.log("Attempting to logIn....")
 		var pass = this.state.password;
-		var username = this.state.username
-		console.log(pass)
+		var username = this.state.username;
+		var that = this;
 		if(pass !== '' && username !== ''){
 			Meteor.loginWithPassword(username, pass, function(err) {
   				if (err) {
-			    	this.loginFail(err.message);
+			    	that.loginFail(err.message);
 				}else{
 			  	console.log("Successful Login!")
 			  	browserHistory.push('/');
